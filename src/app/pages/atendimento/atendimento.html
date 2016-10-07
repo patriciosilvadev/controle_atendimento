@@ -1,0 +1,38 @@
+<form id="form1">
+  <div class="form-group">
+    <label for="dataInput">Data</label>
+    <input type="date" class="form-control" id="dataInput" placeholder="Data">
+  </div>
+  <div class="form-group">
+    <label for="cnpjInput">CNPJ</label>
+    <input type="text" class="form-control" 
+        data-mask="999-99-999-9999-9" 
+        id="cnpjInput" placeholder="CNPJ"
+    >
+  </div>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Problema</label>
+    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+  </div>  
+  <div class="form-group">
+    <label for="exampleInputEmail1">Solução</label>
+    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+  </div>  
+  <div class="checkbox">
+    <label class="custom-checkbox">
+      <input type="checkbox">
+      <span>Check me out</span>
+    </label>
+  </div>
+  <button type="submit" class="btn btn-danger">Submit</button>
+
+
+CNPJ:
+<input type="text" class="form-control" 
+ name="cnpj"
+ ng-model="cnpj"
+ ng-change="mascaraCNPJ(cnpj)"
+ ng-blur="validarCNPJ"
+ maxlength="18"/>
+
+</form>

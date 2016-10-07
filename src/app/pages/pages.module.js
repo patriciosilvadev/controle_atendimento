@@ -16,6 +16,9 @@
     'BlurAdmin.pages.charts',
     'BlurAdmin.pages.maps',
     'BlurAdmin.pages.profile',
+    'BlurAdmin.pages.atendimento',
+    'BlurAdmin.pages.gerenciamento'
+
   ])
       .config(routeConfig);
 
@@ -23,7 +26,7 @@
   function routeConfig($urlRouterProvider, baSidebarServiceProvider) {
     $urlRouterProvider.otherwise('/dashboard');
 
-    baSidebarServiceProvider.addStaticItem({
+    /*baSidebarServiceProvider.addStaticItem({
       title: 'Pages',
       icon: 'ion-document',
       subMenu: [{
@@ -56,7 +59,7 @@
           disabled: true
         }]
       }]
-    });
+    });*/
   }
 
 })();

@@ -6,7 +6,7 @@
   'use strict';
 
   angular.module('BlurAdmin.pages.charts.amCharts', [])
-      .config(routeConfig).config(amChartConfig);
+      .config(routeConfig);//config(amChartConfig);
 
   /** @ngInject */
   function routeConfig($stateProvider) {

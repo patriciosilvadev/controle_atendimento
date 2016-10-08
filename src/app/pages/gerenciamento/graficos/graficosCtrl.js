@@ -5,13 +5,13 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.charts.morris')
+  angular.module('BlurAdmin.pages.gerenciamento.graficos')
     .controller('morrisCtrl', morrisCtrl);
 
   /** @ngInject */
   function morrisCtrl($scope, $window, baConfig) {
     var layoutColors = baConfig.colors;
-    $scope.colors = [layoutColors.primary, layoutColors.warning, layoutColors.danger, layoutColors.info, layoutColors.success, layoutColors.primaryDark];
+    $scope.colors = ['red', layoutColors.warning, layoutColors.danger, layoutColors.info, layoutColors.success, layoutColors.primaryDark];
     $scope.lineData = [
       {y: "2006", a: 100, b: 90},
       {y: "2007", a: 75, b: 65},
@@ -31,10 +31,9 @@
       {y: "2012", a: 100, b: 90}
     ];
     $scope.barData = [
-      {y: "2006", a: 100, b: 90},
-      {y: "2007", a: 75, b: 65},
-      {y: "2008", a: 50, b: 40},
-      {y: "2009", a: 75, b: 65, c: 60},
+      {y: "Agosto", a: 75, b: 65},
+      {y: "Setembro", a: 50, b: 40},
+      {y: "Outubro", a: 75, b: 65},
 
     ];
     $scope.donutData = [

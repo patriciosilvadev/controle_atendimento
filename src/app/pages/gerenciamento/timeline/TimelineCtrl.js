@@ -5,11 +5,11 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.components.timeline')
-      .controller('TimelineCtrl', TimelineCtrl);
+  angular.module('BlurAdmin.pages.gerenciamento.timeline')
+      .controller('TimelineCtrl2', TimelineCtrl2);
 
   /** @ngInject */
-  function TimelineCtrl() {
+  function TimelineCtrl2() {
     var timelineBlocks = $('.cd-timeline-block'),
         offset = 0.8;
 

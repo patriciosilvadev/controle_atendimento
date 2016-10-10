@@ -14,7 +14,7 @@
         .state('gerenciamento.cadastroUsuario', {
           url: '/cadastroUsuario',
           templateUrl: 'app/pages/gerenciamento/cadastroUsuario/cadastro_usuario.html',
-          title: 'cadastroUsuario',
+          title: 'Cadastro de Usuário',
           sidebarMeta: {
             order: 300,
           }

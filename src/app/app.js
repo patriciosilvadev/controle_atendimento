@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('BlurAdmin', [
+var app = angular.module('BlurAdmin', [
   'ngAnimate',
   'ui.bootstrap',
   'ui.sortable',
@@ -16,3 +16,16 @@ angular.module('BlurAdmin', [
   'BlurAdmin.theme',
   'BlurAdmin.pages'
 ]);
+app.constant('ENDPOINT_URI', 'http://localhost:4000/api/');
+
+app.factory("loginService",function($rootScope){
+  $rootScope.isLogged=true;
+  return{
+    getName:function(){
+      return "teste";
+    },
+    isLogged:function(){
+      return false;
+    }
+  }
+});

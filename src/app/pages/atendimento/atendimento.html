@@ -1,32 +1,42 @@
-<form id="form1">
-  <div class="form-group">
-    <label for="dataInput">Data</label>
-    <input type="date" class="form-control" id="dataInput" placeholder="Data">
-  </div>
-  <div class="form-group">
-    <label for="cnpjInput">CNPJ</label>
-    <input type="text" class="form-control" 
-        data-mask="999-99-999-9999-9" 
-        id="cnpjInput" placeholder="CNPJ"
-    >
-  </div>
-  <div class="form-group">
-    <label for="exampleInputEmail1">Problema</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
-  </div>  
-  <div class="form-group">
-    <label for="exampleInputEmail1">Solução</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
-  </div>  
-  <div class="checkbox">
-    <label class="custom-checkbox">
-      <input type="checkbox">
-      <span>Check me out</span>
-    </label>
-  </div>
-  <button type="submit" class="btn btn-danger">Cadastrar</button>
-  <button type="submit" class="btn btn-danger">Alterar</button>
-  <button type="submit" class="btn btn-danger">Deletar</button>
-  <button type="submit" class="btn btn-danger">Pesquisar</button>
+<div class="row" ng-controller="atendimentoCtrl">
+    <div class="col-md-6">
+      <div
+          ba-panel
+          ba-panel-title="Entre com os dados do Atendimento"
+          ba-panel-class="with-scroll">
+          <p>{{message}}</p>
+            <form id="form1">
+              <div class="form-group">
+                <label for="cnpjInput">CNPJ</label>
+                <input type="text" class="form-control" 
+                    data-mask="999-99-999-9999-9" 
+                    id="cnpjInput" placeholder="CNPJ">
+              </div>
+              <div class="form-group">
+                <label for="cliente">Cliente</label>
+                <input type="text" class="form-control"
+                    id="cliente" placeholder="cliente">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Problema</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+              </div>  
+              <div class="form-group">
+                <label for="exampleInputEmail1">Solução</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+              </div>  
+              <div class="checkbox">
+                <label class="custom-checkbox">
+                  <input type="checkbox">
+                  <span>Check me out</span>
+                </label>
+              </div>
+              <button type="submit" class="btn btn-danger">Cadastrar</button>
+              <button type="submit" class="btn btn-danger">Alterar</button>
+              <button type="submit" class="btn btn-danger">Deletar</button>
+              <button type="submit" class="btn btn-danger">Pesquisar</button>
 
-</form>
+            </form>
+      </div>
+    </div>
+</div>

@@ -7,7 +7,8 @@
 
   angular.module('BlurAdmin.pages.gerenciamento', [
     'BlurAdmin.pages.gerenciamento.timeline',
-    'BlurAdmin.pages.gerenciamento.graficos'
+    'BlurAdmin.pages.gerenciamento.graficos',
+    'BlurAdmin.pages.gerenciamento.cadastroUsuario'
   ])
       .config(routeConfig);
 

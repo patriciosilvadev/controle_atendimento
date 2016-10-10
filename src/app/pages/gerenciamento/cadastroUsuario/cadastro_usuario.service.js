@@ -9,7 +9,18 @@
     .factory('usuarioService', usuarioService);
 
   /** @ngInject */
-  function usuarioService() {
-
+  function usuarioService($http,ENDPOINT_URI) {
+    var path = "usuarios";
+    var url = ENDPOINT_URI +path;
+    function all(){
+      return $http.get(url);
+    }
+    function create(item) {
+      return $http.post(url, item);
+    };
+    return {
+      all:all,
+      create:create
+    };
   }
 })();

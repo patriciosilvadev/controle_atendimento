@@ -15,9 +15,9 @@
 
   /** @ngInject */
   function routeConfig($stateProvider) {
-
-
-    $stateProvider
+    var oi=true;
+    if(oi){
+          $stateProvider
         .state('atendimento', {
           url: '/atendimento',
           templateUrl: 'app/pages/atendimento/atendimento.html',
@@ -28,6 +28,11 @@
             order: 8,
           },
         });
-  }
+    }
+  
+
+
+
+}
 
 })();

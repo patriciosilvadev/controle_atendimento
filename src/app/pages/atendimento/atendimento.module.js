@@ -27,6 +27,11 @@
             icon: 'ion-ios-telephone',
             order: 8,
           },
+          data: {
+            rule: function(user) {
+              return true;
+            }
+          }
         });
     }
   

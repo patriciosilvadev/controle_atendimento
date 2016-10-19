@@ -19,6 +19,11 @@
             icon: 'ion-android-home',
             order: 0,
           },
+          data: {
+            rule: function(user) {
+              return true;
+            }
+          }
         });
   }
 

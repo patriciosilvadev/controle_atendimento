@@ -25,6 +25,11 @@
             icon: 'ion-stats-bars',
             order: 150,
           },
+          data: {
+            rule: function(user) {
+              return true;
+            }
+          }
         });
   }
 

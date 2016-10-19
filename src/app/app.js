@@ -17,6 +17,22 @@ var app = angular.module('BlurAdmin', [
 ]);
 app.constant('ENDPOINT_URI', 'http://localhost:4000/api/');
 
+app.run(function($rootScope, $state) {
+  $rootScope.$on('$stateChangeStart', function(e, to) {
+    console.log(e);
+    /*if (!angular.isFunction(to.data.rule)) return;
+    var result = to.data.rule($currentUser);
+
+    if (result && result.to) {
+      e.preventDefault();
+      // Optionally set option.notify to false if you don't want 
+      // to retrigger another $stateChangeStart event
+      $state.go(result.to, result.params, {notify: false});
+    }*/
+  });
+});
+
+
 app.factory("loginService",function($rootScope){
   $rootScope.isLogged=true;
   return{

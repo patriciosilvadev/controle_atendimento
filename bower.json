@@ -67,7 +67,7 @@
         "./dist/amcharts/funnel.js",
         "./dist/amcharts/pie.js",
         "./dist/amcharts/gantt.js"
-      ]
+      ] 
     },
     "amcharts-stock": {
       "main": "./dist/amcharts/amstock.js"
@@ -97,6 +97,12 @@
         "fonts/fontawesome-webfont.ttf",
         "fonts/fontawesome-webfont.woff",
         "fonts/fontawesome-webfont.woff2"
+      ]
+    },
+    "jquery.easy-pie-chart":{
+      "main":[
+        "./dist/angular.easypiechart.min.js",
+        "./dist/jquery.easypiechart.js"
       ]
     }
   }

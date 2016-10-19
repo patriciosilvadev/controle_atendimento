@@ -18,9 +18,17 @@
     function create(item) {
       return $http.post(url, item);
     };
+    function update(item) {
+      return $http.post(url, item);
+    };
+    function deleta(item) {
+      return $http.post(url, item);
+    };
     return {
       all:all,
-      create:create
+      create:create,
+      update:update,
+      deleta:deleta
     };
   }
 })();

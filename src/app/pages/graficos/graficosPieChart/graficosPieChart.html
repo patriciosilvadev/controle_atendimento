@@ -1,0 +1,14 @@
+<div class="row pie-charts">
+  <div class="pie-chart-item-container" ng-repeat="chart in charts">
+    <div ba-panel>
+      <h2>{{ ::chart.description }}</h2>
+      <div class="pie-chart-item">
+        <div easypiechart options="options"  class="chart" percent="percent"> <span class="percent" >10</span> </div>
+        <div class="description">
+          <div class="description-stats">{{ ::chart.stats }}</div>
+        </div>
+        <i class="chart-icon i-{{ ::chart.icon }}"></i>
+      </div>
+    </div>
+  </div>
+</div>

@@ -34,33 +34,33 @@
         </form>
       </div>
     </div>
-<div class="col-md-6">
-      <div
-          ba-panel
-          ba-panel-title="table"
-          ba-panel-class="with-scroll">
-<div class="table-responsive">
-  <table class="table">
-    <tr>
-      <th>ID</th>
-      <th>Nome</th>
-      <th>Email</th>
-      <th>Username</th>
-      <th>Tipo</th>
-      <th>Seleciona</th>
-    </tr>
-    <tr ng-repeat="item in usuarios">
-      <td>{{item.usuario_id}}</td>
-      <td>{{item.nome}}</td>
-      <td>{{item.email}}</td>
-      <td>{{item.username}}</td>
-      <!--td><a class="email-link " ng-href="mailto:mdo@gmail.com" href="mailto:mdo@gmail.com">mdo@gmail.com</a></td-->
-      <td>{{item.tipo}}</td>
-      <!--td><button class="status-button btn btn-xs btn-{{item.status}}">{{item.status}}</button></td-->
-      <td><button class="btn btn-xs btn-primary" ng-click="selecionar($index)">Selecionar</button></td>
-    </tr>
-  </table>
-</div>
-</div>
+    <div class="col-md-6">
+        <div
+                ba-panel
+                ba-panel-title="table"
+                ba-panel-class="with-scroll">
+        <div class="table-responsive">
+        <table class="table">
+            <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Username</th>
+            <th>Tipo</th>
+            <th>Seleciona</th>
+            </tr>
+            <tr ng-repeat="item in usuarios">
+            <td>{{item.usuario_id}}</td>
+            <td>{{item.nome}}</td>
+            <td>{{item.email}}</td>
+            <td>{{item.username}}</td>
+            <!--td><a class="email-link " ng-href="mailto:mdo@gmail.com" href="mailto:mdo@gmail.com">mdo@gmail.com</a></td-->
+            <td>{{item.tipo}}</td>
+            <!--td><button class="status-button btn btn-xs btn-{{item.status}}">{{item.status}}</button></td-->
+            <td><button class="btn btn-xs btn-primary" ng-click="selecionar($index)">Selecionar</button></td>
+            </tr>
+        </table>
+        </div>
+        </div>
     </div>
 </div>

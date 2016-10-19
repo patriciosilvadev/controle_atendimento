@@ -24,7 +24,7 @@
           title: 'Atendimento',
           controller:'atendimentoController',
           sidebarMeta: {
-            icon: 'ion-android-home',
+            icon: 'ion-ios-telephone',
             order: 8,
           },
         });

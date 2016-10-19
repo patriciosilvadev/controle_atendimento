@@ -33,17 +33,17 @@ $scope.percent = 20;
     $scope.charts = [{
       color: pieColor,
       description: 'Atendimentos Ano',
-      stats: '57,820',
+      stats: '50000',
       icon: 'person',
     }, {
       color: pieColor,
       description: 'Atendimentos Mês',
-      stats: '$ 89,745',
+      stats: '10000',
       icon: 'person',
     }, {
       color: pieColor,
-      description: 'Visitas/Chamados',
-      stats: '178,391',
+      description: 'Visitas/Chamados - Mes',
+      stats: '2000',
       icon: 'face',
     }, {
       color: pieColor,

@@ -16,10 +16,13 @@ var app = angular.module('BlurAdmin', [
   'BlurAdmin.pages'
 ]);
 app.constant('ENDPOINT_URI', 'http://localhost:4000/api/');
-
+app.constant('DEV_MODE', true);
 app.run(function($rootScope, $state) {
   $rootScope.$on('$stateChangeStart', function(e, to) {
     console.log(e);
+
+
+    
     /*if (!angular.isFunction(to.data.rule)) return;
     var result = to.data.rule($currentUser);
 

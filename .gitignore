@@ -4,7 +4,6 @@
 
 ## Directory-based project format:
 .idea/
-.tmp/
 
 # if you remove the above rule, at least ignore the following:
 
@@ -54,3 +53,4 @@ build
 /src/release
 /release
 /bower_components
+/.tmp

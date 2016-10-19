@@ -4,10 +4,9 @@
           ba-panel
           ba-panel-title="Entre com os dados do Atendimento"
           ba-panel-class="with-scroll">
-          <p>{{message}}</p>
             <form id="form1">
               <div class="form-group">
-                <label for="cnpjInput">CNPJ</label>
+                <label for="cnpjInput">CNPJ/CPF</label>
                 <input type="text" class="form-control" 
                     data-mask="999-99-999-9999-9" 
                     id="cnpjInput" placeholder="CNPJ">
@@ -15,7 +14,22 @@
               <div class="form-group">
                 <label for="cliente">Cliente</label>
                 <input type="text" class="form-control"
-                    id="cliente" placeholder="cliente">
+                    id="cliente" placeholder="Cliente">
+              </div>
+              <div class="form-group">
+                <label for="Contato">Contato</label>
+                <input type="text" class="form-control"
+                    id="Contato" placeholder="Contato">
+              </div>
+              <div class="form-group">
+                <select ng-model="atendimento.tipo_acesso" class="form-control">
+                    <option ng-repeat="item in acesso">{{item}}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <select ng-model="atendimento.tipo_atendimento" class="form-control">
+                    <option ng-repeat="item in atendimento_tipos">{{item.descricao}}</option>
+                </select>
               </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">Problema</label>
@@ -25,12 +39,6 @@
                 <label for="exampleInputEmail1">Solução</label>
                 <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
               </div>  
-              <div class="checkbox">
-                <label class="custom-checkbox">
-                  <input type="checkbox">
-                  <span>Check me out</span>
-                </label>
-              </div>
               <button type="submit" class="btn btn-danger">Cadastrar</button>
               <button type="submit" class="btn btn-danger">Alterar</button>
               <button type="submit" class="btn btn-danger">Deletar</button>

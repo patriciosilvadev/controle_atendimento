@@ -9,9 +9,14 @@
     .controller('atendimentoCtrl', cadastro_usuarioCtrl);
 
   /** @ngInject */
-  function cadastro_usuarioCtrl($scope,loginService) {
-      //define the possible types of user that can be registered 
-      $scope.message=loginService.getName();
+  function cadastro_usuarioCtrl($scope,loginService,atendimentoService) {
+      //define the possible types of user that can be registered
+      $scope.atendimento_tipos=[];
+      $scope.acesso=['Acesso','Ligação','Acesso/Ligação'];
+      atendimentoService.getAtendimentoTipos().then(function(data){
+        console.log(data);
+        $scope.atendimento_tipos=data.data.data;
+      }) 
   }
 
 })();

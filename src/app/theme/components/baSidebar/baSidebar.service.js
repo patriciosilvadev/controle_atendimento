@@ -70,9 +70,9 @@
               })
               .map(function(s) {
                 var meta = s.sidebarMeta;
-                var roles = "";
-                if(s.data!==undefined && s.data.roles!==undefined){
-                  roles=s.data.roles;
+                var authorizedRoles = "";
+                if(s.data!==undefined && s.data.authorizedRoles!==undefined){
+                  authorizedRoles=s.data.authorizedRoles;
                 }
                 return {
                   name: s.name,
@@ -81,7 +81,7 @@
                   order: meta.order,
                   icon: meta.icon,
                   stateRef: s.name,
-                  roles: roles
+                  authorizedRoles: authorizedRoles
                 };
               })
               .sort(function(a, b) {

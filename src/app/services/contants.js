@@ -13,7 +13,7 @@
         })
         .constant('USER_ROLES', {
                 all: '*',
-                atendimento: 'atendimento',
+                atendente: 'atendente',
                 administrador: 'administrador'
         });
 })();

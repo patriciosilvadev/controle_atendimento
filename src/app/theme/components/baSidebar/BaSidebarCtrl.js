@@ -10,20 +10,12 @@
 
   /** @ngInject */
   // function BaSidebarCtrl($scope, baSidebarService) {
-  function BaSidebarCtrl($scope, baSidebarService,$state,DEV_MODE) {
+  function BaSidebarCtrl($scope, baSidebarService,$state,AuthService) {
 
     $scope.menuItems = baSidebarService.getMenuItems();
     $scope.defaultSidebarState = $scope.menuItems[0].stateRef;
-    console.log($scope.menuItems);
-    var count=0;
-    $scope.showItem=function(item){
-      if(item.roles.indexOf("administrador")>0|| DEV_MODE){
-        console.log(item.roles);
-        return true;
-      }
-      else{
-        return false;
-      }
+    for(var i=0;i < $scope.menuItems.length;i++){
+      $scope.menuItems[i].authorized=AuthService.isAuthorized($scope.menuItems[i].authorizedRoles);
     }
 
     $scope.hoverItem = function ($event) {

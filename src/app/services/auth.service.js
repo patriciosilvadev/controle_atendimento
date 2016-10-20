@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-        angular.module('BlurAdmin').factory('AuthService', function ($http, Session,ENDPOINT_URI) {
+        angular.module('BlurAdmin').factory('AuthService', function ($http, Session,ENDPOINT_URI,DEV_MODE) {
                 var authService = {};
                 var path = "login";
                 var url = ENDPOINT_URI +path;
@@ -12,7 +12,6 @@
                                 //return res.data.user;
                         });
                 };
-                
                 authService.isAuthenticated = function () {
                         return !!Session.userId;
                 };
@@ -21,8 +20,8 @@
                         if (!angular.isArray(authorizedRoles)) {
                                 authorizedRoles = [authorizedRoles];
                         }
-                        return (authService.isAuthenticated() &&
-                        authorizedRoles.indexOf(Session.userRole) !== -1);
+                        return ((authService.isAuthenticated() &&
+                        authorizedRoles.indexOf(Session.userRole) !== -1) || DEV_MODE);
                 };
                 
                 return authService;

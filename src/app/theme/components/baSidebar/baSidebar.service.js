@@ -81,7 +81,8 @@
                   order: meta.order,
                   icon: meta.icon,
                   stateRef: s.name,
-                  authorizedRoles: authorizedRoles
+                  authorizedRoles: authorizedRoles,
+                  authorized:false
                 };
               })
               .sort(function(a, b) {

@@ -16,7 +16,14 @@ var app = angular.module('BlurAdmin', [
   'BlurAdmin.theme',
   'BlurAdmin.pages'
 ]);
-app.run(function($rootScope, $state) {
+app.run(function($rootScope, $state,AuthService) {
+    var user = {
+          username:"vlima",
+          password:"Windows8-19"
+  };
+  AuthService.login(user).then(function(){
+    console.log("funcionou");
+  });
   $rootScope.$on('$stateChangeStart', function(e, to) {
     console.log(e);   
     /*if (!angular.isFunction(to.data.rule)) return;

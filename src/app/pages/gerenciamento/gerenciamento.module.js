@@ -12,7 +12,7 @@
       .config(routeConfig);
 
   /** @ngInject */
-  function routeConfig($stateProvider) {
+  function routeConfig($stateProvider,USER_ROLES) {
     $stateProvider
         .state('gerenciamento', {
           url: '/gerenciamento',
@@ -23,6 +23,9 @@
             icon: 'ion-gear-a',
             order: 100,
           },
+          data: {
+            authorizedRoles: [USER_ROLES.administrador, USER_ROLES.atendente]
+          }
         });
   }
 

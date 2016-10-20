@@ -9,7 +9,7 @@
     .config(routeConfig);
 
   /** @ngInject */
-  function routeConfig($stateProvider) {
+  function routeConfig($stateProvider,USER_ROLES) {
     $stateProvider
         .state('gerenciamento.cadastroUsuario', {
           url: '/cadastroUsuario',
@@ -17,6 +17,9 @@
           title: 'Cadastro de Usuário',
           sidebarMeta: {
             order: 300,
+          },
+          data: {
+            authorizedRoles: [USER_ROLES.administrador, USER_ROLES.atendente]
           }
         });
   }

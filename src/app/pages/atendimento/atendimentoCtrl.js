@@ -9,7 +9,7 @@
     .controller('atendimentoCtrl', cadastro_usuarioCtrl);
 
   /** @ngInject */
-  function cadastro_usuarioCtrl($scope,loginService,atendimentoService) {
+  function cadastro_usuarioCtrl($scope,atendimentoService) {
       //define the possible types of user that can be registered
       $scope.atendimento_tipos=[];
       $scope.acesso=['Acesso','Ligação','Acesso/Ligação'];

@@ -9,23 +9,20 @@
       .config(routeConfig);
 
   /** @ngInject */
-  function routeConfig($stateProvider) {
-    var oi=true;
-    if(oi){
-          $stateProvider
-        .state('atendimento', {
-          url: '/atendimento',
-          templateUrl: 'app/pages/atendimento/atendimento.html',
-          title: 'Atendimento',
-          sidebarMeta: {
-            icon: 'ion-ios-telephone',
-            order: 8,
-          },
-          data: {
-            roles: "adminstrador, atendente, desenvolvedor"
-          }
-        });
+  function routeConfig($stateProvider,USER_ROLES) {
+   $stateProvider
+  .state('atendimento', {
+    url: '/atendimento',
+    templateUrl: 'app/pages/atendimento/atendimento.html',
+    title: 'Atendimento',
+    sidebarMeta: {
+      icon: 'ion-ios-telephone',
+      order: 8,
+    },
+    data: {
+      authorizedRoles: [USER_ROLES.administrador, USER_ROLES.atendente]
     }
+  });
   
 
 

@@ -1,6 +1,7 @@
 'use strict';
 
 var app = angular.module('BlurAdmin', [
+  'constants',
   'ngAnimate',
   'ui.bootstrap',
   'ui.sortable',
@@ -15,14 +16,9 @@ var app = angular.module('BlurAdmin', [
   'BlurAdmin.theme',
   'BlurAdmin.pages'
 ]);
-app.constant('ENDPOINT_URI', 'http://localhost:4000/api/');
-app.constant('DEV_MODE', true);
 app.run(function($rootScope, $state) {
   $rootScope.$on('$stateChangeStart', function(e, to) {
-    console.log(e);
-
-
-    
+    console.log(e);   
     /*if (!angular.isFunction(to.data.rule)) return;
     var result = to.data.rule($currentUser);
 
@@ -33,17 +29,4 @@ app.run(function($rootScope, $state) {
       $state.go(result.to, result.params, {notify: false});
     }*/
   });
-});
-
-
-app.factory("loginService",function($rootScope){
-  $rootScope.isLogged=true;
-  return{
-    getName:function(){
-      return "teste";
-    },
-    isLogged:function(){
-      return false;
-    }
-  }
 });

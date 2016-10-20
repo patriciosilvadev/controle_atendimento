@@ -9,7 +9,7 @@
       .config(routeConfig);
 
   /** @ngInject */
-  function routeConfig($stateProvider) {
+  function routeConfig($stateProvider,USER_ROLES) {
     $stateProvider
         .state('graficos', {
           url: '/graficos',
@@ -19,6 +19,9 @@
             icon: 'ion-stats-bars',
             order: 1,
           },
+          data: {
+            authorizedRoles: [USER_ROLES.administrador, USER_ROLES.atendente]
+          }
         });
   }
 

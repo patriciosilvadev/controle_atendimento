@@ -19,7 +19,7 @@
             order: 300,
           },
           data: {
-            authorizedRoles: [USER_ROLES.administrador, USER_ROLES.atendente]
+            authorizedRoles: [USER_ROLES.administrador]
           }
         });
   }

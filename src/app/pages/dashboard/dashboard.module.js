@@ -9,7 +9,7 @@
       .config(routeConfig);
 
   /** @ngInject */
-  function routeConfig($stateProvider) {
+  function routeConfig($stateProvider,USER_ROLES) {
     $stateProvider
         .state('dashboard', {
           url: '/dashboard',
@@ -20,9 +20,7 @@
             order: 0,
           },
           data: {
-            rule: function(user) {
-              return true;
-            }
+            authorizedRoles: [USER_ROLES.administrador, USER_ROLES.atendente]
           }
         });
   }

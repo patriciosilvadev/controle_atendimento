@@ -10,7 +10,7 @@
 
   /** @ngInject */
   function routeConfig($stateProvider,USER_ROLES) {
-   $stateProvider
+    $stateProvider
   .state('atendimento', {
     url: '/atendimento',
     templateUrl: 'app/pages/atendimento/atendimento.html',

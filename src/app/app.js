@@ -16,6 +16,11 @@ var app = angular.module('BlurAdmin', [
   'BlurAdmin.theme',
   'BlurAdmin.pages'
 ]);
+
+app.config(function ($httpProvider) {
+  $httpProvider.interceptors.push('authInterceptor');
+});
+
 app.run(function($rootScope, $state,AuthService) {
     var user = {
           username:"vlima",
@@ -24,16 +29,19 @@ app.run(function($rootScope, $state,AuthService) {
   AuthService.login(user).then(function(){
     console.log("funcionou");
   });
-  $rootScope.$on('$stateChangeStart', function(e, to) {
-    console.log(e);   
-    /*if (!angular.isFunction(to.data.rule)) return;
-    var result = to.data.rule($currentUser);
-
-    if (result && result.to) {
-      e.preventDefault();
-      // Optionally set option.notify to false if you don't want 
-      // to retrigger another $stateChangeStart event
-      $state.go(result.to, result.params, {notify: false});
-    }*/
+  $rootScope.$on('$stateChangeStart', function(event, next) {
+    var authorizedRoles = next.data.authorizedRoles;
+    console.log(!AuthService.isAuthorized(authorizedRoles));
+    if (!AuthService.isAuthorized(authorizedRoles)) {
+      event.preventDefault();
+      alert("Você não tem permissão para acessar este item!")
+      if (AuthService.isAuthenticated()) {
+        // user is not allowed
+        //$rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
+      } else {
+        // user is not logged in
+        //$rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
+      }
+    }
   });
 });

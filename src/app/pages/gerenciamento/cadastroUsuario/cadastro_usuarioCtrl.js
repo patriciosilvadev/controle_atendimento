@@ -35,12 +35,12 @@
         $scope.cadastroMode=true;
         var deferred = $q.defer();
         deferred.notify();
-        $timeout(()=>{usuarioService.create($scope.usuario).then((response)=>{
+        $timeout(function(data){usuarioService.create($scope.usuario).then(function(response){
             alert("Inserido com sucesso!!!"); 
             atualizaDados();
             $scope.cadastroMode=true;
             deferred.resolve();
-        },(erro)=>{
+        },function(erro){
             $scope.cadastroMode=true;
             alert(erro.data.message);
             deferred.reject();   
@@ -53,12 +53,12 @@
     $scope.salvar=function(){
         var deferred = $q.defer();
         deferred.notify();
-        $timeout(()=>{usuarioService.update($scope.usuario).then((response)=>{
+        $timeout(function(data){usuarioService.update($scope.usuario).then(function(response){
             alert("Salvado com sucesso!"); 
             atualizaDados();
             $scope.cadastroMode=true;
             deferred.resolve();
-        },(erro)=>{
+        },function(erro){
             $scope.cadastroMode=true;
             alert(erro.data.message);
             deferred.reject();    
@@ -72,11 +72,11 @@
         $scope.cadastroMode=true;
         var deferred = $q.defer();
         deferred.notify();
-        $timeout(()=>{usuarioService.deleta($scope.usuario).then((response)=>{
+        $timeout(function(){usuarioService.deleta($scope.usuario).then(function(response){
             alert("Usuario Deletado!!!"); 
             atualizaDados();
             deferred.resolve();
-        },(erro)=>{
+        },function(erro){
             deferred.reject();
             alert(erro.data.message);    
         });},400);

@@ -9,17 +9,19 @@
                 <label for="cnpjInput">CNPJ/CPF</label>
                 <input type="text" class="form-control" 
                     data-mask="999-99-999-9999-9" 
-                    id="cnpjInput" placeholder="CNPJ">
+                    id="cnpjInput" placeholder="CNPJ/CPF" ng-model="atendimento.cnpj">
               </div>
               <div class="form-group">
                 <label for="cliente">Cliente</label>
                 <input type="text" class="form-control"
-                    id="cliente" placeholder="Cliente">
+                    id="cliente" placeholder="Cliente"
+                ng-model="atendimento.nome">
               </div>
               <div class="form-group">
                 <label for="Contato">Contato</label>
                 <input type="text" class="form-control"
-                    id="Contato" placeholder="Contato">
+                    id="Contato" placeholder="Contato"
+                    ng-model="atendimento.contato">
               </div>
               <div class="form-group">
                 <select ng-model="atendimento.tipo_acesso" class="form-control">
@@ -33,17 +35,28 @@
               </div>
               <div class="form-group">
                 <label for="problema">Problema</label>
-                <textarea placeholder="Problema" class="form-control" id="problema"></textarea>
+                <textarea placeholder="Problema" 
+                          class="form-control" 
+                          id="problema"
+                          ng-model="atendimento.problema">
+              </textarea>
               </div> 
               <div class="form-group">
                 <label for="solucao">Solucao</label>
-                <textarea placeholder="Solucao" class="form-control" id="solucao"></textarea>
+                <textarea placeholder="Solucao" 
+                          class="form-control" 
+                          id="solucao"
+                          ng-model="atendimento.solucao">
+                </textarea>
               </div>
-              <button type="submit" class="btn btn-danger">Cadastrar</button>
-              <button type="submit" class="btn btn-danger">Alterar</button>
-              <button type="submit" class="btn btn-danger">Deletar</button>
-              <button type="submit" class="btn btn-danger">Pesquisar</button>
-
+              <div class="form-group">
+                  <section class="col-md-6" ng-show="cadastroMode">
+                      <center><button progress-button="abrirChamado()" pb-style="rotate-side-up" class="btn btn-success">Abrir</button><center>
+                  </section>
+                  <section class="col-md-6" ng-show="!cadastroMode">
+                      <center><button progress-button="finalizarChamado()" pb-style="rotate-side-up" class="btn btn-info">Finalizar</button></center>
+                  </section>
+              </div>
             </form>
       </div>
     </div>
@@ -61,12 +74,8 @@
             <th>Finalizar</th>
             </tr>
             <tr ng-repeat="item in usuarios">
-            <td>{{item.usuario_id}}</td>
+            <td>{{item.cnpj}}</td>
             <td>{{item.nome}}</td>
-            <td>{{item.email}}</td>
-            <td>{{item.username}}</td>
-            <!--td><a class="email-link " ng-href="mailto:mdo@gmail.com" href="mailto:mdo@gmail.com">mdo@gmail.com</a></td-->
-            <td>{{item.tipo}}</td>
             <!--td><button class="status-button btn btn-xs btn-{{item.status}}">{{item.status}}</button></td-->
             <td><button class="btn btn-xs btn-primary" ng-click="selecionar($index)">Selecionar</button></td>
             </tr>

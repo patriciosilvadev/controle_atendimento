@@ -13,7 +13,7 @@
     $stateProvider
         .state('graficos', {
           url: '/graficos',
-          templateUrl: 'app/pages/graficos/dashboard.html',
+          templateUrl: 'app/pages/graficos/grafico.html',
           title: 'Graficos',
           sidebarMeta: {
             icon: 'ion-stats-bars',

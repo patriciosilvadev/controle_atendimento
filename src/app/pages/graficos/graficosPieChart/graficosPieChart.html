@@ -3,9 +3,9 @@
     <div ba-panel>
       <h2>{{ ::chart.description }}</h2>
       <div class="pie-chart-item">
-        <div easypiechart options="options"  class="chart" percent="percent"> <span class="percent" >10</span> </div>
+        <div easypiechart options="options"  class="chart" percent="chart.percent"> <span class="percent" >{{chart.percent | number : 2}}</span> </div>
         <div class="description">
-          <div class="description-stats">{{ ::chart.stats }}</div>
+          <div class="description-stats">  {{chart.stats }}</div>
         </div>
         <i class="chart-icon i-{{ ::chart.icon }}"></i>
       </div>

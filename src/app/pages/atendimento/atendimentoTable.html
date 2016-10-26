@@ -6,44 +6,53 @@
       </select>
     </label>
   </div>
-  <table class="table" st-table="smartTableData">
+  <table class="table" st-table="displayedCollection" st-safe-src="atendimentos">
     <thead>
     <tr class="sortable ">
       <th class="table-id" st-sort="id" st-sort-default="true">#</th>
-      <th st-sort="firstName">First Name</th>
-      <th st-sort="lastName">Last Name</th>
-      <th st-sort="username">Username</th>
-      <th st-sort="email">Email</th>
-      <th st-sort="age">Age</th>
+      <th st-sort="nome">Nome</th>
+      <th st-sort="cnpj">CNPJ</th>
+      <th st-sort="descricao">descricao</th>
+      <th st-sort="aberto">aberto</th>
+      <th st-sort="contato">contato</th>
+      <th>
+        Finalizar/Editar
+      </th>
     </tr>
     <tr>
       <th></th>
-      <th><input st-search="firstName" placeholder="Search First Name" class="input-sm form-control search-input"
+      <th><input st-search="nome" placeholder="Procure por nome" class="input-sm form-control search-input"
                  type="search"/></th>
-      <th><input st-search="lastName" placeholder="Search Last Name" class="input-sm form-control search-input"
+      <th><input st-search="cnpj" placeholder="Search Last cnpj" class="input-sm form-control search-input"
                  type="search"/></th>
-      <th><input st-search="username" placeholder="Search Username" class="input-sm form-control search-input"
+      <th><input st-search="descricao" placeholder="Search descricao" class="input-sm form-control search-input"
                  type="search"/></th>
-      <th><input st-search="email" placeholder="Search Email" class="input-sm form-control search-input" type="search"/>
+      <th><input st-search="aberto" placeholder="Search aberto" class="input-sm form-control search-input" type="search"/>
       </th>
-      <th><input st-search="age" placeholder="Search Age" class="input-sm form-control search-input" type="search"/>
+      <th><input st-search="contato" placeholder="Search contato" class="input-sm form-control search-input" type="search"/>
       </th>
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="item in atendimentos">
-      <td class="table-id">{{item.nome}}</td>
+    <tr ng-repeat="item in displayedCollection">
+      <th>{{item.atendimento_id}}</th>
+      <td>{{item.nome}}</td>
       <td>{{item.cnpj}}</td>
-      <td>{{item.lastName}}</td>
-      <td>{{item.username}}</td>
-      <td><a class="email-link" ng-href="mailto:{{item.email}}">{{item.email}}</a></td>
-      <td>{{item.age}}</td>
+      <td>{{item.descricao}}</td>
+      <td>{{item.aberto}}</td>
+      <!--td><a class="email-link" ng-href="mailto:{{item.email}}">{{item.email}}</a></td-->
+      <td>{{item.contato}}</td>
+      <td>
+				<button type="button" ng-click="removeItem(row)" class="btn btn-sm btn-danger">
+            Finalizar
+				</button>
+			</td>
     </tr>
     </tbody>
     <tfoot>
     <tr>
       <td colspan="6" class="text-center">
-        <div st-pagination="" st-items-by-page="smartTablePageSize" st-displayed-pages="5"></div>
+        <div st-pagination="" st-items-by-page="smartTablePageSize" st-displayed-pages="10"></div>
       </td>
     </tr>
     </tfoot>

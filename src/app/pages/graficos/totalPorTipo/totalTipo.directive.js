@@ -13,7 +13,7 @@
     return {
       restrict: 'E',
       controller: 'TotalTipoChartCtrl',
-      templateUrl: 'app/pages/dashboard/trafficChart/trafficChart.html'
+      templateUrl: 'app/pages/graficos/totalPorTipo/totalTipo.html'
     };
   }
 })();

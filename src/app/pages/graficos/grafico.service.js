@@ -11,7 +11,8 @@
     this.data={
       atendimentoAno:0,
       atendimentoMes:0,
-      destaques:[]
+      destaques:[],
+      porTipo:[]
     };
     this.update = function () {
       var deferred = $q.defer();

@@ -9,54 +9,63 @@
       .controller('TotalTipoChartCtrl', TotalTipoChartCtrl);
 
   /** @ngInject */
-  function TotalTipoChartCtrl($scope, baConfig, colorHelper) {
-
+  function TotalTipoChartCtrl($scope, baConfig, colorHelper,graficoService, $interval) {
+    $scope.totalMes=0;
     $scope.transparent = baConfig.theme.blur;
-    var dashboardColors = baConfig.colors.dashboard;
-    $scope.doughnutData = [
-      {
-        value: 300,
-        color: dashboardColors.white,
-        highlight: colorHelper.shade(dashboardColors.white, 15),
-        label: 'Other',
-        percentage: 87,
-        order: 1,
-      }, {
-        value: 1500,
-        color: dashboardColors.blueStone,
-        highlight: colorHelper.shade(dashboardColors.blueStone, 15),
-        label: 'Search engines',
-        percentage: 22,
-        order: 4,
-      }, {
-        value: 1000,
-        color: dashboardColors.surfieGreen,
-        highlight: colorHelper.shade(dashboardColors.surfieGreen, 15),
-        label: 'Referral Traffic',
-        percentage: 70,
-        order: 3,
-      }, {
-        value: 1200,
-        color: dashboardColors.silverTree,
-        highlight: colorHelper.shade(dashboardColors.silverTree, 15),
-        label: 'Direct Traffic',
-        percentage: 38,
-        order: 2,
-      }, {
-        value: 400,
-        color: dashboardColors.gossip,
-        highlight: colorHelper.shade(dashboardColors.gossip, 15),
-        label: 'Ad Campaigns',
-        percentage: 17,
-        order: 0,
-      },
-    ];
-
+    var dashboardColors = ["#FFA22A","#E88567","#AF0CE8","#2ADAFF","#FF0000","#89E87C",
+        "#E8C87C","#4D31FF","#E8D93C","#3CADE5","#E53C58","#3CE5CB","#997B44"];
+    $scope.chartTipo=[];
     var ctx = document.getElementById('chart-area').getContext('2d');
-    window.myDoughnut = new Chart(ctx).Doughnut($scope.doughnutData, {
+    window.myDoughnut = new Chart(ctx).Doughnut($scope.chartTipo, {
       segmentShowStroke: false,
       percentageInnerCutout : 64,
       responsive: true
     });
+    function updateCharts(){
+        createChart();
+        var ctx = document.getElementById('chart-area').getContext('2d');
+        window.myDoughnut = new Chart(ctx).Doughnut($scope.chartTipo, {
+          segmentShowStroke: false,
+          percentageInnerCutout : 64,
+          responsive: true,
+          animateRotate: false
+        });
+        //animateRotate: true if want to animate
+    };
+    function createChart(){
+      $scope.chartTipo=[];
+      var porTipo=graficoService.data.porTipo;
+      $scope.totalMes=graficoService.data.atendimentoMes;
+      for(var i=0;i<porTipo.length;i++){
+        $scope.chartTipo.push(
+          createItem(
+              porTipo[i].total,
+              calcPercentage($scope.totalMes,porTipo[i].total),
+              porTipo[i].descricao,
+              i)
+        );
+      }
+    }
+    var stop =$interval(updateCharts,5000);
+    $scope.$on('$destroy', function() {
+        if (angular.isDefined(stop)) {
+          $interval.cancel(stop);
+          stop = undefined;
+        }
+    });
+    updateCharts();
+    function createItem(value,porcentagem,descricao,item){
+      return {
+        value: value,
+        color: dashboardColors[item],
+        highlight: dashboardColors[item],
+        label: descricao,
+        porcentagem: porcentagem,
+        order: item,
+      };
+    }
+    function calcPercentage(total,value){
+      return (100/total)*value;
+    }
   }
 })();

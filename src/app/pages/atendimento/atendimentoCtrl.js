@@ -9,7 +9,9 @@
     .controller('atendimentoCtrl', atendimentoCtrl);
 
   /** @ngInject */
-  function atendimentoCtrl($scope,atendimentoService,Session) {
+  function atendimentoCtrl($scope,atendimentoService,Session,$filter, editableOptions, editableThemes) {
+      $scope.smartTablePageSize = 10;
+      $scope.displayedCollection=[];
       $scope.cadastroMode=true;
       $scope.atendimento={};
       $scope.atendimentos=[];

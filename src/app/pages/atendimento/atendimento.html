@@ -1,34 +1,36 @@
-<div class="row" ng-controller="atendimentoCtrl">
-    <div class="col-md-6">
+<div class="row">
+    <div class="col-md-12">
       <div
           ba-panel
           ba-panel-title="Entre com os dados do Atendimento"
           ba-panel-class="with-scroll">
             <form id="form1">
-              <div class="form-group">
+              <div class="form-group col-md-4">
                 <label for="cnpjInput">CNPJ/CPF</label>
                 <input type="text" class="form-control" 
                     data-mask="999-99-999-9999-9" 
                     id="cnpjInput" placeholder="CNPJ/CPF" ng-model="atendimento.cnpj">
               </div>
-              <div class="form-group">
+              <div class="form-group col-md-8">
                 <label for="cliente">Cliente</label>
                 <input type="text" class="form-control"
                     id="cliente" placeholder="Cliente"
                 ng-model="atendimento.nome">
               </div>
-              <div class="form-group">
+              <div class="form-group col-md-4">
                 <label for="Contato">Contato</label>
                 <input type="text" class="form-control"
                     id="Contato" placeholder="Contato"
                     ng-model="atendimento.contato">
               </div>
-              <div class="form-group">
+              <div class="form-group col-md-4">
+                <label for="Contato">Tipo Acesso</label>  
                 <select ng-model="atendimento.tipo_acesso" class="form-control">
                     <option ng-repeat="item in acesso">{{item}}</option>
                 </select>
               </div>
-              <div class="form-group">
+              <div class="form-group col-md-4">
+                <label for="Contato">Tipo Atendimento</label>
                 <select ng-model="atendimento.tipo_atendimento" class="form-control">
                     <option ng-repeat="item in atendimento_tipos">{{item.descricao}}</option>
                 </select>
@@ -69,27 +71,12 @@
             </form>
       </div>
     </div>
-    <div class="col-md-6">
-        <div
-                ba-panel
-                ba-panel-title="Chamados Aberto"
-                ba-panel-class="with-scroll">
-        <div class="table-responsive">
-        <table class="table">
-            <tr>
-            <th></th>
-            <th>CNPJ</th>
-            <th>Empresa</th>
-            <th>Finalizar</th>
-            </tr>
-            <tr ng-repeat="item in usuarios">
-            <td>{{item.cnpj}}</td>
-            <td>{{item.nome}}</td>
-            <!--td><button class="status-button btn btn-xs btn-{{item.status}}">{{item.status}}</button></td-->
-            <td><button class="btn btn-xs btn-primary" ng-click="selecionar($index)">Selecionar</button></td>
-            </tr>
-        </table>
-        </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div ba-panel ba-panel-title="Smart Table With Filtering, Sorting And Pagination" ba-panel-class="with-scroll">
+        <div include-with-scope="app/pages/atendimento/atendimentoTable.html"></div>
         </div>
     </div>
 </div>

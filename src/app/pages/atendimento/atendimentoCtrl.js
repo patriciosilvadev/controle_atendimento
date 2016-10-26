@@ -6,10 +6,10 @@
   'use strict';
 
   angular.module('BlurAdmin.pages.atendimento')
-    .controller('atendimentoCtrl', cadastro_usuarioCtrl);
+    .controller('atendimentoCtrl', atendimentoCtrl);
 
   /** @ngInject */
-  function cadastro_usuarioCtrl($scope,atendimentoService,Session) {
+  function atendimentoCtrl($scope,atendimentoService,Session) {
       $scope.cadastroMode=true;
       $scope.atendimento={};
       $scope.atendimentos=[];
@@ -25,7 +25,7 @@
        */
       function atualizaDados(){
         atendimentoService.all().then(function (response) {
-            $scope.atendimentos = response.data.data;
+            $scope.atendimentos = response.data;
             console.log($scope.atendimentos);
         }, function (error) {
             $scope.status = 'Unable to load customer data: ' + error.message;
@@ -41,6 +41,7 @@
           alert(erro.data.message);
         })
       }
+      atualizaDados();
   }
 
 })();

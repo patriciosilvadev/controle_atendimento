@@ -15,6 +15,7 @@
     url: '/atendimento',
     templateUrl: 'app/pages/atendimento/atendimento.html',
     title: 'Atendimento',
+    controller:'atendimentoCtrl',
     sidebarMeta: {
       icon: 'ion-ios-telephone',
       order: 8,

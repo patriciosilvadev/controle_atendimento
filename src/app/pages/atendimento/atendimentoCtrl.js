@@ -9,7 +9,7 @@
     .controller('atendimentoCtrl', atendimentoCtrl);
 
   /** @ngInject */
-  function atendimentoCtrl($scope,atendimentoService,Session,$filter, editableOptions, editableThemes) {
+  function atendimentoCtrl($scope,atendimentoService,Session,$filter, editableOptions, editableThemes,$q,$timeout) {
       $scope.smartTablePageSize = 10;
       $scope.displayedCollection=[];
       $scope.cadastroMode=true;
@@ -27,6 +27,7 @@
        */
       function atualizaDados(){
         atendimentoService.all().then(function (response) {
+            $scope.atendimento={};
             $scope.atendimentos = response.data;
             console.log($scope.atendimentos);
         }, function (error) {
@@ -35,13 +36,20 @@
         $scope.usuario={};
       }
       $scope.abrirChamado=function(){
+        var deferred = $q.defer();
+        deferred.notify();
         $scope.atendimento.userId=Session.userId;
-        atendimentoService.create($scope.atendimento)
-        .then(function(data) {
-          console.log(data);
-        },function(erro) {
-          alert(erro.data.message);
-        })
+          $timeout(function(){atendimentoService.create($scope.atendimento)
+          .then(function(data) {
+            alert("Inserido com sucesso!!!"); 
+            atualizaDados();
+            $scope.cadastroMode=true;
+            deferred.resolve();
+          },function(erro) {
+            alert(erro.data.message);
+            deferred.reject();   
+          })},400);
+          return deferred.promise;
       }
       atualizaDados();
   }

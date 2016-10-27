@@ -3,6 +3,7 @@
 var app = angular.module('BlurAdmin', [
   'constants',
   'ngAnimate',
+  'LocalStorageModule',
   'ui.bootstrap',
   'ui.sortable',
   'ui.router',
@@ -18,16 +19,14 @@ var app = angular.module('BlurAdmin', [
 ]);
 
 app.config(function ($httpProvider) {
-  $httpProvider.interceptors.push('authInterceptor');
+  $httpProvider.interceptors.push('AuthInterceptor');
 });
 
-app.run(function($rootScope, $state,AuthService) {
-    var user = {
-          username:"vlima",
-          password:"Windows8-19"
-  };
-  AuthService.login(user).then(function(){
+app.run(function($rootScope, $state,AuthService,$window) {
+  AuthService.login().then(function(){
     console.log("funcionou");
+  },function(erro){
+    $window.location.href = '/auth.html';
   });
   $rootScope.$on('$stateChangeStart', function(event, next) {
     var authorizedRoles = next.data.authorizedRoles;

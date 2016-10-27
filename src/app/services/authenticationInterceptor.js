@@ -1,16 +1,18 @@
 (function () {
   'use strict';
-        angular.module('BlurAdmin').factory('authInterceptor', function ($rootScope, $q, $window) {
+        angular.module('BlurAdmin')
+        .factory('AuthInterceptor',
+         function ($rootScope, $q, Session) {
                 return {
                         request: function (config) {
                                 config.headers = config.headers || {};
-                                if ($window.sessionStorage.token) {
-                                        config.headers.Authorization = 'Bearer ' + $window.sessionStorage.token;
+                                if (Session.token!=null) {
+                                         config.headers['x-access-token'] = Session.token;
                                 }
                                 return config;
                         },
                         response: function (response) {
-                                if (response.status === 401) {
+                                if (response.status === 403) {
                                         // handle the case where the user is not authenticated
                                 }
                                 return response || $q.when(response);

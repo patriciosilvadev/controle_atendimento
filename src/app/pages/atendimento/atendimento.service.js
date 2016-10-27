@@ -9,7 +9,7 @@
     var path = "atendimentos";
     var url = ENDPOINT_URI +path;
     function all(){
-      return $http.get(url);
+      return $http.get(url+'/'+Session.usuario_id);
     }
     function create(item) {
       return $http.post(url, item);

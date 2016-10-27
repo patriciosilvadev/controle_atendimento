@@ -38,7 +38,7 @@
       $scope.abrirChamado=function(){
         var deferred = $q.defer();
         deferred.notify();
-        $scope.atendimento.userId=Session.userId;
+        $scope.atendimento.userId=Session.usuario_id;
           $timeout(function(){atendimentoService.create($scope.atendimento)
           .then(function(data) {
             alert("Inserido com sucesso!!!"); 

@@ -15,6 +15,7 @@
       <th st-sort="descricao">descricao</th>
       <th st-sort="aberto">aberto</th>
       <th st-sort="contato">contato</th>
+      <th st-sort="data">Data</th>
       <th>
         Finalizar/Editar
       </th>
@@ -23,13 +24,15 @@
       <th></th>
       <th><input st-search="nome" placeholder="Procure por nome" class="input-sm form-control search-input"
                  type="search"/></th>
-      <th><input st-search="cnpj" placeholder="Search Last cnpj" class="input-sm form-control search-input"
+      <th><input st-search="cnpj" placeholder="Procure por  cnpj" class="input-sm form-control search-input"
                  type="search"/></th>
-      <th><input st-search="descricao" placeholder="Search descricao" class="input-sm form-control search-input"
+      <th><input st-search="descricao" placeholder="Procure por  descricao" class="input-sm form-control search-input"
                  type="search"/></th>
-      <th><input st-search="aberto" placeholder="Search aberto" class="input-sm form-control search-input" type="search"/>
+      <th><input st-search="aberto" placeholder="Procure por aberto" class="input-sm form-control search-input" type="search"/>
       </th>
-      <th><input st-search="contato" placeholder="Search contato" class="input-sm form-control search-input" type="search"/>
+      <th><input st-search="contato" placeholder="Procure por contato" class="input-sm form-control search-input" type="search"/>
+      </th>
+      <th><input st-search="data" placeholder="Procure por contato" class="input-sm form-control search-input" type="search"/>
       </th>
     </tr>
     </thead>
@@ -42,6 +45,7 @@
       <td>{{item.aberto}}</td>
       <!--td><a class="email-link" ng-href="mailto:{{item.email}}">{{item.email}}</a></td-->
       <td>{{item.contato}}</td>
+      <td>{{item.data_inicio}}</td>
       <td>
 				<button type="button" ng-click="removeItem(row)" class="btn btn-sm btn-danger">
             Finalizar

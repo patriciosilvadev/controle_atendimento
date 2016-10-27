@@ -10,24 +10,10 @@
 
   /** @ngInject */
   // function BaSidebarCtrl($scope, baSidebarService) {
-  function BaSidebarCtrl($scope, baSidebarService,$state,AuthService,$timeout) {
-
+  function BaSidebarCtrl($scope, baSidebarService,$state,AuthService,$timeout,DEV_MODE) {
+    $scope.show=DEV_MODE;
     $scope.menuItems = baSidebarService.getMenuItems();
     $scope.defaultSidebarState = $scope.menuItems[0].stateRef;
-    function process(){
-          for(var i=0;i < $scope.menuItems.length;i++){
-            $scope.menuItems[i].authorized=AuthService.isAuthorized($scope.menuItems[i].authorizedRoles);
-          }
-    }
-    if(AuthService.isAuthenticated()){
-          process();
-          console.log("logged!!!");
-    }else{ 
-       $timeout(function(){
-         process();
-       }, 2000);
-    }
-
     $scope.hoverItem = function ($event) {
       $scope.showHoverElem = true;
       $scope.hoverElemHeight =  $event.currentTarget.clientHeight;

@@ -17,10 +17,7 @@
           title: 'Dashboard',
           sidebarMeta: {
             icon: 'ion-android-home',
-            order: 0,
-          },
-          data: {
-            authorizedRoles: [USER_ROLES.administrador, USER_ROLES.atendente]
+            order: 1,
           }
         });
   }

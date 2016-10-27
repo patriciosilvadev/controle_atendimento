@@ -30,8 +30,7 @@ app.run(function($rootScope, $state,AuthService,$window) {
   });
   $rootScope.$on('$stateChangeStart', function(event, next) {
     var authorizedRoles = next.data.authorizedRoles;
-    console.log(!AuthService.isAuthorized(authorizedRoles));
-    if (!AuthService.isAuthorized(authorizedRoles)) {
+    if (AuthService.isAuthenticated() && !AuthService.isAuthorized(authorizedRoles)) {
       event.preventDefault();
       alert("Você não tem permissão para acessar este item!")
       if (AuthService.isAuthenticated()) {

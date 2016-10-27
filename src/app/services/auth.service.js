@@ -22,7 +22,7 @@
                         return deferred.promise;
                 };
                 authService.isAuthenticated = function () {
-                        return !!Session.userId;
+                        return !!Session.usuario_id;
                 };
                 
                 authService.isAuthorized = function (authorizedRoles) {
@@ -30,7 +30,7 @@
                                 authorizedRoles = [authorizedRoles];
                         }
                         return ((authService.isAuthenticated() &&
-                                authorizedRoles.indexOf(Session.userRole) !== -1)
+                                authorizedRoles.indexOf(Session.tipo) !== -1)
                                 || DEV_MODE);
                 };
                 return authService;

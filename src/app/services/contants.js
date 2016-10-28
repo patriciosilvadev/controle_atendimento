@@ -2,8 +2,8 @@
 	'use strict';
 	var contants= angular.module('constants',[])
 	//.constant('ENDPOINT_URI', 'http://localhost:4000/api/')
-	.constant('ENDPOINT_URI', 'http://191.182.25.177:8080/api/')
-	.constant('DEV_MODE', true)
+	.constant('ENDPOINT_URI', 'http://localhost:4000/api/')
+	.constant('DEV_MODE', false)
 	.constant('AUTH_EVENTS', {
 		loginSuccess: 'auth-login-success',
 		loginFailed: 'auth-login-failed',

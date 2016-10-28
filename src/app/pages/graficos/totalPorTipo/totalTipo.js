@@ -9,7 +9,7 @@
       .controller('TotalTipoChartCtrl', TotalTipoChartCtrl);
 
   /** @ngInject */
-  function TotalTipoChartCtrl($scope, baConfig, colorHelper,graficoService, $interval) {
+  function TotalTipoChartCtrl($scope, baConfig, colorHelper,graficoService, $interval,$rootScope) {
     $scope.totalMes=0;
     $scope.transparent = baConfig.theme.blur;
     var dashboardColors = ["#FFA22A","#E88567","#AF0CE8","#2ADAFF","#FF0000","#89E87C",
@@ -30,7 +30,6 @@
           responsive: true,
           animateRotate: false
         });
-        //animateRotate: true if want to animate
     };
     function createChart(){
       $scope.chartTipo=[];
@@ -46,14 +45,10 @@
         );
       }
     }
-    var stop =$interval(updateCharts,5000);
-    $scope.$on('$destroy', function() {
-        if (angular.isDefined(stop)) {
-          $interval.cancel(stop);
-          stop = undefined;
-        }
+    $rootScope.$on("SYNC_CHART",function(events,args){
+		updateCharts();
+		console.log("updated chart");
     });
-    updateCharts();
     function createItem(value,porcentagem,descricao,item){
       return {
         value: value,

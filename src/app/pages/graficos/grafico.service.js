@@ -4,26 +4,20 @@
   angular.module('BlurAdmin.pages.graficos')
   .service('graficoService', graficoService);
 
-  function graficoService($http,ENDPOINT_URI,$q) {
+  function graficoService($http,ENDPOINT_URI,$q,$rootScope) {
     var path = "grafico";
     var url = ENDPOINT_URI +path;
     var serviceChart = this;
+    var socket = io.connect('http://localhost:4000');
+    socket.on('chartUpdate', function (data) {
+		serviceChart.data=data;
+		$rootScope.$emit("SYNC_CHART",{});
+    });
     this.data={
       atendimentoAno:0,
       atendimentoMes:0,
       destaques:[],
       porTipo:[]
     };
-    this.update = function () {
-      var deferred = $q.defer();
-      $http.get(url+"/2016/10").then(function(response){
-        serviceChart.data=response.data;
-        deferred.resolve();
-      },function(erro){
-        deferred.reject(erro);
-      });
-      return deferred.promise;
-    };
-    serviceChart.update();
   }
 })();

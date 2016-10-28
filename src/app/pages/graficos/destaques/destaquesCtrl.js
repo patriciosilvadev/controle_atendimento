@@ -9,7 +9,7 @@
       .controller('destaquesCtrl', destaquesCtrl);
 
   /** @ngInject */
-  function destaquesCtrl($scope,$interval,graficoService) {
+  function destaquesCtrl($scope,$interval,graficoService,$rootScope) {
     $scope.destaques=[];
     function updateCharts(){
             $scope.destaques=graficoService.data.destaques;
@@ -22,12 +22,9 @@
         $scope.destaques[i].porcentagem=((100/totalMes)*$scope.destaques[i].total);
       }
     }
-    var stop =$interval(updateCharts,2000);
-    $scope.$on('$destroy', function() {
-        if (angular.isDefined(stop)) {
-          $interval.cancel(stop);
-          stop = undefined;
-        }
+    $rootScope.$on("SYNC_CHART",function(events,args){
+		updateCharts();
+		console.log("updated chart");
     });
   }
 })();

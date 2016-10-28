@@ -3,7 +3,8 @@
 	var contants= angular.module('constants',[])
 	//.constant('ENDPOINT_URI', 'http://localhost:4000/api/')
 	.constant('ENDPOINT_URI', 'http://localhost:4000/api/')
-	.constant('DEV_MODE', false)
+	.constant('DEV_MODE', true)
+	.constant('SYNC_TIME', 120000)
 	.constant('AUTH_EVENTS', {
 		loginSuccess: 'auth-login-success',
 		loginFailed: 'auth-login-failed',

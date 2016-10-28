@@ -9,7 +9,8 @@
       .controller('graficosPieChartCtrl', graficosPieChartCtrl);
 
   /** @ngInject */
-  function graficosPieChartCtrl($scope, graficoService,$interval, baConfig, baUtil) {
+  function graficosPieChartCtrl($scope, graficoService,$rootScope,
+  							$interval, baConfig, baUtil) {
     /**
      * create variables
      */
@@ -37,12 +38,9 @@
     $scope.charts.push(createChar('Destaque do Mes','face'));
 
 
-    var stop =$interval(updateCharts,2000);
-    $scope.$on('$destroy', function() {
-        if (angular.isDefined(stop)) {
-          $interval.cancel(stop);
-          stop = undefined;
-        }
+    $rootScope.$on("SYNC_CHART",function(events,args){
+		updateCharts();
+		console.log("updated chart");
     });
     function updateCharts(){
             var data=graficoService.data;
@@ -53,11 +51,11 @@
             $scope.charts[1].stats=data.atendimentoMes;
             $scope.charts[1].percent=calcPercentage(data.atendimentoAno,data.atendimentoMes);
             //update 
-            $scope.charts[3].stats=data.destaques[0].total;
+           $scope.charts[3].stats=data.destaques[0].total;
             $scope.charts[3].description="Destaque do Mes" + data.destaques[0].nome;
             $scope.charts[3].percent=calcPercentage(data.atendimentoMes,data.destaques[0].total);
-            graficoService.update();
-    };
+			
+	};
     
     function createChar(description,icon){
       return {

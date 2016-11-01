@@ -9,9 +9,9 @@
     .factory('usuarioService', usuarioService);
 
   /** @ngInject */
-  function usuarioService($http,ENDPOINT_URI) {
+  function usuarioService($http,ENDPOINT_API) {
     var path = "usuarios";
-    var url = ENDPOINT_URI +path;
+    var url = ENDPOINT_API +path;
     function all(){
       return $http.get(url);
     }

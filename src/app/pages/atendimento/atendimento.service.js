@@ -5,9 +5,9 @@
   .factory('atendimentoService', atendimentoService);
 
   /** @ngInject */
-  function atendimentoService($http,ENDPOINT_URI,Session) {
+  function atendimentoService($http,ENDPOINT_API,Session) {
     var path = "atendimentos";
-    var url = ENDPOINT_URI +path;
+    var url = ENDPOINT_API +path;
     function all(){
       return $http.get(url+'/'+Session.usuario_id);
     }
@@ -21,7 +21,7 @@
       return $http.delete(url, item);
     }
     function getAtendimentoTipos(){
-            return $http.get(ENDPOINT_URI+"tipoAtendimento");
+            return $http.get(ENDPOINT_API+"tipoAtendimento");
     }
     return {
       all:all,

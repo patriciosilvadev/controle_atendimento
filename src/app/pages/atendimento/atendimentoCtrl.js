@@ -12,6 +12,9 @@
 	function atendimentoCtrl($scope,atendimentoService,
 						Session,$filter, editableOptions,
 						editableThemes,$q,$timeout,$uibModal) {
+
+
+	$scope.vm=true;
 		$scope.smartTablePageSize = 10;
 		$scope.displayedCollection=[];
 		$scope.cadastroMode=true;

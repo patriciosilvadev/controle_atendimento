@@ -6,10 +6,10 @@
 	 * 
 	 */
 	function AuthService(localStorageService,$http,
-						Session,ENDPOINT_URI,DEV_MODE,$q) {
+						Session,ENDPOINT_API,DEV_MODE,$q) {
 		var authService = {};
 		var path = "login";
-		var url = ENDPOINT_URI +path;
+		var url = ENDPOINT_API +path;
 		/**
 		 * Loads session from local storage and 
 		 * saves it to the session service

@@ -11,7 +11,7 @@
   /** @ngInject */
   function NotificationsCtrl($scope, toastr) {
     $scope.showSuccessMsg = function() {
-      toastr.success('Your information has been saved successfully!');
+      toastr.success('Your information  2 has been saved successfully!');
     };
 
     $scope.showInfoMsg = function() {

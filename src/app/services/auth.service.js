@@ -21,7 +21,8 @@
 				Session.create(s.usuario_id,
 						s.tipo,
 						s.username,
-						s.token
+						s.token,
+						s.nome
 						);
 				deferred.resolve();
 			}else{

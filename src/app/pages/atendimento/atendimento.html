@@ -7,9 +7,7 @@
             <form id="form1">
               <div class="form-group col-md-4">
                 <label for="cnpjInput">CNPJ/CPF</label>
-                <input type="text" class="form-control" 
-                    data-mask="999-99-999-9999-9" 
-                    id="cnpjInput" placeholder="CNPJ/CPF" ng-model="atendimento.cnpj">
+                <input type="text" id="cnpjInput"  placeholder="CNPJ/CPF" class="form-control"  ng-keydown="key($event)" name="field" ng-model="atendimento.cnpj">
               </div>
               <div class="form-group col-md-8">
                 <label for="cliente">Cliente</label>
@@ -52,13 +50,10 @@
                 </textarea>
               </div>
               <div class="form-group">
-                <label class="checkbox-inline custom-checkbox nowrap">
-                  <input type="checkbox" 
-                          id="inlineCheckbox03" 
-                          value="option3"
-                          ng-model="atendimento.chamado">
                   <span>Chamado</span>
-                </label>
+                    <div class="switches clearfix">
+                        <switcher color="primary" ng-model="atendimento.chamado"></switcher>
+                    </div>
               </div>
               <div class="form-group">
                   <section class="col-md-6" ng-show="cadastroMode">
@@ -68,9 +63,9 @@
                       <center><button progress-button="finalizarChamado()" pb-style="rotate-side-up" class="btn btn-info">Finalizar</button></center>
                   </section>
               </div>
-                <div class="switches clearfix">
-                    <switcher color="primary" ng-model="vm"></switcher>
-                </div>
+
+
+
             </form>
       </div>
     </div>

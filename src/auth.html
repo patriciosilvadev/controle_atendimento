@@ -65,7 +65,8 @@
       $http.post("http://localhost:4000/login",$scope.usuario).then(function(data){
         alert("logago");
         localStorageService.set("session",data.data);
-        $window.location.href = '/';
+        //$window.location.href = '/';
+        window.location.href = '/';
       },function(erro){
           console.log(erro);
       });

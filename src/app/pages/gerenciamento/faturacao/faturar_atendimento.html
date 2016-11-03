@@ -1,0 +1,73 @@
+<!--ba-panel-class="with-scroll"-->
+<div class="row" ng-controller="cadastro_usuarioCtrl">
+    <div class="col-md-6">
+      <div
+          ba-panel
+          ba-panel-title="Entre com os dados do Usuário"
+          ba-panel-class="with-scroll">
+        <form>
+            <div class="form-group">
+                <label for="nome">Nome</label>
+                <input type="text" class="form-control" id="nome" placeholder="Nome" ng-model="usuario.nome">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" placeholder="Email" ng-model="usuario.email">
+            </div>
+            <div class="form-group">
+                <label for="usuario">Usuário</label>
+                <input type="text" class="form-control" id="usuario" placeholder="Usuário" ng-model="usuario.username">
+            </div>
+            <div class="form-group">
+                <label for="senha">Senha</label>
+                <input type="password" class="form-control" id="senha" placeholder="Senha" ng-model="usuario.password">
+            </div>
+            <div class="form-group">
+                <select ng-model="usuario.tipo" class="form-control">
+                    <option ng-repeat="item in tipos">{{item}}</option>
+                </select>
+            </div>
+            <div class="row">
+                <section class="col-md-6" ng-show="cadastroMode">
+                    <center><button progress-button="criarUsuario()" pb-style="rotate-side-up" class="btn btn-success">Cadastrar</button><center>
+                </section>
+                <section class="col-md-6" ng-show="!cadastroMode">
+                    <center><button progress-button="salvar()" pb-style="rotate-side-up" class="btn btn-info">Salvar</button></center>
+                </section>
+                <section class="col-md-6" ng-show="!cadastroMode">
+                    <center><button progress-button="deletar()" pb-style="rotate-side-up" class="btn btn-danger">Deletar</button></center>
+                </section>
+            </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-md-6">
+        <div
+                ba-panel
+                ba-panel-title="Usuarios"
+                ba-panel-class="with-scroll">
+        <div class="table-responsive">
+        <table class="table">
+            <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Username</th>
+            <th>Tipo</th>
+            <th>Seleciona</th>
+            </tr>
+            <tr ng-repeat="item in usuarios">
+            <td>{{item.usuario_id}}</td>
+            <td>{{item.nome}}</td>
+            <td>{{item.email}}</td>
+            <td>{{item.username}}</td>
+            <!--td><a class="email-link " ng-href="mailto:mdo@gmail.com" href="mailto:mdo@gmail.com">mdo@gmail.com</a></td-->
+            <td>{{item.tipo}}</td>
+            <!--td><button class="status-button btn btn-xs btn-{{item.status}}">{{item.status}}</button></td-->
+            <td><button class="btn btn-xs btn-primary" ng-click="selecionar($index)">Selecionar</button></td>
+            </tr>
+        </table>
+        </div>
+        </div>
+    </div>
+</div>

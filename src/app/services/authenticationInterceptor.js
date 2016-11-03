@@ -13,13 +13,16 @@
 			},
 			response: function (response) {
 				if (response.status === 403) {
-					 $window.location.href = '/auth.html';        
+					 //$window.location.href = '/auth.html';    
+					 window.location.href = '/auth.html';    
 				}
 				return response || $q.when(response);
 			},
 			responseError: function(rejection) {
-                console.log("could not connect to the server");
-				alert("Could not connect to the server");
+				if(rejection.status===404){
+					console.log("could not connect to the server");
+					alert("Could not connect to the server");
+				}
                 return $q.reject(rejection);
             }
 		};

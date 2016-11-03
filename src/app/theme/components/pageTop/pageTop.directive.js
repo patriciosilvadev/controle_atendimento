@@ -12,6 +12,10 @@
   function pageTop() {
     return {
       restrict: 'E',
+      controller:function(Session){
+        this.name=Session.nome;
+      },
+      controllerAs:'ctrl',
       templateUrl: 'app/theme/components/pageTop/pageTop.html'
     };
   }

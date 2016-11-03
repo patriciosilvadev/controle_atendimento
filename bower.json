@@ -54,7 +54,8 @@
     "textAngular": "~1.4.6",
     "angular-xeditable": "~0.1.9",
     "ng-js-tree": "~0.0.7",
-    "angular-local-storage": "^0.5.2"
+    "angular-local-storage": "^0.5.2",
+    "string-mask": "^0.3.0"
   },
   "resolutions": {
     "angular": "~1.4.8"

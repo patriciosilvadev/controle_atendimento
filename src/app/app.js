@@ -26,7 +26,8 @@ app.run(function($rootScope, $state,AuthService,$window) {
 	AuthService.login().then(function(){
 		console.log("funcionou");
 	},function(erro){
-		$window.location.href = '/auth.html';
+		//$window.location.href = '/auth.html';
+		window.location.href = '/auth.html';
 	});
 	$rootScope.$on('$stateChangeStart', function(event, next) {
 		var authorizedRoles = next.data.authorizedRoles;

@@ -12,6 +12,7 @@
       return $http.get(url+'/'+Session.usuario_id);
     }
     function create(item) {
+      console.log(item);
       return $http.post(url, item);
     }
     function update(item) {

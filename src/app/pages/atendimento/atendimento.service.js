@@ -24,8 +24,12 @@
     function getAtendimentoTipos(){
             return $http.get(ENDPOINT_API+"tipoAtendimento");
     }
+    function getCliente(cnpj){
+        return $http.get(ENDPOINT_API+"clientes/cnpj/"+cnpj);
+    }
     return {
       all:all,
+      getCliente:getCliente,
       create:create,
       update:update,
       deleta:deleta,

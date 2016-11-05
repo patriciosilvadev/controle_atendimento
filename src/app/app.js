@@ -18,8 +18,9 @@ var app = angular.module('BlurAdmin', [
 	'BlurAdmin.pages'
 ]);
 
-app.config(function ($httpProvider) {
+app.config(function ($httpProvider, $logProvider) {
 	$httpProvider.interceptors.push('AuthInterceptor');
+	$logProvider.debugEnabled(true);
 });
 
 app.run(function($rootScope, $state,AuthService,$window) {

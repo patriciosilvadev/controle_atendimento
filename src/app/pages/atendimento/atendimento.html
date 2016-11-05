@@ -7,7 +7,12 @@
             <form id="form1">
               <div class="form-group col-md-4">
                 <label for="cnpjInput">CNPJ/CPF</label>
-                <input type="text" id="cnpjInput"  placeholder="CNPJ/CPF" class="form-control"  ng-keydown="key($event)" name="field" ng-model="atendimento.cnpj">
+                <input type="text" id="cnpjInput"  
+                       placeholder="CNPJ/CPF" class="form-control"  
+                       ng-keydown="key($event)"
+                       name="field" 
+                       ng-model="atendimento.cnpj"
+                       ng-blur="procura(atendimento.cnpj)">
               </div>
               <div class="form-group col-md-8">
                 <label for="cliente">Cliente</label>
@@ -29,7 +34,7 @@
               </div>
               <div class="form-group col-md-4">
                 <label for="Contato">Tipo Atendimento</label>
-                <select ng-model="atendimento.tipo_atendimento" class="form-control">
+                <select ng-model="atendimento.tipo_atendimento" class="form-control" ng-change="verificarMore(atendimento.tipo_atendimento)">
                     <option ng-repeat="item in atendimento_tipos">{{item.descricao}}</option>
                 </select>
               </div>
@@ -49,23 +54,56 @@
                           ng-model="atendimento.solucao">
                 </textarea>
               </div>
-              <div class="form-group">
-                  <span>Chamado</span>
-                    <div class="switches clearfix">
-                        <switcher color="primary" ng-model="atendimento.chamado"></switcher>
+              <div class="row">
+                    <div class="form-group col-md-3" >
+                        <label>Chamado</label>
+                            <div class="switches clearfix">
+                                <switcher color="primary" ng-model="atendimento.chamado"></switcher>
+                            </div>
+                    </div>
+                    <div class="form-group col-md-3" ng-if="more">
+                        <label for="preco">Preço</label>
+                        <input type="text" class="form-control"
+                            id="preco" placeholder="Preço"
+                            ng-model="atendimento.valor">
+                    </div>
+                    <div class="form-group col-md-3" ng-if="more">
+                        <label>Preço</label>
+                            <div class="switches clearfix">
+                                <switcher color="primary" ng-model="atendimento.aprovado"></switcher>
+                            </div>
                     </div>
               </div>
               <div class="form-group">
-                  <section class="col-md-6" ng-show="cadastroMode">
-                      <center><button progress-button="abrirChamado()" pb-style="rotate-side-up" class="btn btn-success">Abrir</button><center>
+                  <section class="col-md-6" ng-if="cadastroMode">
+                      <center><button progress-button="abrirChamado()" 
+                                      pb-style="rotate-side-up" 
+                                      class="btn btn-success">
+                                      Abrir
+                              </button><center>
                   </section>
-                  <section class="col-md-6" ng-show="!cadastroMode">
-                      <center><button progress-button="finalizarChamado()" pb-style="rotate-side-up" class="btn btn-info">Finalizar</button></center>
+                  <section class="col-md-6" ng-if="viewMode">
+                      <center><button progress-button="limpar()" 
+                                      pb-style="rotate-side-up" 
+                                      class="btn btn-info">
+                                      Fechar
+                              </button><center>
+                  </section>
+                  <section class="col-md-6" ng-if="saveMode">
+                      <center><button progress-button="salvarChamado()" 
+                                      pb-style="rotate-side-up" 
+                                      class="btn btn-danger">
+                                      Salvar
+                              </button><center>
+                  </section>
+                  <section class="col-md-6" ng-if="finalizarMode">
+                      <center><button progress-button="finalizarChamado()" 
+                                      pb-style="rotate-side-up" 
+                                      class="btn btn-danger">
+                                      Finalizar
+                              </button><center>
                   </section>
               </div>
-
-
-
             </form>
       </div>
     </div>
@@ -73,7 +111,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <div ba-panel ba-panel-title="Smart Table With Filtering, Sorting And Pagination" ba-panel-class="with-scroll">
+        <div ba-panel ba-panel-title="Atendimentos" ba-panel-class="with-scroll">
         <div include-with-scope="app/pages/atendimento/atendimentoTable.html"></div>
         </div>
     </div>

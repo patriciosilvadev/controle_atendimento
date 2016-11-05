@@ -7,8 +7,9 @@
 
   angular.module('BlurAdmin.pages.atendimento')
       .directive('switcher', switchDirective);
+      //.directive('status', status);
 
-  /** @ngInject */
+
   function switchDirective($timeout) {
     return {
       restrict: 'EA',
@@ -36,5 +37,5 @@
         });
       }
     };
-  }
+    }
 })();

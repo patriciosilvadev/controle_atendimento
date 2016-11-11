@@ -25,7 +25,7 @@
           var input = $(elem).find('input');
           input.bootstrapSwitch({
             size: 'small',
-            onColor: attr.color,
+            onColor: 'success',
             offText: 'Não',
             onText: 'Sim'
           });

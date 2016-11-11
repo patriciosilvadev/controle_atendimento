@@ -4,106 +4,162 @@
           ba-panel
           ba-panel-title="Entre com os dados do Atendimento"
           ba-panel-class="with-scroll">
-            <form id="form1">
-              <div class="form-group col-md-4">
-                <label for="cnpjInput">CNPJ/CPF</label>
-                <input type="text" id="cnpjInput"  
-                       placeholder="CNPJ/CPF" class="form-control"  
-                       ng-keydown="key($event)"
-                       name="field" 
-                       ng-model="atendimento.cnpj"
-                       ng-blur="procura(atendimento.cnpj)">
-              </div>
-              <div class="form-group col-md-8">
-                <label for="cliente">Cliente</label>
-                <input type="text" class="form-control"
-                    id="cliente" placeholder="Cliente"
-                ng-model="atendimento.nome">
-              </div>
-              <div class="form-group col-md-4">
-                <label for="Contato">Contato</label>
-                <input type="text" class="form-control"
-                    id="Contato" placeholder="Contato"
-                    ng-model="atendimento.contato">
-              </div>
-              <div class="form-group col-md-4">
-                <label for="Contato">Tipo Acesso</label>  
-                <select ng-model="atendimento.tipo_acesso" class="form-control">
-                    <option ng-repeat="item in acesso">{{item}}</option>
-                </select>
-              </div>
-              <div class="form-group col-md-4">
-                <label for="Contato">Tipo Atendimento</label>
-                <select ng-model="atendimento.tipo_atendimento" class="form-control" ng-change="verificarMore(atendimento.tipo_atendimento)">
-                    <option ng-repeat="item in atendimento_tipos">{{item.descricao}}</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="problema">Problema</label>
-                <textarea placeholder="Problema" 
-                          class="form-control" 
-                          id="problema"
-                          ng-model="atendimento.problema">
-              </textarea>
-              </div> 
-              <div class="form-group">
-                <label for="solucao">Solucao</label>
-                <textarea placeholder="Solucao" 
-                          class="form-control" 
-                          id="solucao"
-                          ng-model="atendimento.solucao">
-                </textarea>
-              </div>
-              <div class="row">
-                    <div class="form-group col-md-3" >
-                        <label>Chamado</label>
-                            <div class="switches clearfix">
-                                <switcher color="primary" ng-model="atendimento.chamado"></switcher>
-                            </div>
-                    </div>
-                    <div class="form-group col-md-3" ng-if="more">
-                        <label for="preco">Preço</label>
+            <form name="ctrl.Form" novalidate>
+
+                <div class ="row">
+                    <div class="form-group has-feedback col-md-4"
+                         ng-class="{'has-error': ctrl.Form.cnpj.$invalid}">
+                        <label for="cnpjInput">CNPJ/CPF</label>
+                        <input type="text" id="cnpj"  
+                            placeholder="CNPJ/CPF" class="form-control has-error"  
+                            ng-keyup="key($event)"
+                            name="cnpj"
+                            ng-mouseleave="key($event)"
+                            ng-model="atendimento.cnpj"
+                            ng-blur="procura(atendimento.cnpj)" 
+                            ng-disabled="saveMode"
+                            required>
+                        <span class="help-block error-block basic-block">Requerido</span>
+                    </div>                   
+                    <div class="form-group col-md-8"
+                         ng-class="{'has-error': ctrl.Form.cliente.$invalid}">
+                        <label for="nome">Cliente</label>
                         <input type="text" class="form-control"
-                            id="preco" placeholder="Preço"
-                            ng-model="atendimento.valor">
+                            id="cliente" placeholder="Cliente"
+                            name="cliente"
+                            ng-disabled="saveMode"
+                            ng-model="atendimento.nome" required>
+                        <span class="help-block error-block basic-block">Requerido</span>
                     </div>
-                    <div class="form-group col-md-3" ng-if="more">
-                        <label>Preço</label>
+                </div>
+                
+                <div class ="row">
+                    <div class="form-group col-md-4">
+                        <label for="Contato">Contato</label>
+                        <input type="text" class="form-control"
+                            id="Contato" placeholder="Contato"
+                            ng-model="atendimento.contato">
+                    </div>
+                    <div class="form-group col-md-4"
+                         ng-class="{'has-error': ctrl.Form.tipo_acesso.$invalid}">
+                        <label for="Contato">Tipo Acesso</label>  
+                        <select ng-model="atendimento.tipo_acesso" 
+                                name="tipo_acesso"
+                                id="tipo_acesso" 
+                                ng-disabled="saveMode"
+                                class="form-control" required>
+                            <option ng-repeat="item in acesso">{{item}}</option>
+                        </select>
+                        <span class="help-block error-block basic-block">Requerido</span>
+                    </div>
+                    <div class="form-group col-md-4"
+                         ng-class="{'has-error': ctrl.Form.tipo.$invalid}">
+                        <label for="Contato">Tipo Atendimento</label>
+                        <select ng-model="atendimento.tipo_atendimento" 
+                                ng-disabled="saveMode"
+                                class="form-control"
+                                name="tipo"
+                                id="tipo" 
+                                ng-change="verificarMore(atendimento.tipo_atendimento)"
+                                required>
+                            <option ng-repeat="item in atendimento_tipos">{{item.descricao}}</option>
+                        </select>
+                        <span class="help-block error-block basic-block">Requerido</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label for="problema">Problema</label>
+                        <textarea placeholder="Problema" 
+                                class="form-control" 
+                                id="problema"
+                                ng-model="atendimento.problema">
+                        </textarea>
+                    </div>
+                </div>
+
+                <div class ="row">
+                    <div class="form-group col-md-12">
+                        <label for="solucao">Solucao</label>
+                        <textarea placeholder="Solucao" 
+                                class="form-control" 
+                                id="solucao"
+                                ng-model="atendimento.solucao">
+                        </textarea>
+                    </div>
+                </div>
+
+                <div class="row">
+                        <div class="form-group col-md-3" >
+                            <label>Chamado</label>
+                                <div class="switches clearfix">
+                                    <switcher color="primary" ng-model="atendimento.chamado"></switcher>
+                                </div>
+                        </div>
+                        <div class="form-group col-md-3" ng-if="more">
+                            <label for="preco">Preço</label>
+                            <div class="input-group">
+                                <span class="input-group-addon addon-left input-group-addon-success">R$</span>
+                                <input type="text" class="form-control with-success-addon" 
+                                    aria-label="Amount (to the nearest dollar)" ng-model="atendimento.valor"
+                                    id="preco" 
+                                    placeholder="Preço"
+                                    ng-keyup="keyPreco(atendimento.valor)"
+                                    name="preco" required>
+                            </div>
+                            <span class="has-error" ng-if="ctrl.Form.preco.$invalid">Requerido</span>
+                        </div>
+                        <div class="form-group col-md-3" ng-if="more">
+                            <label>Aprovado</label>
                             <div class="switches clearfix">
                                 <switcher color="primary" ng-model="atendimento.aprovado"></switcher>
                             </div>
+                        </div>
+                </div>
+                <div class="row" ng-if="!atendimento.aprovado && more">
+                    <div class="form-group col-md-12"
+                         ng-class="{'has-error': ctrl.Form.motivo.$invalid}">
+                        <label for="motivo">Motivo</label>
+                        <textarea placeholder="Motivo" 
+                                class="form-control form-group" 
+                                id="motivo"
+                                name="motivo"
+                                ng-model="atendimento.motivo" required>
+                        </textarea>
+                        <span class="help-block error-block basic-block">Requerido</span>
                     </div>
-              </div>
-              <div class="form-group">
-                  <section class="col-md-6" ng-if="cadastroMode">
-                      <center><button progress-button="abrirChamado()" 
-                                      pb-style="rotate-side-up" 
-                                      class="btn btn-success">
-                                      Abrir
-                              </button><center>
-                  </section>
-                  <section class="col-md-6" ng-if="viewMode">
-                      <center><button progress-button="limpar()" 
-                                      pb-style="rotate-side-up" 
-                                      class="btn btn-info">
-                                      Fechar
-                              </button><center>
-                  </section>
-                  <section class="col-md-6" ng-if="saveMode">
-                      <center><button progress-button="salvarChamado()" 
-                                      pb-style="rotate-side-up" 
-                                      class="btn btn-danger">
-                                      Salvar
-                              </button><center>
-                  </section>
-                  <section class="col-md-6" ng-if="finalizarMode">
-                      <center><button progress-button="finalizarChamado()" 
-                                      pb-style="rotate-side-up" 
-                                      class="btn btn-danger">
-                                      Finalizar
-                              </button><center>
-                  </section>
-              </div>
+                </div>
+                <div class="form-group">
+                    <section class="col-md-6" ng-if="cadastroMode">
+                        <center><button progress-button="abrirChamado()" 
+                                        pb-style="rotate-side-up" 
+                                        class="btn btn-success">
+                                        Abrir
+                                </button><center>
+                    </section>
+                    <section class="col-md-6" ng-if="viewMode">
+                        <center><button progress-button="limpar()" 
+                                        pb-style="rotate-side-up" 
+                                        class="btn btn-info">
+                                        Fechar
+                                </button><center>
+                    </section>
+                    <section class="col-md-6" ng-if="saveMode">
+                        <center><button progress-button="salvarChamado()" 
+                                        pb-style="rotate-side-up" 
+                                        class="btn btn-info">
+                                        Salvar
+                                </button><center>
+                    </section>
+                    <section class="col-md-6" ng-if="finalizarMode">
+                        <center><button progress-button="finalizarChamado()" 
+                                        pb-style="rotate-side-up" 
+                                        class="btn btn-danger">
+                                        Finalizar
+                                </button><center>
+                    </section>
+                </div>
             </form>
       </div>
     </div>

@@ -23,7 +23,17 @@ app.config(function ($httpProvider, $logProvider) {
 	$logProvider.debugEnabled(true);
 });
 
-app.run(function($rootScope, $state,AuthService,$window) {
+app.run(function($rootScope, $state,AuthService,$window,$log) {
+	Date.prototype.getWeek = function() {
+        var onejan = new Date(this.getFullYear(), 0, 1);
+        return Math.ceil((((this - onejan) / 86400000) + onejan.getDay() + 1) / 7);
+    }
+
+	var date = new Date();
+	var weekNumber = date.getWeek();
+	$log.info("Week number "+weekNumber);
+	$log.info(date);
+
 	AuthService.login().then(function(){
 		console.log("funcionou");
 	},function(erro){

@@ -1,0 +1,75 @@
+<div class="horizontal-scroll">
+  <div class="form-group select-page-size-wrap ">
+    <label>Numero de paginas
+      <select class="form-control selectpicker show-tick" title="Rows on page" selectpicker
+              ng-model="smartTablePageSize" ng-options="i for i in [5,10,15,20,25]">
+      </select>
+    </label>
+  </div>
+  <table class="table" st-table="displayedCollection" st-safe-src="faturas">
+    <thead>
+    <tr class="sortable ">
+      <th class="table-id" st-sort="id" st-sort-default="true">#</th>
+      <th st-sort="nome">Nome</th>
+      <th st-sort="cnpj">CNPJ</th>
+      <th >Valor</th>
+      <th st-sort="aberto">aberto</th>
+      <th st-sort="username">Responsável</th>
+      <th st-sort="data">Data</th>
+      <th>
+        Faturar
+      </th>
+    </tr>
+    <tr>
+      <th></th>
+      <th><input st-search="nome" placeholder="Procure por nome" class="input-sm form-control search-input"
+                 type="search"/></th>
+      <th><input st-search="cnpj" placeholder="Procure por  cnpj" class="input-sm form-control search-input"
+                 type="search"/></th>
+      <th></th>
+      <th><input st-search="aberto" placeholder="Procure por aberto" class="input-sm form-control search-input" type="search"/>
+      </th>
+      <th><input st-search="username" placeholder="Procure por Responsável" class="input-sm form-control search-input" type="search"/>
+      </th>
+      <th><input st-search="data_inicio" placeholder="Procure por Data" class="input-sm form-control search-input" type="search"/>
+      </th>
+      <th>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="item in displayedCollection" 
+        ng-class="{ success: item.aberto, 
+                    primary: !item.aberto
+                  }">
+      <td>{{item.atendimento_id}}</td>
+      <td>{{item.nome}}</td>
+      <td>{{applyMask(item.cnpj)}}</td>
+      <td>{{item.valor}}</td>
+      <td>
+        <div ng-if="item.aberto">
+          Sim
+        </div>
+        <div ng-if="!item.aberto">
+          Nao
+        </div>
+      </td>
+      <td>{{item.username}}</td>
+      <td>{{formataData(item.data_inicio)}}</td>
+      <td>
+          <div class="buttons">
+            <button class="btn btn-primary editable-table-button btn-xs" ng-click="faturar(item.atendimento_id)">Sim</button>
+            <!--button class="btn btn-danger editable-table-button btn-xs" ng-click="removeUser($index)">Não</button-->
+          </div>
+			</td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+      <td colspan="6" class="text-center">
+        <div st-pagination="" st-items-by-page="smartTablePageSize" st-displayed-pages="10"></div>
+      </td>
+    </tr>
+    </tfoot>
+  </table>
+</div>

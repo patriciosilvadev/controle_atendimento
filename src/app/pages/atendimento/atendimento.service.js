@@ -9,14 +9,17 @@
     var path = "atendimentos";
     var url = ENDPOINT_API +path;
     function all(){
-      return $http.get(url+'/'+Session.usuario_id);
+      return $http.get(url);
     }
     function create(item) {
       console.log(item);
       return $http.post(url, item);
     }
     function update(item) {
-      return $http.put(url, item);
+      return $http.put(url+"/"+item.atendimento_id, item);
+    }
+    function finalizar(item) {
+      return $http.put(url+"/finalizar/"+item.atendimento_id, item);
     }
     function deleta(item) {
       return $http.delete(url, item);
@@ -30,6 +33,7 @@
     return {
       all:all,
       getCliente:getCliente,
+      finalizar:finalizar,
       create:create,
       update:update,
       deleta:deleta,

@@ -10,7 +10,7 @@
 
   /** @ngInject */
   function faturamentoService($http,ENDPOINT_API) {
-    var path = "usuarios";
+    var path = "faturamento";
     var url = ENDPOINT_API +path;
     function all(){
       return $http.get(url);

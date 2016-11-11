@@ -24,10 +24,17 @@
   background-color: transparent;
 }
 
+
 .channels-info {
   display: inline-block;
   width: calc(100% - 370px);
   margin-left: 70px;
+  margin-top: -20px;
+}
+.destaque-info {
+  display: inline-block;
+  width: calc(100% - 70px);
+  margin-left: 50px;
   margin-top: -20px;
 }
 .small-container {

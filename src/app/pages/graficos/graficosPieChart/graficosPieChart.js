@@ -16,21 +16,7 @@
 		 */
 		$scope.charts=[];
 		var pieColor = baUtil.hexToRGB(baConfig.colors.defaultText, 0.2);
-		$scope.options = {
-			animate:{
-				duration:200,
-				enabled:true
-			},
-			barColor:pieColor,
-			scaleColor:true,
-			lineWidth: 9,
-			lineCap: 'round',
-			easing: 'easeOutBounce',
-			trackColor: 'rgba(0,0,0,0)',
-			size: 84,
-			scaleLength: 0,
-			animation: 2000
-		};
+
 		function createChar(description,icon){
 			return {
 				color:pieColor,
@@ -43,12 +29,35 @@
 
 		$scope.charts.push(createChar('Atendimentos Ano','person'));
 		$scope.charts.push(createChar('Atendimentos Mês','person'));
-		$scope.charts.push(createChar('Visitas/Chamados - Mes','face'));
+		$scope.charts.push(createChar('Visitas - Mes','face'));
 		$scope.charts.push(createChar('Destaque do Mes','face'));
+		
+		function loadPieCharts() {
+			$('.chart').each(function () {
+				var chart = $(this);
+				chart.easyPieChart({
+					easing: 'easeOutBounce',
+					onStep: function (from, to, percent) {
+					$(this.el).find('.percent').text(Math.round(percent));
+					},
+					barColor: pieColor,
+					trackColor: 'rgba(0,0,0,0)',
+					size: 84,
+					scaleLength: 0,
+					animation: 2000,
+					lineWidth: 9,
+					lineCap: 'round',
+				});
+			});
+		}
 
 		function calcPercentage(total,value){
+			if(total===0 || value ===0){
+				return 0;
+			}
 			return (100/total)*value;
 		}
+
 		function updateCharts(){
 			var data=graficoService.data;
 			//update Atendimento por ano
@@ -62,8 +71,17 @@
 			$scope.charts[3].stats=data.destaques[0].total||0;
 			$scope.charts[3].description="Destaque do Mes"
 			$scope.charts[3].percent=calcPercentage(data.atendimentoMes,(data.destaques[0].total || 0));
+
+			$('.pie-charts .chart').each(function(index, chart) {
+				$(chart).data('easyPieChart').update($scope.charts[index].percent);
+			});
 		};
-		$timeout(updateCharts,300);
+
+		$timeout(function(){
+			loadPieCharts();
+			updateCharts();
+		},600);
+
 		$rootScope.$on("SYNC_CHART",function(events,args){
 			updateCharts();
 		});

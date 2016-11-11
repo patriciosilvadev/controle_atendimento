@@ -12,84 +12,67 @@
   /**
    * Controle para o cadastro de usuario
    */
-  function faturamentoCtrl($scope,$http,usuarioService,$q,$timeout) {
-    $scope.usuario={};
-    $scope.usuarios={};
-    $scope.cadastroMode=true;
-    /**
-     * Atualiza dados da tabela
-     */
+  function faturamentoCtrl($filter,$scope,$http,faturamentoService,$q,$timeout,$log) {
+
+
+
+
+function weekCount(year, month_number) {
+
+    // month_number is in the range 1..12
+
+    var firstOfMonth = new Date(year, month_number-1, 1);
+    var lastOfMonth = new Date(year, month_number, 0);
+
+    var used = firstOfMonth.getDay() + lastOfMonth.getDate();
+
+    return Math.ceil( used / 7);
+}
+console.log(weekCount(2016,11));
+
+    $scope.faturas={};
     function atualizaDados(){
-        usuarioService.all().then(function (response) {
-            $scope.usuarios = response.data.data;
+        faturamentoService.all().then(function (response) {
+            $scope.faturas = response.data;
         }, function (error) {
             $scope.status = 'Unable to load customer data: ' + error.message;
         });
-        $scope.usuario={};
+    }atualizaDados();
+    $scope.formataData=function(date){
+        return $filter('date')(date, 'dd/MM/yyyy');
+    };
+    /**
+     * Pega Numero
+     */
+    function getNumber(str){
+        str+="";
+        return str.replace(/[^\d]/g, '').slice(0, 14)
     }
-    atualizaDados();
     /**
-     * Criar usuario
+     * Aplica Mascara
      */
-    $scope.criarUsuario=function(){
-        $scope.cadastroMode=true;
-        var deferred = $q.defer();
-        deferred.notify();
-        $timeout(function(data){usuarioService.create($scope.usuario).then(function(response){
-            alert("Inserido com sucesso!!!"); 
-            atualizaDados();
-            $scope.cadastroMode=true;
-            deferred.resolve();
-        },function(erro){
-            $scope.cadastroMode=true;
-            alert(erro.data.message);
-            deferred.reject();   
-        });},400);
-        return deferred.promise;
-    };
+    function applyMask(str){
+        var number = getNumber(str);
+        var cnpj = new StringMask('00.000.000\/0000-00');
+        var cpf = new StringMask('000.000.000-00');
+        var mascara ="";
+        if(number.length>11){
+            mascara = cnpj.apply(number);
+        }else{
+            mascara = cpf.apply(number);
+        }
+        return mascara.trim().replace(/[^0-9]$/, '');
+    }
+
+    $scope.faturar=function(numeroAtendimento){
+        $log.info("faturando "+numeroAtendimento);
+    }
+
     /**
-     * Salva alteracoes feiras 
+     * Faz o binding para o scope
      */
-    $scope.salvar=function(){
-        var deferred = $q.defer();
-        deferred.notify();
-        $timeout(function(data){usuarioService.update($scope.usuario).then(function(response){
-            alert("Salvado com sucesso!"); 
-            atualizaDados();
-            $scope.cadastroMode=true;
-            deferred.resolve();
-        },function(erro){
-            $scope.cadastroMode=true;
-            alert(erro.data.message);
-            deferred.reject();    
-        });},400);
-        return deferred.promise;
-    };
-    /**
-     * Deletar Usuario
-     */
-    $scope.deletar=function(){
-        $scope.cadastroMode=true;
-        var deferred = $q.defer();
-        deferred.notify();
-        $timeout(function(){usuarioService.deleta($scope.usuario).then(function(response){
-            alert("Usuario Deletado!!!"); 
-            atualizaDados();
-            deferred.resolve();
-        },function(erro){
-            deferred.reject();
-            alert(erro.data.message);    
-        });},400);
-        return deferred.promise;
-    };
-    /**
-     * Seleciona o usuario da tabela
-     */
-    $scope.selecionar=function(index){
-        $scope.cadastroMode=false;
-        $scope.usuario=$scope.usuarios[index];
-    };
-    $scope.tipos = ['administrador','atendente'];
+    $scope.applyMask=applyMask;
+
   }
 
 })();

@@ -2,7 +2,7 @@
     <div class="destaque-info">
       <div class="channels-info-item" ng-repeat="destaque in destaques">
         <div class="legend-color" style="background-color: {{destaque.color}}"></div>
-          <p>{{destaque.nome }}<span class="destaques-number">{{destaque.total}}</span></p>
+          <p>{{destaque.nome }}<span class="channel-number">{{rs}}{{destaque.total}}</span></p>
           <div class="progress progress-sm channel-progress">
             <div class="progress-bar " role="progressbar"
                 aria-valuenow="{{destaque.porcentagem}}" aria-valuemin="0" aria-valuemax="100" style="width: {{destaque.porcentagem}}%">

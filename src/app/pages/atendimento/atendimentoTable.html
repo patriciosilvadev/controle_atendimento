@@ -28,7 +28,13 @@
                  type="search"/></th>
       <th><input st-search="descricao" placeholder="Procure por  descricao" class="input-sm form-control search-input"
                  type="search"/></th>
-      <th><input st-search="aberto" placeholder="Procure por aberto" class="input-sm form-control search-input" type="search"/>
+      <th>
+          <select st-search="aberto"
+                    class="input-sm form-control search-input" type="search">
+				<option value="">Todos</option>
+				<option value="true">Sim</option>
+				<option value="false">Nao</option>
+          </select>
       </th>
       <th><input st-search="username" placeholder="Procure por Responsável" class="input-sm form-control search-input" type="search"/>
       </th>
@@ -39,15 +45,22 @@
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="item in displayedCollection" 
-        ng-class="{ success: item.aberto, 
+    <tr ng-repeat="item in displayedCollection"
+        ng-class="{
                     primary: !item.aberto
                   }">
       <td>{{item.atendimento_id}}</td>
       <td>{{item.nome}}</td>
       <td>{{applyMask(item.cnpj)}}</td>
       <td>{{item.descricao}}</td>
-      <td>{{item.aberto}}</td>
+      <td>
+			<div ng-if="item.aberto">
+				Sim
+			</div>
+			<div ng-if="!item.aberto">
+				Nao
+			</div>
+      </td>
       <td>{{item.username}}</td>
       <td>{{formataData(item.data_inicio)}}</td>
       <td>

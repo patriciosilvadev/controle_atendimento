@@ -9,8 +9,23 @@
       .controller('TotalTipoChartCtrl', TotalTipoChartCtrl);
 
   /** @ngInject */
-  	function TotalTipoChartCtrl($scope, $log, baConfig, colorHelper,graficoService, $interval,$rootScope) {
+  	function TotalTipoChartCtrl($scope, $log, baConfig, graficosFaturamentoService,
+	  				colorHelper,graficoService, $interval,$rootScope) {
+
+		var service ={};
+		$scope.rs = "";
+		if(isAtendimento()){
+			service=graficoService;
+		}else{
+			$scope.rs="R$ ";
+			service=graficosFaturamentoService;
+		}
+		function isAtendimento(){
+			return $scope.tipo==='atendimento';
+		}
+
 		$scope.totalMes=0;
+
 		var colorTipo=new Array(40);
 
 		function getRandomColor() {
@@ -23,7 +38,6 @@
 		}
 		for(var i=0;i<colorTipo.length;i++){
 			colorTipo[i]=getRandomColor();
-			$log.debug(i+ " Color "+colorTipo[i]);
 		}
 		$scope.transparent = baConfig.theme.blur;
 		var dashboardColors = ["#FFA22A","#E88567","#AF0CE8","#2ADAFF","#FF0000","#89E87C",
@@ -44,20 +58,22 @@
 			responsive: true,
 			animateRotate: false
 			});
-		};
+		}updateCharts();
 		function createChart(){
 			$scope.chartTipo=[];
-			var porTipo=graficoService.data.porTipo;
-			$scope.totalMes=graficoService.data.atendimentoMes;
+			var porTipo=service.data.porTipo;
+			$scope.totalMes=service.data.total_mes;
 			for(var i=0;i<porTipo.length;i++){
+				$log.info(porTipo[i]);
 				$scope.chartTipo.push(
 				createItem(
-					porTipo[i].total,
-					calcPercentage($scope.totalMes,porTipo[i].total),
+					porTipo[i].total_tipo,
+					calcPercentage($scope.totalMes,porTipo[i].total_tipo),
 					porTipo[i].descricao,
 					i)
 				);
 			}
+			//$log.info($scope.chartTipo);
 		}
 		function createItem(value,porcentagem,descricao,item){
 			return {
@@ -73,9 +89,9 @@
 		return (100/total)*value;
 		}
 		/**Resposable for updating charts when the event is fired */
-	    $rootScope.$on("SYNC_CHART",function(events,args){
+		var listenner = $rootScope.$on("SYNC_CHART",function(events,args){
 			updateCharts();
-    	});
-		updateCharts();
+		});
+		$scope.$on('$destroy', listenner);
   	}
 })();

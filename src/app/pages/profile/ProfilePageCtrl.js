@@ -3,87 +3,53 @@
  * created on 16.12.2015
  */
 (function () {
-  'use strict';
+	'use strict';
 
-  angular.module('BlurAdmin.pages.profile')
-    .controller('ProfilePageCtrl', ProfilePageCtrl);
+	angular.module('BlurAdmin.pages.profile')
+	.controller('ProfilePageCtrl', ProfilePageCtrl);
 
-  /** @ngInject */
-  function ProfilePageCtrl($scope, fileReader, $filter, $uibModal) {
-    $scope.picture = $filter('profilePicture')('Nasta');
+	/** @ngInject */
+	function ProfilePageCtrl($scope,$q,Session,toastr,
+						$http,$log,ENDPOINT_API,$timeout) {
+		var path = "usuarios";
+    	var url = ENDPOINT_API +path;
+		$scope.usuario={};
+		$scope.ctrl={};
 
-    $scope.removePicture = function () {
-      $scope.picture = $filter('appImage')('theme/no-photo.png');
-      $scope.noPicture = true;
-    };
 
-    $scope.uploadPicture = function () {
-      var fileInput = document.getElementById('uploadFile');
-      fileInput.click();
+		function limpar(){
+			$http.get(url+"/"+Session.usuario_id).then(function(response){
+				$scope.usuario=response.data;
+				$scope.usuario.passwordTeste=$scope.usuario.password;
+				$log.info(response);
+			},function(error){
+				toastr.error("Nao foi possivel encontrar seu usuarior","Erro");
+				$log.error("Nao foi possivel encontrar usuario!!!");
+			});
+		}limpar();
 
-    };
+		$scope.salvarUsuario=function(){
+			var deferred = $q.defer();
+			deferred.notify();
+			if($scope.usuario.password!==$scope.usuario.passwordTeste){
+				toastr.error('Senha Invalida!', 'Erro!');
+				deferred.reject();
+			}else if($scope.ctrl.Form.$valid){
+				$timeout(function(){$http.put(url+"/"+Session.usuario_id,$scope.usuario)
+				.then(function(data) {
+					toastr.success('Os dados foram salvos com sucesso', 'Sucesso!');
+					limpar();
+					deferred.resolve();
+				},function(erro) {
+					toastr.error('Erro ao salvar os dados!', 'Erro!');
+					deferred.reject();
+				})},400);
+			}else{
+      			toastr.error('Digite os campos necessários para abrir o atendimento', 'Erro');
+				deferred.reject();
+			}
+			return deferred.promise;
+		};
 
-    $scope.socialProfiles = [
-      {
-        name: 'Facebook',
-        href: 'https://www.facebook.com/akveo/',
-        icon: 'socicon-facebook'
-      },
-      {
-        name: 'Twitter',
-        href: 'https://twitter.com/akveo_inc',
-        icon: 'socicon-twitter'
-      },
-      {
-        name: 'Google',
-        icon: 'socicon-google'
-      },
-      {
-        name: 'LinkedIn',
-        href: 'https://www.linkedin.com/company/akveo',
-        icon: 'socicon-linkedin'
-      },
-      {
-        name: 'GitHub',
-        href: 'https://github.com/akveo',
-        icon: 'socicon-github'
-      },
-      {
-        name: 'StackOverflow',
-        icon: 'socicon-stackoverflow'
-      },
-      {
-        name: 'Dribbble',
-        icon: 'socicon-dribble'
-      },
-      {
-        name: 'Behance',
-        icon: 'socicon-behace'
-      }
-    ];
-
-    $scope.unconnect = function (item) {
-      item.href = undefined;
-    };
-
-    $scope.showModal = function (item) {
-      $uibModal.open({
-        animation: false,
-        controller: 'ProfileModalCtrl',
-        templateUrl: 'app/pages/profile/profileModal.html'
-      }).result.then(function (link) {
-          item.href = link;
-        });
-    };
-
-    $scope.getFile = function () {
-      fileReader.readAsDataUrl($scope.file, $scope)
-          .then(function (result) {
-            $scope.picture = result;
-          });
-    };
-
-    $scope.switches = [true, true, false, true, true, false];
-  }
-
+	}
 })();

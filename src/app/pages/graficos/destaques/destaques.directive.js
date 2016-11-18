@@ -5,15 +5,18 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.graficos')
-      .directive('destaques', destaques);
+	angular.module('BlurAdmin.pages.graficos')
+    .directive('destaques', destaques);
 
-  /** @ngInject */
-  function destaques() {
-    return {
-      restrict: 'E',
-      controller: 'destaquesCtrl',
-      templateUrl: 'app/pages/graficos/destaques/destaques.html'
-    };
+	/** @ngInject */
+	function destaques() {
+		return {
+		restrict: 'E',
+		scope: {
+			tipo: '@tipo'
+		},
+		controller: 'destaquesCtrl',
+		templateUrl: 'app/pages/graficos/destaques/destaques.html'
+		};
   }
 })();

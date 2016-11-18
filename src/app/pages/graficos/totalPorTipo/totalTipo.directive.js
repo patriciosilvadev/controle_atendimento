@@ -12,6 +12,9 @@
   function totalTipoChart() {
     return {
       restrict: 'E',
+      scope: {
+			  tipo: '@tipo'
+		  },
       controller: 'TotalTipoChartCtrl',
       templateUrl: 'app/pages/graficos/totalPorTipo/totalTipo.html'
     };

@@ -4,9 +4,9 @@
 	.constant('ENDPOINT_API', 'http://localhost:4000/api/')
 	//.constant('ENDPOINT_API', 'http://191.182.25.177:8080/api/')
 	//.constant('ENDPOINT_URL', 'http://localhost:4000')
-	.constant('ENDPOINT_API', 'http://191.182.25.177:8080/api/')
+	//.constant('ENDPOINT_API', 'http://191.182.25.177:8080/api/')
 	//.constant('ENDPOINT_URL', 'http://191.182.25.177:8080')
-	.constant('DEV_MODE', true)
+	.constant('DEV_MODE', false)
 	.constant('SYNC_TIME', 120000)
 	.constant('AUTH_EVENTS', {
 		loginSuccess: 'auth-login-success',

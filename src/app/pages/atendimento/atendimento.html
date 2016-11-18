@@ -110,14 +110,19 @@
                             </div>
                             <span class="has-error" ng-if="ctrl.Form.preco.$invalid">Requerido</span>
                         </div>
-                        <div class="form-group col-md-3" ng-if="more">
-                            <label>Aprovado</label>
-                            <div class="switches clearfix">
-                                <switcher color="primary" ng-model="atendimento.aprovado"></switcher>
-                            </div>
+                        <div class="form-group col-md-4" ng-if="more"
+                            ng-class="{'has-error': ctrl.Form.status.$invalid}">
+                            <label for="status">Aprovado</label>  
+                            <select ng-model="atendimento.status" 
+                                    name="status"
+                                    id="status" 
+                                    class="form-control" required>
+                                <option ng-repeat="item in status">{{item}}</option>
+                            </select>
+                            <span class="help-block error-block basic-block">Requerido</span>
                         </div>
                 </div>
-                <div class="row" ng-if="!atendimento.aprovado && more">
+                <div class="row" ng-if="atendimento.status==='não aprovado' && more">
                     <div class="form-group col-md-12"
                          ng-class="{'has-error': ctrl.Form.motivo.$invalid}">
                         <label for="motivo">Motivo</label>

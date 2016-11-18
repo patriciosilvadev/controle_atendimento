@@ -10,7 +10,20 @@
 
   /** @ngInject */
   function graficosPieChartCtrl($scope, graficoService,$rootScope,
-							baConfig, baUtil,$timeout) {
+							baConfig, $log, baUtil,$timeout,graficosFaturamentoService) {
+
+		var service ={};
+		var rs = "";
+		if(isAtendimento()){
+			service=graficoService;
+		}else{
+			rs="R$ ";
+			service=graficosFaturamentoService;
+		}
+		function isAtendimento(){
+			return $scope.tipo==='atendimento';
+		}
+		$scope.isAtendimento=isAtendimento();
 		/**
 		 * create variables
 		 */
@@ -27,10 +40,17 @@
 			};
 		}
 
-		$scope.charts.push(createChar('Atendimentos Ano','person'));
-		$scope.charts.push(createChar('Atendimentos Mês','person'));
-		$scope.charts.push(createChar('Visitas - Mes','face'));
-		$scope.charts.push(createChar('Destaque do Mes','face'));
+		if(isAtendimento()){
+			$scope.charts.push(createChar('Atendimentos Do Mes','person'));
+			$scope.charts.push(createChar('Atendimentos da Semana','person'));
+			$scope.charts.push(createChar('Visitas - Mes','face'));
+			$scope.charts.push(createChar('Destaque do Mes','face'));
+		}else{
+			$scope.charts.push(createChar('Faturamento Mes','person'));
+			$scope.charts.push(createChar('Faturamento da Semana','person'));
+			$scope.charts.push(createChar('Nao Aprovados - Mes','face'));
+			$scope.charts.push(createChar('Destaque do Mes','face'));
+		}
 		
 		function loadPieCharts() {
 			$('.chart').each(function () {
@@ -59,18 +79,28 @@
 		}
 
 		function updateCharts(){
-			var data=graficoService.data;
-			//update Atendimento por ano
-			$scope.charts[0].stats=data.atendimentoAno;
-			$scope.charts[0].percent=calcPercentage(data.atendimentoAno,data.atendimentoAno);
-			//update Atendimento por Mês
-			$scope.charts[1].stats=data.atendimentoMes;
-			$scope.charts[1].percent=calcPercentage(data.atendimentoAno,data.atendimentoMes);
+			var data=service.data;
+			//update Atendimento por mes
+			$scope.charts[0].stats=rs + data.total_mes;
+			$scope.charts[0].percent=calcPercentage(data.total_ano,data.total_mes);
+			//update Atendimento por semana
+			$scope.charts[1].stats= rs +(data.total_semana || 0);
+			$scope.charts[1].percent=calcPercentage(data.total_mes,(data.total_semana||0));
+			
+
+			if(isAtendimento()){
+				$scope.charts[2].stats= rs +data.total_visitas;
+				$scope.charts[2].percent=calcPercentage(data.total_mes,data.total_visitas);
+			}else{
+				//nao Aprovados
+				$scope.charts[2].stats= rs +data.nao_aprovados;
+				$scope.charts[2].percent=calcPercentage(data.total_mes,data.nao_aprovados);
+			}
+
 			//update
 			var destaqueTotal=0;
-			$scope.charts[3].stats=data.destaques[0].total||0;
-			$scope.charts[3].description="Destaque do Mes"
-			$scope.charts[3].percent=calcPercentage(data.atendimentoMes,(data.destaques[0].total || 0));
+			$scope.charts[3].stats= rs +data.destaques[0].total||0;
+			$scope.charts[3].percent=calcPercentage(data.total_mes,(data.destaques[0].total || 0));
 
 			$('.pie-charts .chart').each(function(index, chart) {
 				$(chart).data('easyPieChart').update($scope.charts[index].percent);
@@ -82,8 +112,9 @@
 			updateCharts();
 		},600);
 
-		$rootScope.$on("SYNC_CHART",function(events,args){
+		var listenner = $rootScope.$on("SYNC_CHART",function(events,args){
 			updateCharts();
 		});
+		$scope.$on('$destroy', listenner);
 	}
 })();

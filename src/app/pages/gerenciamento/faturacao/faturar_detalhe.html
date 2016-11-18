@@ -1,0 +1,134 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <button type="button" class="close" ng-click="$dismiss()" aria-label="Close">
+      <em class="ion-ios-close-empty sn-link-close"></em>
+    </button>
+    <h4 class="modal-title">Detalhes do item selecionado</h4>
+  </div>
+  <div class="modal-body">
+    
+         <form name="ctrl.Form" novalidate>
+
+                <div class ="row">
+                    <div class="form-group col-md-4">
+                        <label for="cnpjInput">CNPJ/CPF</label>
+                        <input type="text" id="cnpj"  
+                            placeholder="CNPJ/CPF" class="form-control"  
+                            name="cnpj""
+                            ng-model="item.cnpj"
+                            ng-blur="procura(item.cnpj)" 
+                            ng-disabled="true"
+                            >
+                    </div>                   
+                    <div class="form-group col-md-8">
+                        <label for="nome">Cliente</label>
+                        <input type="text" class="form-control"
+                            id="cliente" placeholder="Cliente"
+                            name="cliente"
+                            ng-disabled="true"
+                            ng-model="item.nome">
+                    </div>
+                </div>
+
+<div class ="row">
+                    <div class="form-group col-md-4">
+                        <label for="Contato">Contato</label>
+                        <input type="text" class="form-control"
+                            id="Contato" placeholder="Contato"
+                            ng-disabled="true"
+                            ng-model="item.contato">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="tipo_acesso">Tipo Acesso</label>
+                        <input type="text" class="form-control"
+                            id="tipo_acesso" placeholder="Tipo Acesso"
+                            ng-disabled="true"
+                            ng-model="item.tipo_acesso">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="tipo_atendimento">Tipo Atendimento</label>
+                        <input type="text" class="form-control"
+                            id="tipo_atendimento" placeholder="Tipo Atendimento"
+                            ng-disabled="true"
+                            ng-model="item.tipo_atendimento">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label for="problema">Problema</label>
+                        <textarea placeholder="Problema" 
+                                class="form-control" 
+                                id="problema"
+                                ng-disabled="true"
+                                ng-model="item.problema">
+                        </textarea>
+                    </div>
+                </div>
+
+                <div class ="row">
+                    <div class="form-group col-md-12">
+                        <label for="solucao">Solucao</label>
+                        <textarea placeholder="Solucao" 
+                                class="form-control" 
+                                id="solucao"
+                                ng-disabled="true"
+                                ng-model="item.solucao">
+                        </textarea>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                        <div class="form-group col-md-3" >
+                            <label>Chamado</label>
+                                <div class="switches clearfix" ng-disabled="true">
+                                    <switcher color="primary" ng-model="item.chamado"></switcher>
+                                </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="preco">Preço</label>
+                            <div class="input-group">
+                                <span class="input-group-addon addon-left input-group-addon-success">R$</span>
+                                <input type="text" class="form-control with-success-addon" 
+                                    ng-model="item.valor"
+                                    id="preco" 
+                                    ng-disabled="true"
+                                    placeholder="Preço"
+                                    name="preco">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                          <label for="status">Status</label>
+                          <input type="text" id="status"  
+                              class="form-control"  
+                              name="status""
+                              ng-model="item.status"
+                              ng-disabled="true"
+                              >
+                       </div>                   
+                </div>
+
+
+
+
+                <div class="row" ng-if="item.status==='não aprovado'">
+                    <div class="form-group col-md-12">
+                        <label for="motivo">Motivo</label>
+                        <textarea placeholder="Motivo" 
+                                class="form-control form-group" 
+                                id="motivo"
+                                name="motivo"
+                                ng-disabled="true"
+                                ng-model="item.motivo">
+                        </textarea>
+                    </div>
+                </div>
+            </form>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-info" ng-if="!(item.status==='não aprovado')" ng-click="faturar()">Faturar</button>
+    <button type="button" class="btn btn-primary" ng-click="$dismiss()">Fechar</button>
+  </div>
+</div>

@@ -25,6 +25,7 @@
 		//define the possible types of user that can be registered
 		$scope.atendimento_tipos=[];
 		$scope.acesso=['Acesso','Ligação','Acesso/Ligação'];
+		$scope.status=['aguardando aprovação','aprovado','não aprovado'];
 		$scope.atendimento={};
 
 		function limpar(){
@@ -39,7 +40,7 @@
 			atendimento.motivo="";
 			atendimento.chamado=false;
 			atendimento.valor=null;
-			atendimento.aprovado=true;
+			atendimento.status="";
 			$scope.cadastroMode=true;
 			$scope.finalizarMode=false;
 			$scope.viewMode=false;
@@ -191,9 +192,9 @@
 				item.aberto
 			    $scope.finalizarMode=!!item.aberto;
 			}
-			$scope.atendimento=item;
+			$scope.atendimento=clone(item);
 			$scope.atendimento.cnpj = applyMask($scope.atendimento.cnpj);
-			$scope.atendimento.tipo_atendimento=item.descricao;
+			$scope.atendimento.tipo_atendimento=clone(item.descricao);
 			$scope.verificarMore(item.descricao);
 		}
 

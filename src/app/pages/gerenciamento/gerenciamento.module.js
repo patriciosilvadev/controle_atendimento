@@ -6,7 +6,7 @@
   'use strict';
 
   angular.module('BlurAdmin.pages.gerenciamento', [
-    'BlurAdmin.pages.gerenciamento.timeline',
+    //'BlurAdmin.pages.gerenciamento.timeline',
     'BlurAdmin.pages.gerenciamento.cadastroUsuario',
     'BlurAdmin.pages.gerenciamento.faturamentoAtendimento'
   ])

@@ -1,12 +1,12 @@
 (function () {
 	'use strict';
 
-	angular.module('BlurAdmin.pages.graficos')
-	.service('graficoService', graficoService);
+	angular.module('BlurAdmin.pages.graficosFaturamento')
+	.service('graficosFaturamentoService', graficosFaturamentoService);
 
-	function graficoService($http,ENDPOINT_API,
+	function graficosFaturamentoService($http,ENDPOINT_API,
 					$filter,$log, $q,$rootScope,$interval) {
-		var path = "grafico";
+		var path = "graficoFaturamento";
 		var url = ENDPOINT_API+path;
 		var serviceChart = this;
 		serviceChart.date=format(new Date());

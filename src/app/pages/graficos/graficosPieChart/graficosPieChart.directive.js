@@ -12,6 +12,9 @@
   function graficosPieChart() {
     return {
       restrict: 'E',
+      scope: {
+			  tipo: '@tipo'
+	  	},
       controller: 'graficosPieChartCtrl',
       templateUrl: 'app/pages/graficos/graficosPieChart/graficosPieChart.html'
     };

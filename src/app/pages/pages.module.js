@@ -10,6 +10,7 @@
 		'BlurAdmin.pages.dashboard',
 		'BlurAdmin.pages.ui',
 		//'BlurAdmin.pages.components',
+		'BlurAdmin.pages.graficosFaturamento',
 		'BlurAdmin.pages.form',
 		'BlurAdmin.pages.tables',
 		'BlurAdmin.pages.charts',
@@ -25,7 +26,7 @@
 	function routeConfig($urlRouterProvider, baSidebarServiceProvider) {
 		$urlRouterProvider.otherwise('/atendimento');
 
-		baSidebarServiceProvider.addStaticItem({
+		/*baSidebarServiceProvider.addStaticItem({
 			title: 'Pages',
 			icon: 'ion-document',
 			subMenu: [{
@@ -44,7 +45,7 @@
 				fixedHref: '404.html',
 				blank: true
 			}]
-		});
+		});*/
 		baSidebarServiceProvider.addStaticItem({
 			title: 'Menu Level 1',
 			icon: 'ion-ios-more',

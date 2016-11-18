@@ -5,17 +5,17 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.graficos', ['easypiechart'])
+  angular.module('BlurAdmin.pages.graficosFaturamento', ['easypiechart'])
       .config(routeConfig);
 
   /** @ngInject */
   function routeConfig($stateProvider,USER_ROLES) {
     $stateProvider
-        .state('graficos', {
-          url: '/graficos',
-          controller:'graficosCtrl',
-          templateUrl: 'app/pages/graficos/grafico.html',
-          title: 'Graficos',
+        .state('graficosFaturamento', {
+          url: '/graficosFaturamento',
+          controller:'graficosFaturamentoCtrl',
+          templateUrl: 'app/pages/graficosFaturamento/graficosFaturamento.html',
+          title: 'Graficos Faturamento',
           sidebarMeta: {
             icon: 'ion-stats-bars',
             order: 1,

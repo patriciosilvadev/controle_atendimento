@@ -9,7 +9,8 @@
 		var path = "graficoFaturamento";
 		var url = ENDPOINT_API+path;
 		var serviceChart = this;
-		serviceChart.date=format(new Date());
+		serviceChart.dataInicial=format(new Date());
+		serviceChart.dataFinal=format(new Date());
 		//var socket = io.connect(ENDPOINT_URL);
 		/*var socket = io.connect(ENDPOINT_URL,{'transports': ['websocket', 'polling']});
 		socket.on('chartUpdate', function (data) {
@@ -22,18 +23,25 @@
 				console.log("recebeu");
 			});*/
 
-			$http.get(url+"/"+serviceChart.date).then(function(response){
+			$http.get(url+"/"+serviceChart.dataInicial+"/"+serviceChart.dataFinal).then(function(response){
 				serviceChart.data=response.data;
 				$rootScope.$emit("SYNC_CHART",{});
 			});
 		}update();
-		serviceChart.update=function(date){
-			serviceChart.date=date;
+		serviceChart.update=function(dataInicial,dataFinal){
+			if(dataInicial!==undefined && dataFinal!==undefined){
+				serviceChart.dataInicial=format(dataInicial);
+				serviceChart.dataFinal=format(dataFinal);
+				$log.info(dataInicial);
+			}else{
+				$log.error("Erro com as datas");
+			}
+			update();
 		}
 		function format(date){
 			return $filter('date')(date, 'MM/dd/yyyy');
 		}
-		$interval(update,5000);
+		$interval(update,50000);
 		serviceChart.data={
 			total_ano:0,
 			total_visitas:0,

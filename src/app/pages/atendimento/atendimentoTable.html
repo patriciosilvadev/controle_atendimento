@@ -1,3 +1,33 @@
+<div class="row">
+  <h3>Pesquisa por Mês e Ano</h3>
+  <div class="row">
+      <div class="col-md-3">
+          <label>Data Inicial</label>
+          <p class="input-group">
+            <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="dt" datepicker-options="dataOptions" ng-required="true" close-text="Close" is-open="date.opened" />
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default" ng-click="open(1)"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+          </p>
+        </div>
+        <div class="col-md-3">
+          <label>Data Final</label>
+          <p class="input-group">
+            <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="dt2" datepicker-options="dataOptions2" ng-required="true" close-text="Close" is-open="date2.opened" />
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default" ng-click="open(2)"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+          </p>
+        </div>
+        <div class="col-md-3">
+          <button progress-button="pesquisar()"
+                  pb-style="rotate-side-up"
+                  class="btn btn-info">
+                  Pesquisar
+          </button>
+        </div>
+  </div>
+</div>
 <div class="horizontal-scroll">
   <div class="form-group select-page-size-wrap ">
     <label>Numero de paginas

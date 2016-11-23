@@ -25,35 +25,43 @@
        <destaques tipo="atendimento"></destaques>
   </div>
 </div>
-<div class="row">
-	<div>
-		<pre>Selected date is: <em>{{dt | date:'fullDate' }}</em></pre>
 
-		<h4>Selecione </h4>
-    <!--input type="text" class="form-control" uib-datepicker-popup="MM.yyyy" ng-model="dt" datepicker-options="dataOptions" ng-required="true" close-text="Close" is-open="date.opened" /-->
-    <div class="row">
-      <div class="col-md-3">
-        <p class="input-group">
-          <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="dt" datepicker-options="dataOptions" ng-required="true" close-text="Close" is-open="date.opened" />
-          <span class="input-group-btn">
-            <button type="button" class="btn btn-default" ng-click="open(1)"><i class="glyphicon glyphicon-calendar"></i></button>
-          </span>
-        </p>
-      </div>
-      <div class="col-md-3">
-        <p class="input-group">
-          <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="dt2" datepicker-options="dataOptions" ng-required="true" close-text="Close" is-open="date2.opened" />
-          <span class="input-group-btn">
-            <button type="button" class="btn btn-default" ng-click="open(2)"><i class="glyphicon glyphicon-calendar"></i></button>
-          </span>
-        </p>
-      </div>
-    </div>
-		<hr />
-		<button type="button" class="btn btn-sm btn-info" ng-click="today()">Today</button>
-		<button type="button" class="btn btn-sm btn-default" ng-click="setDate(2009, 7, 24)">2009-08-24</button>
-		<button type="button" class="btn btn-sm btn-danger" ng-click="clear()">Clear</button>
-		<button type="button" class="btn btn-sm btn-default" ng-click="toggleMin()" uib-tooltip="After today restriction">Min date</button>
+
+<div class="row">
+	<div class="col-lg-12 col-md-12 col-sm-12"
+          ba-panel
+          ba-panel-title="Pesquisa por Data"
+          ba-panel-class="medium-panel">
+		<div ng-controller="graficosCtrl">
+			<!--pre>Selected date is: <em>{{dt | date:'fullDate' }}</em></pre-->
+
+			<!--input type="text" class="form-control" uib-datepicker-popup="MM.yyyy" ng-model="dt" datepicker-options="dataOptions" ng-required="true" close-text="Close" is-open="date.opened" /-->
+			<div class="col-md-3">
+				<!--label>Data Inicial</label-->
+				<p class="input-group">
+					<input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="dt" datepicker-options="dataOptions" ng-required="true" close-text="Close" is-open="date.opened" />
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-default" ng-click="open(1)"><i class="glyphicon glyphicon-calendar"></i></button>
+					</span>
+				</p>
+			</div>
+			<div class="col-md-3">
+				<!--label>Data Final</label-->
+				<p class="input-group">
+					<input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="dt2" datepicker-options="dataOptions2" ng-required="true" close-text="Close" is-open="date2.opened" />
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-default" ng-click="open(2)"><i class="glyphicon glyphicon-calendar"></i></button>
+					</span>
+				</p>
+			</div>
+			<div class="col-md-3">
+				<button progress-button="pesquisar()"
+								pb-style="rotate-side-up"
+								class="btn btn-info">
+								Pesquisar
+				</button>
+			</div>
+		</div>
 	</div>
 </div>
 <!--<div class="row">

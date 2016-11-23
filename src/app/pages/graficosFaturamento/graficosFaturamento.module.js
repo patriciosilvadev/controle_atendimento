@@ -13,7 +13,7 @@
     $stateProvider
         .state('graficosFaturamento', {
           url: '/graficosFaturamento',
-          controller:'graficosFaturamentoCtrl',
+          //controller:'graficosFaturamentoCtrl',
           templateUrl: 'app/pages/graficosFaturamento/graficosFaturamento.html',
           title: 'Graficos Faturamento',
           sidebarMeta: {

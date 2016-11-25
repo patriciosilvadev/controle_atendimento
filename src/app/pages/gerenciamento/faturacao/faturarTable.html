@@ -66,7 +66,7 @@
             <button class="btn btn-primary editable-table-button btn-xs" ng-click="open(item)">destalhes</button>
             <button class="btn btn-danger editable-table-button btn-xs"
 					ng-if="item.status==='aprovado'" 
-					ng-click="faturar(item,false)">
+					ng-click="faturar(item.at_id)">
 					sim
 			</button>
           </div>

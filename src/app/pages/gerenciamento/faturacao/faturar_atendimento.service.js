@@ -15,8 +15,8 @@
     function all(){
       return $http.get(url);
     }
-    function create(item) {
-      return $http.post(url, item);
+    function put(id) {
+      return $http.put(url+"/"+id+"/faturar");
     };
     function update(item) {
       return $http.put(url+'/'+item.usuario_id, item);
@@ -26,9 +26,7 @@
     };
     return {
       all:all,
-      create:create,
-      update:update,
-      deleta:deleta
+      put:put
     };
   }
 })();

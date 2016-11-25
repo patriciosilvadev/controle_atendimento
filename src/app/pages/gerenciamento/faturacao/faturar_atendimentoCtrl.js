@@ -18,7 +18,8 @@
   /**
    * Controle para o cadastro de usuario
    */
-    function faturamentoCtrl($filter,$scope,$http,faturamentoService,$q,$timeout,$log,$uibModal) {
+    function faturamentoCtrl($filter,$scope,$http,faturamentoService,
+                toastr,$q,$timeout,$log,$uibModal) {
 
 
         $scope.open = function (item) {
@@ -79,10 +80,17 @@
                 return mascara.trim().replace(/[^0-9]$/, '');
             }
 
-            $scope.faturar=function(numeroAtendimento,faturado){
+            $scope.faturar=function(id){
                 $log.info("faturando item");
-                $log.info(numeroAtendimento);
-                $log.info(faturado);
+                $log.info(id);
+                faturamentoService.put(id).then(function(data){
+                    $log.debug("Faturado com sucesso");
+                    toastr.success('Faturado com sucesso', 'Sucesso ao Faturar!');
+                    atualizaDados();
+                },function(error){
+                    toastr.error('Erro ao faturar', 'Erro!');
+                    $log.debug(error);
+                })
             }
 
             /**

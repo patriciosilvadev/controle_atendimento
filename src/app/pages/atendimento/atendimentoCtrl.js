@@ -25,7 +25,7 @@
 		//define the possible types of user that can be registered
 		$scope.atendimento_tipos=[];
 		$scope.acesso=['Acesso','Ligação','Acesso/Ligação'];
-		$scope.status=['aguardando aprovação','aprovado','não aprovado'];
+		$scope.status=['aguardando aprovação','aprovado','não aprovado','faturado'];
 		$scope.atendimento={};
 
 		function limpar(){

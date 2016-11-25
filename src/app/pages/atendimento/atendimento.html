@@ -112,12 +112,12 @@
                         </div>
                         <div class="form-group col-md-4" ng-if="more"
                             ng-class="{'has-error': ctrl.Form.status.$invalid}">
-                            <label for="status">Aprovado</label>  
-                            <select ng-model="atendimento.status" 
+                            <label for="status">Aprovado{{atendimento.status}}</label>  
+                            <select ng-disabled="atendimento.status==='faturado'" ng-model="atendimento.status" 
                                     name="status"
                                     id="status" 
                                     class="form-control" required>
-                                <option ng-repeat="item in status">{{item}}</option>
+                                <option ng-if="(item!=='faturado' || atendimento.status==='faturado')"  ng-repeat="item in status">{{item}}</option>
                             </select>
                             <span class="help-block error-block basic-block">Requerido</span>
                         </div>

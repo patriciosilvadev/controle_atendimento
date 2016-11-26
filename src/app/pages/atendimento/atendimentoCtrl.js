@@ -12,6 +12,36 @@
 	function atendimentoCtrl($scope,atendimentoService,
 							 Session,$filter, editableOptions, $log,
 							 editableThemes,$q,$timeout,$uibModal,toastr) {
+	$scope.data=undefined;
+        //options for data
+        $scope.dataOptions={
+            datepickerMode:'month',
+            minMode:'month',
+            maxMode: 'month'
+        };
+
+        $scope.date={opened:false};
+        $scope.open=function(){
+		$scope.date.opened=!$scope.date.opened;
+		$log.info("Data :");
+		$log.info($scope.$parent.data);
+        };
+        $scope.pesquisar=function(dt){
+            var deferred = $q.defer();
+            deferred.notify();
+            $timeout(function(){
+                if(dt===undefined){
+                    toastr.error('Por favor, selecione as datas!', 'Erro!');
+                    deferred.reject();
+                }else{
+                    toastr.info('Pesquisa Realizada com Sucesso!', 'Sucesso!');
+                    atualizaDados(dt);
+                    deferred.resolve();
+                }
+            },400);
+            return deferred.promise;
+        }
+	    
 	    $scope.ctrl={};
 		/**Cria objecto atendimento e inicializa suas propriedades */
 		$scope.smartTablePageSize = 10;
@@ -60,8 +90,8 @@
 		/**
 		 * Atualiza dados da tabela
 		 */
-		function atualizaDados(){
-			atendimentoService.all().then(function (response) {
+		function atualizaDados(date){
+			atendimentoService.all(date).then(function (response) {
 				limpar();
 				$scope.atendimentos = response.data;
 				console.log($scope.atendimentos);
@@ -69,7 +99,7 @@
 				$scope.status = 'Unable to load customer data: ' + error.message;
 			});
 			$scope.usuario={};
-		}atualizaDados();
+		}atualizaDados(new Date());
 
 		/**
 		 * Abre Chamado

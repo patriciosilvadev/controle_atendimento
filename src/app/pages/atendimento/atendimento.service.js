@@ -5,11 +5,19 @@
   .factory('atendimentoService', atendimentoService);
 
   /** @ngInject */
-  function atendimentoService($http,ENDPOINT_API,Session) {
+  function atendimentoService($http,ENDPOINT_API,Session,$log) {
     var path = "atendimentos";
     var url = ENDPOINT_API +path;
+    var date = new Date();
+    $log.debug("Year: "+date.getFullYear()+" Month: "+date.getMonth());
+
     function all(){
       return $http.get(url);
+    }
+    function all(data){
+      date = data;
+      $log.debug("Retrieving by Year: "+date.getFullYear()+" Month: "+(date.getMonth()+1));
+      return $http.get(url+"/"+date.getFullYear()+"/"+(date.getMonth()+1));
     }
     function create(item) {
       console.log(item);

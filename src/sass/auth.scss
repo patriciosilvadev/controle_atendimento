@@ -36,10 +36,11 @@ $text-color: #ffffff;
 .auth-block {
   width: 540px;
   margin: 0 auto;
+  margin-top: 100px;
   border-radius: 5px;
-  @include bg-translucent-dark(0.55);
+  @include bg-translucent-dark(0.70);
   color: #fff;
-  padding: 32px;
+  padding: 40px;
   h1 {
     font-weight: $font-light;
     margin-bottom: 28px;

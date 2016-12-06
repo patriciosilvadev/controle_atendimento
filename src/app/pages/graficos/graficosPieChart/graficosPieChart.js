@@ -98,9 +98,12 @@
 			}
 
 			//update
-			var destaqueTotal=0;
-			$scope.charts[3].stats= rs +data.destaques[0].total||0;
-			$scope.charts[3].percent=calcPercentage(data.total_mes,(data.destaques[0].total || 0));
+			var destaqueTotal=0
+			if(data.destaques[0]!==undefined){
+				destaqueTotal=data.destaques[0].total;
+			}
+			$scope.charts[3].stats= rs + (destaqueTotal);
+			$scope.charts[3].percent=calcPercentage(data.total_mes,destaqueTotal);
 
 			$('.pie-charts .chart').each(function(index, chart) {
 				$(chart).data('easyPieChart').update($scope.charts[index].percent);

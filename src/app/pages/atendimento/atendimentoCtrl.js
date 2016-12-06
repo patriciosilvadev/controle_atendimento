@@ -12,7 +12,7 @@
 	function atendimentoCtrl($scope,atendimentoService,
 							 Session,$filter, editableOptions, $log,
 							 editableThemes,$q,$timeout,$uibModal,toastr) {
-	$scope.data=undefined;
+	$scope.data=new Date();
         //options for data
         $scope.dataOptions={
             datepickerMode:'month',
@@ -35,7 +35,8 @@
                     deferred.reject();
                 }else{
                     toastr.info('Pesquisa Realizada com Sucesso!', 'Sucesso!');
-                    atualizaDados(dt);
+                    $scope.data=dt;
+		    atualizaDados();
                     deferred.resolve();
                 }
             },400);
@@ -90,8 +91,8 @@
 		/**
 		 * Atualiza dados da tabela
 		 */
-		function atualizaDados(date){
-			atendimentoService.all(date).then(function (response) {
+		function atualizaDados(){
+			atendimentoService.all($scope.data).then(function (response) {
 				limpar();
 				$scope.atendimentos = response.data;
 				console.log($scope.atendimentos);
@@ -99,7 +100,7 @@
 				$scope.status = 'Unable to load customer data: ' + error.message;
 			});
 			$scope.usuario={};
-		}atualizaDados(new Date());
+		}atualizaDados();
 
 		/**
 		 * Abre Chamado

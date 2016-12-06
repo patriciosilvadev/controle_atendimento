@@ -9,7 +9,7 @@
 		var path = "graficoFaturamento";
 		var url = ENDPOINT_API+path;
 		var serviceChart = this;
-		serviceChart.dataInicial=format(new Date());
+		var dataInicial=new Date();
 		serviceChart.dataFinal=format(new Date());
 		//var socket = io.connect(ENDPOINT_URL);
 		/*var socket = io.connect(ENDPOINT_URL,{'transports': ['websocket', 'polling']});
@@ -19,25 +19,22 @@
 			console.log("recebeu");
 		});*/
 		function update(){
-			/*$http.get(ENDPOINT_API+"graficoTeste/"+serviceChart.date).then(function(response){
-				console.log("recebeu");
-			});*/
-
-			$http.get(url+"/"+serviceChart.dataInicial+"/"+serviceChart.dataFinal).then(function(response){
+			$http.get(url+"/"+dataInicial.getFullYear()+"/"+(dataInicial.getMonth()+1)+"/"+dataInicial.getDate())
+			.then(function(response){
 				serviceChart.data=response.data;
 				$rootScope.$emit("SYNC_CHART",{});
 			});
 		}update();
-		serviceChart.update=function(dataInicial,dataFinal){
-			if(dataInicial!==undefined && dataFinal!==undefined){
-				serviceChart.dataInicial=format(dataInicial);
-				serviceChart.dataFinal=format(dataFinal);
+		serviceChart.update=function(dt){
+			if(dt!==undefined){
+				dataInicial=dt;
 				$log.info(dataInicial);
+				update();
 			}else{
 				$log.error("Erro com as datas");
 			}
-			update();
 		}
+		
 		function format(date){
 			return $filter('date')(date, 'MM/dd/yyyy');
 		}

@@ -9,20 +9,17 @@
     .factory('faturamentoService', faturamentoService);
 
   /** @ngInject */
-  function faturamentoService($http,ENDPOINT_API) {
+  function faturamentoService($http,ENDPOINT_API,$log) {
     var path = "faturamento";
     var url = ENDPOINT_API +path;
-    function all(){
-      return $http.get(url);
+    var date=new Date();
+    function all(data){
+      date = data;
+      $log.debug("Retrieving by Year: "+date.getFullYear()+" Month: "+(date.getMonth()+1));
+      return $http.get(url+"/"+date.getFullYear()+"/"+(date.getMonth()+1));
     }
     function put(id) {
       return $http.put(url+"/"+id+"/faturar");
-    };
-    function update(item) {
-      return $http.put(url+'/'+item.usuario_id, item);
-    };
-    function deleta(item) {
-      return $http.delete(url+'/'+item.usuario_id);
     };
     return {
       all:all,

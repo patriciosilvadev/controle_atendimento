@@ -1,3 +1,23 @@
+<div class="row">
+  <div class="form-group">
+      <div class="col-md-3">
+          <label>Data Inicial</label>
+          <p class="input-group">
+            <input type="text" class="form-control" uib-datepicker-popup="MM/yyyy" ng-model="data" datepicker-options="dataOptions" is-open="date.opened">
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default" ng-click="openDate()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+          </p>
+      </div>
+      <div class="col-md-3">
+        <button progress-button="pesquisar(data)"
+                pb-style="rotate-side-up"
+                class="btn btn-info">
+                Pesquisar
+        </button>
+      </div>
+  </div>
+</div>
 <div class="horizontal-scroll">
   <div class="form-group select-page-size-wrap ">
     <label>Numero de paginas

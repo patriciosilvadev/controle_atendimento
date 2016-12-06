@@ -21,7 +21,7 @@
     function faturamentoCtrl($filter,$scope,$http,faturamentoService,
                 toastr,$q,$timeout,$log,$uibModal) {
 
-
+        
         $scope.open = function (item) {
             $uibModal.open({
                 animation: true,
@@ -32,71 +32,89 @@
                 }
             });
         };
+        var selectedDate= new Date();
+        $scope.data=undefined;
+        //options for data
+        $scope.dataOptions={
+            datepickerMode:'month',
+            minMode:'month',
+            maxMode: 'month'
+        };
 
-        function weekCount(year, month_number) {
-
-            // month_number is in the range 1..12
-
-            var firstOfMonth = new Date(year, month_number-1, 1);
-            var lastOfMonth = new Date(year, month_number, 0);
-
-            var used = firstOfMonth.getDay() + lastOfMonth.getDate();
-
-            return Math.ceil( used / 7);
-        }
-        console.log(weekCount(2016,11));
-
-            $scope.faturas={};
-            function atualizaDados(){
-                faturamentoService.all().then(function (response) {
-                    $scope.faturas = response.data;
-                }, function (error) {
-                    $scope.status = 'Unable to load customer data: ' + error.message;
-                });
-            }atualizaDados();
-            $scope.formataData=function(date){
-                return $filter('date')(date, 'dd/MM/yyyy');
-            };
-            /**
-             * Pega Numero
-             */
-            function getNumber(str){
-                str+="";
-                return str.replace(/[^\d]/g, '').slice(0, 14)
-            }
-            /**
-             * Aplica Mascara
-             */
-            function applyMask(str){
-                var number = getNumber(str);
-                var cnpj = new StringMask('00.000.000\/0000-00');
-                var cpf = new StringMask('000.000.000-00');
-                var mascara ="";
-                if(number.length>11){
-                    mascara = cnpj.apply(number);
+        $scope.date={opened:false};
+        $scope.openDate=function(){
+		$scope.date.opened=!$scope.date.opened;
+		$log.info("Data :");
+		$log.info($scope.$parent.data);
+        };
+        $scope.pesquisar=function(dt){
+            var deferred = $q.defer();
+            deferred.notify();
+            $timeout(function(){
+                if(dt===undefined){
+                    toastr.error('Por favor, selecione as datas!', 'Erro!');
+                    deferred.reject();
                 }else{
-                    mascara = cpf.apply(number);
+                    toastr.info('Pesquisa Realizada com Sucesso!', 'Sucesso!');
+                    selectedDate=dt;
+                    atualizaDados(dt);
+                    deferred.resolve();
                 }
-                return mascara.trim().replace(/[^0-9]$/, '');
-            }
+            },400);
+            return deferred.promise;
+        }
 
-            $scope.faturar=function(id){
-                $log.info("faturando item");
-                $log.info(id);
-                faturamentoService.put(id).then(function(data){
-                    $log.debug("Faturado com sucesso");
-                    toastr.success('Faturado com sucesso', 'Sucesso ao Faturar!');
-                    atualizaDados();
-                },function(error){
-                    toastr.error('Erro ao faturar', 'Erro!');
-                    $log.debug(error);
-                })
+        $scope.faturas={};
+        function atualizaDados(data){
+            faturamentoService.all(data).then(function (response) {
+                $scope.faturas = response.data;
+            }, function (error) {
+                $scope.status = 'Unable to load customer data: ' + error.message;
+            });
+        }atualizaDados(selectedDate);
+        $scope.formataData=function(date){
+            return $filter('date')(date, 'dd/MM/yyyy');
+        };
+        /**
+         * Pega Numero
+         */
+        function getNumber(str){
+            str+="";
+            return str.replace(/[^\d]/g, '').slice(0, 14)
+        }
+        /**
+         * Aplica Mascara
+         */
+        function applyMask(str){
+            var number = getNumber(str);
+            var cnpj = new StringMask('00.000.000\/0000-00');
+            var cpf = new StringMask('000.000.000-00');
+            var mascara ="";
+            if(number.length>11){
+                mascara = cnpj.apply(number);
+            }else{
+                mascara = cpf.apply(number);
             }
+            return mascara.trim().replace(/[^0-9]$/, '');
+        }
 
-            /**
-             * Faz o binding para o scope
-             */
-            $scope.applyMask=applyMask;
+        $scope.faturar=function(id){
+            $log.info("faturando item");
+            $log.info(id);
+            faturamentoService.put(id).then(function(data){
+                $log.debug("Faturado com sucesso");
+                toastr.success('Faturado com sucesso', 'Sucesso ao Faturar!');
+                atualizaDados(selectedDate);
+            },function(error){
+                toastr.error('Erro ao faturar', 'Erro!');
+                $log.debug(error);
+            })
+        }
+
+        /**
+         * Faz o binding para o scope
+         */
+        $scope.applyMask=applyMask;
     }
 
 })();

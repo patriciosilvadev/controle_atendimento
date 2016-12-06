@@ -9,25 +9,25 @@
 		var path = "grafico";
 		var url = ENDPOINT_API+path;
 		var serviceChart = this;
-		serviceChart.dataInicial=format(new Date());
-		serviceChart.dataFinal=format(new Date());
+		var dataInicial=new Date();
+		//serviceChart.dataFinal=format(new Date());
 
 		function update(){
-			$http.get(url+"/"+serviceChart.dataInicial+"/"+serviceChart.dataFinal).then(function(response){
+			$http.get(url+"/"+dataInicial.getFullYear()+"/"+(dataInicial.getMonth()+1)+"/"+dataInicial.getDate())
+			.then(function(response){
 				serviceChart.data=response.data;
 				$rootScope.$emit("SYNC_CHART",{});
 			});
 		}update();
 
-		serviceChart.update=function(dataInicial,dataFinal){
-			if(dataInicial!==undefined && dataFinal!==undefined){
-				serviceChart.dataInicial=format(dataInicial);
-				serviceChart.dataFinal=format(dataFinal);
+		serviceChart.update=function(dt){
+			if(dt!==undefined){
+				dataInicial=dt;
 				$log.info(dataInicial);
+				update();
 			}else{
 				$log.error("Erro com as datas");
 			}
-			update();
 		}
 
 		function format(date){

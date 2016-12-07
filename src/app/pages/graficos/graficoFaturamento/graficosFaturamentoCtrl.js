@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.graficosFaturamento')
+  angular.module('BlurAdmin.pages.grafico.faturamento')
       .controller('graficosFaturamentoCtrl', graficosFaturamentoCtrl);
 
   /** @ngInject */

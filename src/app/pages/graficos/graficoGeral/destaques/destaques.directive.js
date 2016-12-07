@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-	angular.module('BlurAdmin.pages.graficos')
+	angular.module('BlurAdmin.pages.grafico.geral')
     .directive('destaques', destaques);
 
 	/** @ngInject */
@@ -16,7 +16,7 @@
 			tipo: '@tipo'
 		},
 		controller: 'destaquesCtrl',
-		templateUrl: 'app/pages/graficos/destaques/destaques.html'
+		templateUrl: 'app/pages/graficos/graficoGeral/destaques/destaques.html'
 		};
   }
 })();

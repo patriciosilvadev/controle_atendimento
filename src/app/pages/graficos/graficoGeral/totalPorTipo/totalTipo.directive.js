@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.graficos')
+  angular.module('BlurAdmin.pages.grafico.geral')
       .directive('totalTipoChart', totalTipoChart);
 
   /** @ngInject */
@@ -16,7 +16,7 @@
 			  tipo: '@tipo'
 		  },
       controller: 'TotalTipoChartCtrl',
-      templateUrl: 'app/pages/graficos/totalPorTipo/totalTipo.html'
+      templateUrl: 'app/pages/graficos/graficoGeral/totalPorTipo/totalTipo.html'
     };
   }
 })();

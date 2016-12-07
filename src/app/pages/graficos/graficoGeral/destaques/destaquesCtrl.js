@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.graficos')
+  angular.module('BlurAdmin.pages.grafico.geral')
       .controller('destaquesCtrl', destaquesCtrl);
 
   /** @ngInject */

@@ -1,16 +1,16 @@
 (function () {
 	'use strict';
 
-	angular.module('BlurAdmin.pages.graficos')
-	.service('graficoService', graficoService);
+	angular.module('BlurAdmin.pages.grafico.faturamento')
+	.service('graficosFaturamentoService', graficosFaturamentoService);
 
-	function graficoService($http,ENDPOINT_API,
+	function graficosFaturamentoService($http,ENDPOINT_API,
 					$filter,$log, $q,$rootScope,$interval) {
-		var path = "grafico";
+		var path = "graficoFaturamento";
 		var url = ENDPOINT_API+path;
 		var serviceChart = this;
 		var dataInicial=new Date();
-		//serviceChart.dataFinal=format(new Date());
+		serviceChart.dataFinal=format(new Date());
 
 		function update(){
 			$http.get(url+"/"+dataInicial.getFullYear()+"/"+(dataInicial.getMonth()+1)+"/"+dataInicial.getDate())
@@ -29,11 +29,13 @@
 				$log.error("Erro com as datas");
 			}
 		}
-
+		
 		function format(date){
 			return $filter('date')(date, 'MM/dd/yyyy');
 		}
-		$interval(update,60000);
+
+		$interval(update,50000);
+		
 		serviceChart.data={
 			total_ano:0,
 			total_visitas:0,
@@ -44,12 +46,3 @@
 		};
 	}
 })();
-
-
-		//var socket = io.connect(ENDPOINT_URL);
-		/*var socket = io.connect(ENDPOINT_URL,{'transports': ['websocket', 'polling']});
-		socket.on('chartUpdate', function (data) {
-			serviceChart.data=data;
-			$rootScope.$emit("SYNC_CHART",{});
-			console.log("recebeu");
-		});*/

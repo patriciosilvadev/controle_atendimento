@@ -22,7 +22,7 @@
           title: 'gerenciamento',
           sidebarMeta: {
             icon: 'ion-gear-a',
-            order: 100,
+            order: 6,
           },
           data: {
             authorizedRoles: [USER_ROLES.administrador]

@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.graficos')
+  angular.module('BlurAdmin.pages.grafico.geral')
       .directive('graficosPieChart', graficosPieChart);
 
   /** @ngInject */
@@ -16,7 +16,7 @@
 			  tipo: '@tipo'
 	  	},
       controller: 'graficosPieChartCtrl',
-      templateUrl: 'app/pages/graficos/graficosPieChart/graficosPieChart.html'
+      templateUrl: 'app/pages/graficos/graficoGeral/graficosPieChart/graficosPieChart.html'
     };
   }
 })();

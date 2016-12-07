@@ -1,27 +1,31 @@
 /**
- * @author v.lugovsky
- * created on 16.12.2015
+ * @author k.danovsky
+ * created on 15.01.2016
  */
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.graficos', ['easypiechart'])
+  angular.module('BlurAdmin.pages.grafico', [
+    //'BlurAdmin.pages.gerenciamento.timeline',
+    'BlurAdmin.pages.grafico.faturamento',
+    'BlurAdmin.pages.grafico.geral'
+  ])
       .config(routeConfig);
 
   /** @ngInject */
   function routeConfig($stateProvider,USER_ROLES) {
     $stateProvider
-        .state('graficos', {
-          url: '/graficos',
-          //controller:'graficosCtrl',
-          templateUrl: 'app/pages/graficos/grafico.html',
-          title: 'Graficos',
+        .state('grafico', {
+          url: '/grafico',
+          template : '<ui-view></ui-view>',
+          abstract: true,
+          title: 'Grafico',
           sidebarMeta: {
             icon: 'ion-stats-bars',
-            order: 1,
+            order: 100,
           },
           data: {
-            authorizedRoles: [USER_ROLES.administrador, USER_ROLES.atendente]
+            authorizedRoles: [USER_ROLES.all]
           }
         });
   }

@@ -18,7 +18,7 @@
 
 
 		function limpar(){
-			$http.get(url+"/"+Session.usuario_id).then(function(response){
+			$http.get(url+"/"+Session.id).then(function(response){
 				$scope.usuario=response.data;
 				$scope.usuario.passwordTeste=$scope.usuario.password;
 				$log.info(response);
@@ -35,7 +35,7 @@
 				toastr.error('Senha Invalida!', 'Erro!');
 				deferred.reject();
 			}else if($scope.ctrl.Form.$valid){
-				$timeout(function(){$http.put(url+"/"+Session.usuario_id,$scope.usuario)
+				$timeout(function(){$http.put(url+"/"+Session.id,$scope.usuario)
 				.then(function(data) {
 					toastr.success('Os dados foram salvos com sucesso', 'Sucesso!');
 					limpar();

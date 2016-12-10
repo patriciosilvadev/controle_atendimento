@@ -17,26 +17,24 @@
     function all(data){
       date = data;
       $log.debug("Retrieving by Year: "+date.getFullYear()+" Month: "+(date.getMonth()+1));
-      return $http.get(url+"/"+date.getFullYear()+"/"+(date.getMonth()+1));
+      return $http.get(url+"/"+date.getFullYear()+"/"+(date.getMonth()));
     }
     function create(item) {
       console.log(item);
       return $http.post(url, item);
     }
     function update(item) {
-      return $http.put(url+"/"+item.atendimento_id, item);
+      return $http.put(url+"/"+item.id, item);
     }
     function finalizar(item) {
       return $http.put(url+"/finalizar/"+item.atendimento_id, item);
     }
     function deleta(item) {
-      return $http.delete(url, item);
+      return $http.delete(url+"/"+item.id);
     }
-    function getAtendimentoTipos(){
-            return $http.get(ENDPOINT_API+"tipoAtendimento");
-    }
+
     function getCliente(cnpj){
-        return $http.get(ENDPOINT_API+"clientes/cnpj/"+cnpj);
+        return $http.get(ENDPOINT_API+"clientes/"+cnpj);
     }
     return {
       all:all,
@@ -44,8 +42,7 @@
       finalizar:finalizar,
       create:create,
       update:update,
-      deleta:deleta,
-      getAtendimentoTipos:getAtendimentoTipos
+      deleta:deleta
     };
   }
 })();

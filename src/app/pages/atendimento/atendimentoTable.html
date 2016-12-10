@@ -29,36 +29,36 @@
   <table class="table" st-table="displayedCollection" st-safe-src="atendimentos">
     <thead>
     <tr class="sortable ">
-      <th class="table-id" st-sort="id" st-sort-default="true">#</th>
-      <th st-sort="nome">Nome</th>
-      <th st-sort="cnpj">CNPJ</th>
-      <th st-sort="descricao">descricao</th>
+      <th class="table-id" st-sort="id" st-sort-default="false">#</th>
+      <th st-sort="cliente.nome">Nome</th>
+      <th st-sort="cliente.cnpj">CNPJ</th>
+      <th st-sort="tipo_atendimento">descricao</th>
       <th st-sort="aberto">aberto</th>
-      <th st-sort="username">Responsável</th>
-      <th st-sort="data">Data</th>
+      <th st-sort="usuario.username">Responsável</th>
+      <th st-sort="created_at">Data</th>
       <th>
         Detalhes
       </th>
     </tr>
     <tr>
       <th></th>
-      <th><input st-search="nome" placeholder="Procure por nome" class="input-sm form-control search-input"
+      <th><input st-search="cliente.nome" placeholder="Procure por nome" class="input-sm form-control search-input"
                  type="search"/></th>
-      <th><input st-search="cnpj" placeholder="Procure por  cnpj" class="input-sm form-control search-input"
+      <th><input st-search="cliente.cnpj" placeholder="Procure por  cnpj" class="input-sm form-control search-input"
                  type="search"/></th>
-      <th><input st-search="descricao" placeholder="Procure por  descricao" class="input-sm form-control search-input"
+      <th><input st-search="tipo_atendimento" placeholder="Procure por  descricao" class="input-sm form-control search-input"
                  type="search"/></th>
       <th>
           <select st-search="aberto"
                     class="input-sm form-control search-input" type="search">
-				<option value="">Todos</option>
-				<option value="true">Sim</option>
-				<option value="false">Nao</option>
+            <option value="">Todos</option>
+            <option value="true">SIM</option>
+            <option value="false">NÃO</option>
           </select>
       </th>
-      <th><input st-search="username" placeholder="Procure por Responsável" class="input-sm form-control search-input" type="search"/>
+      <th><input st-search="usuario.username" placeholder="Procure por Responsável" class="input-sm form-control search-input" type="search"/>
       </th>
-      <th><input st-search="data_inicio" placeholder="Procure por Data" class="input-sm form-control search-input" type="search"/>
+      <th><input st-search="created_at" placeholder="Procure por Data" class="input-sm form-control search-input" type="search"/>
       </th>
       <th>
       </th>
@@ -69,20 +69,20 @@
         ng-class="{
                     primary: !item.aberto
                   }">
-      <td>{{item.atendimento_id}}</td>
-      <td>{{item.nome}}</td>
-      <td>{{applyMask(item.cnpj)}}</td>
-      <td>{{item.descricao}}</td>
+      <td>{{item.id}}</td>
+      <td>{{item.cliente.nome}}</td>
+      <td>{{applyMask(item.cliente.cnpj)}}</td>
+      <td>{{item.tipo_atendimento}}</td>
       <td>
 			<div ng-if="item.aberto">
-				Sim
+				SIM
 			</div>
 			<div ng-if="!item.aberto">
-				Nao
+				NÃO
 			</div>
       </td>
-      <td>{{item.username}}</td>
-      <td>{{formataData(item.data_inicio)}}</td>
+      <td>{{item.usuario.username}}</td>
+      <td>{{formataData(item.created_at)}}</td>
       <td>
 				<button type="button" ng-click="seleciona(item)" class="btn btn-sm btn-danger">
             Detalhes

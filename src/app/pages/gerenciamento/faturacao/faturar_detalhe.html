@@ -15,8 +15,8 @@
                         <input type="text" id="cnpj"  
                             placeholder="CNPJ/CPF" class="form-control"  
                             name="cnpj""
-                            ng-model="item.cnpj"
-                            ng-blur="procura(item.cnpj)" 
+                            ng-model="item.cliente.cnpj"
+                            ng-blur="procura(item.cliente.cnpj)" 
                             ng-disabled="true"
                             >
                     </div>                   
@@ -26,7 +26,7 @@
                             id="cliente" placeholder="Cliente"
                             name="cliente"
                             ng-disabled="true"
-                            ng-model="item.nome">
+                            ng-model="item.cliente.nome">
                     </div>
                 </div>
 
@@ -43,14 +43,14 @@
                         <input type="text" class="form-control"
                             id="tipo_acesso" placeholder="Tipo Acesso"
                             ng-disabled="true"
-                            ng-model="item.tipo_acesso">
+                            ng-model="item.tipo_acesso_id">
                     </div>
                     <div class="form-group col-md-4">
                         <label for="tipo_atendimento">Tipo Atendimento</label>
                         <input type="text" class="form-control"
                             id="tipo_atendimento" placeholder="Tipo Atendimento"
                             ng-disabled="true"
-                            ng-model="item.tipo_atendimento">
+                            ng-model="item.tipo_atendimento_id">
                     </div>
                 </div>
 
@@ -91,7 +91,7 @@
                             <div class="input-group">
                                 <span class="input-group-addon addon-left input-group-addon-success">R$</span>
                                 <input type="text" class="form-control with-success-addon" 
-                                    ng-model="item.valor"
+                                    ng-model="item.valor.valor"
                                     id="preco" 
                                     ng-disabled="true"
                                     placeholder="Preço"
@@ -103,7 +103,7 @@
                           <input type="text" id="status"  
                               class="form-control"  
                               name="status""
-                              ng-model="item.status"
+                              ng-model="item.valor.status.descricao"
                               ng-disabled="true"
                               >
                        </div>                   
@@ -120,7 +120,7 @@
                                 id="motivo"
                                 name="motivo"
                                 ng-disabled="true"
-                                ng-model="item.motivo">
+                                ng-model="item.valor.motivo">
                         </textarea>
                     </div>
                 </div>

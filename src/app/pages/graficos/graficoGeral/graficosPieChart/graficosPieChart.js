@@ -12,6 +12,7 @@
   function graficosPieChartCtrl($scope, graficoService,$rootScope,
 							baConfig, $log, baUtil,$timeout,graficosFaturamentoService) {
 
+		$scope.destaqueNome= "";
 		var service ={};
 		var rs = "";
 		if(isAtendimento()){
@@ -44,12 +45,12 @@
 			$scope.charts.push(createChar('Atendimentos Do Mes','person'));
 			$scope.charts.push(createChar('Atendimentos da Semana','person'));
 			$scope.charts.push(createChar('Visitas - Mes','face'));
-			$scope.charts.push(createChar('Destaque do Mes','face'));
+			$scope.charts.push(createChar($scope.destaqueNome,'face'));
 		}else{
 			$scope.charts.push(createChar('Faturamento Mes','person'));
 			$scope.charts.push(createChar('Faturamento da Semana','person'));
 			$scope.charts.push(createChar('Nao Aprovados - Mes','face'));
-			$scope.charts.push(createChar('Destaque do Mes','face'));
+			$scope.charts.push(createChar($scope.destaqueNome,'face'));
 		}
 		
 		function loadPieCharts() {
@@ -102,6 +103,7 @@
 			if(data.destaques[0]!==undefined){
 				destaqueTotal=data.destaques[0].total;
 			}
+			$scope.charts[3].description=data.destaques[0].nome || "";
 			$scope.charts[3].stats= rs + (destaqueTotal);
 			$scope.charts[3].percent=calcPercentage(data.total_mes,destaqueTotal);
 

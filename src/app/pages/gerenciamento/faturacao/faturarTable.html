@@ -29,7 +29,7 @@
   <table class="table"  st-set-filter="myStrictFilter" st-table="displayedCollection" st-safe-src="faturas">
     <thead>
     <tr class="sortable ">
-      <th class="table-id" st-sort="id" st-sort-default="true">#</th>
+      <th class="table-id" st-sort="id" st-sort-default="false">#</th>
       <th st-sort="nome">Nome</th>
       <th st-sort="cnpj">CNPJ</th>
       <th >Valor</th>
@@ -68,25 +68,25 @@
     </thead>
     <tbody>
     <tr ng-repeat="item in displayedCollection"
-        ng-class="{ warning: item.status=='aguardando aprovação',
-					info: item.status=='faturado',
-					danger: item.status=='não aprovado'
+        ng-class="{ warning: item.valor.status.descricao=='AGUARDANDO APROVAÇÃO',
+					info: item.valor.status.descricao=='FATURADO',
+					danger: item.valor.status.descricao=='NÃO APROVADO'
                   }">
-      <td>{{item.atendimento_id}}</td>
-      <td>{{item.nome}}</td>
-      <td>{{applyMask(item.cnpj)}}</td>
-      <td>{{item.valor}}</td>
+      <td>{{item.id}}</td>
+      <td>{{item.cliente.nome}}</td>
+      <td>{{applyMask(item.cliente.cnpj)}}</td>
+      <td>{{item.valor.valor}}</td>
       <td>
-		  {{item.status}}
+		    {{item.valor.status.descricao}}
       </td>
-      <td>{{item.username}}</td>
-      <td>{{formataData(item.data)}}</td>
+      <td>{{item.usuario.username}}</td>
+      <td>{{formataData(item.created_at)}}</td>
       <td>
           <div class="buttons">
-            <button class="btn btn-primary editable-table-button btn-xs" ng-click="open(item)">destalhes</button>
+            <button class="btn btn-primary editable-table-button btn-xs" ng-click="open(item)">Detalhes</button>
             <button class="btn btn-danger editable-table-button btn-xs"
-					ng-if="item.status==='aprovado'" 
-					ng-click="faturar(item.at_id)">
+					ng-if="item.valor.status.descricao==='APROVADO'" 
+					ng-click="faturar(item.valor.id)">
 					sim
 			</button>
           </div>

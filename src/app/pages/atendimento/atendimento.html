@@ -114,17 +114,19 @@
                             ng-class="{'has-error': ctrl.Form.status.$invalid}">
                             <label for="status">Aprovado</label>  
                             <select ng-model="atendimento.valor.status_id" 
-                                ng-disabled="saveMode"
+                                ng-disabled="disableStatus"
                                 class="form-control"
                                 name="status"
                                 id="status" 
-                                ng-options="option.id as option.descricao disable when (option.descricao=='FATURADO') for option in status"
+                                ng-init="mudaStatus(atendimento.valor.status_id)"
+                                ng-change="mudaStatus(atendimento.valor.status_id)"
+                                ng-options="option.id as option.descricao disable when ((option.descricao=='FATURADO' || option.descricao=='NÃO FATURADO')&& !disableStatus) for option in status"
                                 required>
                             </select>
                             <span class="help-block error-block basic-block">Requerido</span>
                         </div>
                 </div>
-                <div class="row" ng-if="atendimento.status===2 && more">
+                <div class="row" ng-if="motivo">
                     <div class="form-group col-md-12"
                          ng-class="{'has-error': ctrl.Form.motivo.$invalid}">
                         <label for="motivo">Motivo</label>

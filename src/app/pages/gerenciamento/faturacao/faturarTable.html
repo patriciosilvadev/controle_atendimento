@@ -68,9 +68,12 @@
     </thead>
     <tbody>
     <tr ng-repeat="item in displayedCollection"
-        ng-class="{ warning: item.valor.status.descricao=='AGUARDANDO APROVAÇÃO',
-					info: item.valor.status.descricao=='FATURADO',
-					danger: item.valor.status.descricao=='NÃO APROVADO'
+        ng-class="{ 
+
+              warning: item.valor.status.descricao=='AGUARDANDO APROVAÇÃO',
+					    info: item.valor.status.descricao=='FATURADO',
+					    danger: (item.valor.status.descricao=='NÃO APROVADO' || item.valor.status.descricao=='NÃO FATURADO')
+                  
                   }">
       <td>{{item.id}}</td>
       <td>{{item.cliente.nome}}</td>
@@ -85,10 +88,15 @@
           <div class="buttons">
             <button class="btn btn-primary editable-table-button btn-xs" ng-click="open(item)">Detalhes</button>
             <button class="btn btn-danger editable-table-button btn-xs"
-					ng-if="item.valor.status.descricao==='APROVADO'" 
-					ng-click="faturar(item.valor.id)">
-					sim
-			</button>
+                ng-if="(item.valor.status.descricao==='APROVADO' || item.valor.status.descricao=='NÃO FATURADO')" 
+                ng-click="faturar(item.valor)">
+                sim
+            </button>
+            <button class="btn btn-danger editable-table-button btn-xs"
+                ng-if="item.valor.status.descricao==='APROVADO' || item.valor.status.descricao==='FATURADO'" 
+                ng-click="naoFaturar(item)">
+                nao
+            </button>
           </div>
 			</td>
     </tr>

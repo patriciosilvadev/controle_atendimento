@@ -85,11 +85,33 @@
 			$scope.abrir=true;
 			$scope.fechar=false;
 			$scope.salvar=false;
+			$scope.disableStatus=false;
 			$scope.finalizar=false;
 			$scope.excluir=false;
+			$scope.more=false;
+			$scope.motivo=false;
 
 		}limpar();
 		$scope.limpar=limpar;
+
+
+
+		/**Disable Status */
+		$scope.mudaStatus=function(id){
+			$log.debug("disabled "+id);
+			var found = $filter('getById')($scope.status, id);
+			if(found && (found.descricao.indexOf('NÃO FATURADO')>=0 || found.descricao.indexOf('NÃO APROVADO')>=0)){
+				$scope.motivo=true;
+				$scope.disableStatus=true;
+			}else if(found && (found.descricao.indexOf('FATURADO')>=0)){
+				
+				$scope.disableStatus=true;
+			
+			}else{
+				$scope.motivo=false;
+				$scope.disableStatus=false;
+			}
+		};
 		
 		/**
 		 * Atualiza dados da tabela
@@ -242,9 +264,10 @@
 
 			}
 
+
 			$scope.atendimento= Util.clone(item);
 			$scope.verificarMore(item.tipo_atendimento_id);
-
+			$scope.mudaStatus(item.valor.status_id)
 		}
 
 		$scope.formataData=function(date){

@@ -19,8 +19,19 @@
    * Controle para o cadastro de usuario
    */
     function faturamentoCtrl($filter,$scope,$http,faturamentoService,
-                toastr,$q,$timeout,$log,$uibModal) {
+                toastr,$q,$timeout,$log,$uibModal,Util) {
 
+        Util.atualiza().then(function(){
+            $scope.status=Util.status;
+        });
+
+        function findFaturado(){
+            for(var i=0;i<=$scope.status.length;i++){
+                if($scope.status[i].descricao==='FATURADO'){
+                    return $scope.status[i];
+                }
+            }
+        }
         
         $scope.open = function (item) {
             $uibModal.open({
@@ -32,6 +43,60 @@
                 }
             });
         };
+
+        $scope.naoFaturar = function (item) {
+
+            $uibModal.open({
+                animation: true,
+                templateUrl: 'app/pages/gerenciamento/faturacao/faturar_motivo.html',
+                size: 'lg',//size,
+                controller: function($scope,faturamentoService,toastr,Util) {
+                    $scope.item = item; 
+                    Util.atualiza().then(function(){
+                        $scope.status=Util.status;
+                    });
+                    $scope.salvar=function(item){
+                        var deferred = $q.defer();
+                        deferred.notify();
+
+                        if($scope.ctrl.Form.$valid){
+
+                            var itemCopy = item.valor;
+                            var status=$scope.status.filter(function( obj ) {
+                            return obj.descricao == 'NÃO FATURADO';
+                            });
+                            itemCopy.status_id=status[0].id;
+
+                            $timeout(function(){faturamentoService.put(itemCopy)
+                            .then(function(data) {
+
+                                toastr.success('Salvo com sucesso!', 'Sucesso!');
+                                atualizaDados(selectedDate);
+                                $scope.$dismiss();
+                                deferred.resolve();
+
+                            },function(erro) {
+
+                                toastr.error('Ocorreu o seguinte erro: '+ erro.data.message, 'Erro');
+                                deferred.reject();
+
+                            })},400);
+
+                        }else{
+                            toastr.error('Digite o motivo!!!!', 'Erro');
+                            deferred.reject();
+                        }
+
+                        return deferred.promise;
+                    };
+                }
+            });
+        };
+
+
+
+
+
         var selectedDate= new Date();
         $scope.data=undefined;
         //options for data
@@ -44,8 +109,8 @@
         $scope.date={opened:false};
         $scope.openDate=function(){
 		$scope.date.opened=!$scope.date.opened;
-		$log.info("Data :");
-		$log.info($scope.$parent.data);
+            $log.info("Data :");
+            $log.info($scope.$parent.data);
         };
         $scope.pesquisar=function(dt){
             var deferred = $q.defer();
@@ -75,6 +140,7 @@
         $scope.formataData=function(date){
             return $filter('date')(date, 'dd/MM/yyyy');
         };
+
         /**
          * Pega Numero
          */
@@ -82,6 +148,7 @@
             str+="";
             return str.replace(/[^\d]/g, '').slice(0, 14)
         }
+        
         /**
          * Aplica Mascara
          */
@@ -98,10 +165,12 @@
             return mascara.trim().replace(/[^0-9]$/, '');
         }
 
-        $scope.faturar=function(id){
+        $scope.faturar=function(item){
+
             $log.info("faturando item");
-            $log.info(id);
-            faturamentoService.put(id).then(function(data){
+            item.status_id=findFaturado().id;
+            $log.info(item);
+            faturamentoService.put(item).then(function(data){
                 $log.debug("Faturado com sucesso");
                 toastr.success('Faturado com sucesso', 'Sucesso ao Faturar!');
                 atualizaDados(selectedDate);
@@ -109,6 +178,7 @@
                 toastr.error('Erro ao faturar', 'Erro!');
                 $log.debug(error);
             })
+
         }
 
         /**

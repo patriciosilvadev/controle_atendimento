@@ -23,6 +23,7 @@
                     utilService.tipo_acesso=data.tipo_acesso;
                     utilService.status=data.status;
                     utilService.tipo_atendimento=data.tipo_atendimento;
+                    atualizou=true;
                     deferred.resolve();      
                 },function(error){
                     $log.debug("Aconteceu um erro ao tentar pegar utils!!!");

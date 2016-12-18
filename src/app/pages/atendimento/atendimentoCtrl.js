@@ -21,7 +21,7 @@
 			$scope.tipo_atendimento=Util.tipo_atendimento;
 			$scope.status=Util.status;
 		});
-							
+
 		$scope.data=new Date();
         //options for data
         $scope.dataOptions={

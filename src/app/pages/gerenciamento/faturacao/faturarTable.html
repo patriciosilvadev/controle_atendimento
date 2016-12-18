@@ -18,95 +18,91 @@
       </div>
   </div>
 </div>
-<div class="horizontal-scroll">
-  <div class="form-group select-page-size-wrap ">
-    <label>Numero de paginas
-      <select class="form-control selectpicker show-tick" title="Rows on page" selectpicker
-              ng-model="smartTablePageSize" ng-options="i for i in [5,10,15,20,25]">
-      </select>
-    </label>
-  </div>
-  <table class="table"  st-set-filter="myStrictFilter" st-table="displayedCollection" st-safe-src="faturas">
-    <thead>
-    <tr class="sortable ">
-      <th class="table-id" st-sort="id" st-sort-default="false">#</th>
-      <th st-sort="nome">Nome</th>
-      <th st-sort="cnpj">CNPJ</th>
-      <th >Valor</th>
-      <th st-sort="status">Status</th>
-      <th st-sort="username">Responsável</th>
-      <th st-sort="data">Data</th>
-      <th>
-        Faturar
-      </th>
-    </tr>
-    <tr>
-      <th></th>
-      <th><input st-search="nome" placeholder="Procure por nome" class="input-sm form-control search-input"
-                 type="search"/></th>
-      <th><input st-search="cnpj" placeholder="Procure por  cnpj" class="input-sm form-control search-input"
-                 type="search"/></th>
-      <th></th>
-      <th>
-          <select st-search="status"
-                    class="input-sm form-control search-input" type="search">
-            <option value="">Todos</option>
-            <option value="aprovado">aprovado</option>
-            <option value="aguardando aprovação">aguardando aprovação</option>
-			<option value="não aprovado">não aprovado</option>
-			<option value="faturado">faturado</option>
-          </select>
-        <!--input st-search="aberto" placeholder="Procure por aberto" class="input-sm form-control search-input" type="search"/-->
-      </th>
-      <th><input st-search="username" placeholder="Procure por Responsável" class="input-sm form-control search-input" type="search"/>
-      </th>
-      <th><input st-search="data" placeholder="Procure por Data" class="input-sm form-control search-input" type="search"/>
-      </th>
-      <th>
-      </th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="item in displayedCollection"
-        ng-class="{ 
 
-              warning: item.valor.status.descricao=='AGUARDANDO APROVAÇÃO',
-					    info: item.valor.status.descricao=='FATURADO',
-					    danger: (item.valor.status.descricao=='NÃO APROVADO' || item.valor.status.descricao=='NÃO FATURADO')
-                  
-                  }">
-      <td>{{item.id}}</td>
-      <td>{{item.cliente.nome}}</td>
-      <td>{{applyMask(item.cliente.cnpj)}}</td>
-      <td>{{item.valor.valor}}</td>
-      <td>
-		    {{item.valor.status.descricao}}
-      </td>
-      <td>{{item.usuario.username}}</td>
-      <td>{{formataData(item.created_at)}}</td>
-      <td>
-          <div class="buttons">
-            <button class="btn btn-primary editable-table-button btn-xs" ng-click="open(item)">Detalhes</button>
-            <button class="btn btn-danger editable-table-button btn-xs"
-                ng-if="(item.valor.status.descricao==='APROVADO' || item.valor.status.descricao=='NÃO FATURADO')" 
-                ng-click="faturar(item.valor)">
-                sim
-            </button>
-            <button class="btn btn-danger editable-table-button btn-xs"
-                ng-if="item.valor.status.descricao==='APROVADO' || item.valor.status.descricao==='FATURADO'" 
-                ng-click="naoFaturar(item)">
-                nao
-            </button>
-          </div>
+
+
+
+<div class="horizontal-scroll">
+	<div class="form-group select-page-size-wrap ">
+		<label>Numero de paginas
+			<select class="form-control selectpicker show-tick" title="Rows on page" selectpicker
+							ng-model="smartTablePageSize" ng-options="i for i in [5,10,15,20,25]">
+			</select>
+		</label>
+	</div>
+	<table class="table" st-table="displayedCollection" st-safe-src="faturas">
+		<thead>
+		<tr class="sortable ">
+			<th class="table-id" st-sort="id" st-sort-default="false">#</th>
+			<th>Nome</th>
+			<th>CNPJ</th>
+			<th>Valor</th>
+			<th>Status</th>
+			<th>Responsável</th>
+			<th>Data</th>
+			<th>
+				Detalhes
+			</th>
+		</tr>
+		<tr>
+			<th></th>
+			<th><input st-search="cliente.nome" placeholder="Procure por nome" class="input-sm form-control search-input"
+								 /></th>
+			<th><input st-search="cliente.cnpj" placeholder="Procure por  cnpj" class="input-sm form-control search-input"
+								 type="search"/></th>
+			<th>
+
+			</th>
+			<th>
+					<select st-search="valor.status_id"
+										class="input-sm form-control search-input" type="search">
+						<option value="">Todos</option>
+						<option value="{{option.id}}" ng-repeat="option in status">{{option.descricao}}</option>
+					</select>
+			</th>
+			<th><input st-search="usuario.username" placeholder="Procure por Responsável" class="input-sm form-control search-input" type="search"/>
+			</th>
+			<th><input st-search="created_at" placeholder="Procure por Data" class="input-sm form-control search-input" type="search"/>
+			</th>
+			<th>
+			</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr ng-repeat="item in displayedCollection"
+				ng-class="{
+										primary: !item.aberto
+									}">
+			<td>{{item.id}}</td>
+			<td>{{item.cliente.nome}}</td>
+			<td>{{item.cliente.cnpj}}</td>
+			<td>{{item.valor.valor}}</td>
+			<td>{{item.valor.status.descricao}}</td>
+			<td>{{item.usuario.username}}</td>
+			<td>{{formataData(item.created_at)}}</td>
+      		<td>
+				<div class="buttons">
+					<button class="btn btn-primary editable-table-button btn-xs" ng-click="open(item)">Detalhes</button>
+					<button class="btn btn-danger editable-table-button btn-xs"
+						ng-if="(item.valor.status.descricao==='APROVADO' || item.valor.status.descricao=='NÃO FATURADO')" 
+						ng-click="faturar(item.valor)">
+						sim
+					</button>
+					<button class="btn btn-danger editable-table-button btn-xs"
+						ng-if="item.valor.status.descricao==='APROVADO' || item.valor.status.descricao==='FATURADO'" 
+						ng-click="naoFaturar(item)">
+						nao
+					</button>
+				</div>
 			</td>
-    </tr>
-    </tbody>
-    <tfoot>
-    <tr>
-      <td colspan="6" class="text-center">
-        <div st-pagination="" st-items-by-page="smartTablePageSize" st-displayed-pages="10"></div>
-      </td>
-    </tr>
-    </tfoot>
-  </table>
+		</tr>
+		</tbody>
+		<tfoot>
+		<tr>
+			<td colspan="6" class="text-center">
+				<div st-pagination="" st-items-by-page="smartTablePageSize" st-displayed-pages="10"></div>
+			</td>
+		</tr>
+		</tfoot>
+	</table>
 </div>

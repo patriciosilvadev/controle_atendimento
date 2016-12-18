@@ -21,9 +21,14 @@
     function faturamentoCtrl($filter,$scope,$http,faturamentoService,
                 toastr,$q,$timeout,$log,$uibModal,Util) {
 
-        Util.atualiza().then(function(){
-            $scope.status=Util.status;
-        });
+        /**
+		 * Retrieves utils
+		 */
+		Util.atualiza().then(function(){
+			$scope.tipo_acesso=Util.tipo_acesso;
+			$scope.tipo_atendimento=Util.tipo_atendimento;
+			$scope.status=Util.status;
+		});
 
         function findFaturado(){
             for(var i=0;i<=$scope.status.length;i++){
@@ -129,7 +134,7 @@
             return deferred.promise;
         }
 
-        $scope.faturas={};
+        $scope.faturas=[];
         function atualizaDados(data){
             faturamentoService.all(data).then(function (response) {
                 $scope.faturas = response.data;

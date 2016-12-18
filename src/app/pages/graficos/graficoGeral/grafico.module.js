@@ -13,7 +13,7 @@
     $stateProvider
       .state('grafico.geral', {
         url: '/geral',
-        templateUrl: '/app/pages/graficos/graficoGeral/grafico.html',
+        templateUrl: 'app/pages/graficos/graficoGeral/grafico.html',
           title: 'Geral',
           sidebarMeta: {
             icon: 'ion-ios-pulse',

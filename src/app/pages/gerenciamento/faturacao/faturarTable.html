@@ -34,12 +34,12 @@
 		<thead>
 		<tr class="sortable ">
 			<th class="table-id" st-sort="id" st-sort-default="false">#</th>
-			<th>Nome</th>
-			<th>CNPJ</th>
+			<th st-sort="cliente.nome">Nome</th>
+			<th st-sort="cliente.cnpj">CNPJ</th>
 			<th>Valor</th>
-			<th>Status</th>
-			<th>Responsável</th>
-			<th>Data</th>
+			<th st-sort="valor.status_id">Status</th>
+			<th st-sort="usuario.username">Responsável</th>
+			<th st-sort="created_at">Data</th>
 			<th>
 				Detalhes
 			</th>

@@ -218,7 +218,7 @@
 		 */
 		$scope.procura=function(cnpj){
 			if(cnpj!==undefined && cnpj.length>0){
-				atendimentoService.getCliente(cnpj).then(function (response) {
+				atendimentoService.getCliente(getNumber(cnpj)).then(function (response) {
 					if(response.data.nome!==null && response.data.nome!==undefined){
 						$scope.atendimento.cliente.nome=response.data.nome;
 					}

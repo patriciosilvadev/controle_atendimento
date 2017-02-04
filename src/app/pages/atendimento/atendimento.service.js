@@ -36,13 +36,19 @@
     function getCliente(cnpj){
         return $http.get(ENDPOINT_API+"clientes/"+cnpj);
     }
+
+    function getByClienteID(cnpj){
+        return $http.get(ENDPOINT_API+"atendimento/cliente/"+cnpj);
+    }
+
     return {
       all:all,
       getCliente:getCliente,
       finalizar:finalizar,
       create:create,
       update:update,
-      deleta:deleta
+      deleta:deleta,
+      getByClienteID:getByClienteID
     };
   }
 })();

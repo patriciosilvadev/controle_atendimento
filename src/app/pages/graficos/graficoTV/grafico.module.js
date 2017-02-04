@@ -5,16 +5,16 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.grafico.geral', ['easypiechart'])
+  angular.module('BlurAdmin.pages.grafico.tv', ['easypiechart'])
       .config(routeConfig);
 
   /** @ngInject */
   function routeConfig($stateProvider,USER_ROLES) {
     $stateProvider
-      .state('grafico.geral', {
-        url: '/geral',
-        templateUrl: 'app/pages/graficos/graficoGeral/grafico.html',
-          title: 'Geral',
+      .state('grafico.tv', {
+        url: '/tv',
+        templateUrl: 'app/pages/graficos/graficoTV/grafico.html',
+          title: 'TV',
           sidebarMeta: {
             icon: 'ion-ios-pulse',
             order: 100,

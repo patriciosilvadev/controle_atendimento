@@ -1,24 +1,14 @@
- <!--div class="row">
-    <div class="col-md-12">
-      <div
-          ba-panel
-          ba-panel-title="Escolha o range"
-          ba-panel-class="with-scroll">
-        <div ng-include="'app/pages/graficos/grafico.sliders.html'"></div>
-      </div>
-    </div>
- </div-->
-
 <graficos-pie-chart tipo="atendimento"></graficos-pie-chart>
+<graficos-pie-chart tipo="faturamento"></graficos-pie-chart>
 
 <div class="row">
   <div class="col-lg-6 col-md-12 col-sm-12"
        ba-panel
-       ba-panel-title="Total Chamados Por Tipo - Mes"
-       ba-panel-class="with-scroll medium-panel traffic-panel">
-      <!-- ba-panel-class="with-scroll table-panel"-->
-    <total-tipo-chart tipo="atendimento"></total-tipo-chart>
+       ba-panel-title="Destaques do Mes"
+       ba-panel-class="with-scroll medium-panel">
+       <destaques tipo="faturamento"></destaques>
   </div>
+
   <div class="col-lg-6 col-md-12 col-sm-12"
        ba-panel
        ba-panel-title="Destaques do Mes"
@@ -26,40 +16,3 @@
        <destaques tipo="atendimento"></destaques>
   </div>
 </div>
-
-
-<div class="row">
-	<div class="col-lg-12 col-md-12 col-sm-12"
-          ba-panel
-          ba-panel-title="Pesquisa por Data"
-          ba-panel-class="medium-panel">
-		<div ng-controller="graficosCtrl">
-			<!--pre>Selected date is: <em>{{dt | date:'fullDate' }}</em></pre-->
-
-			<!--input type="text" class="form-control" uib-datepicker-popup="MM.yyyy" ng-model="dt" datepicker-options="dataOptions" ng-required="true" close-text="Close" is-open="date.opened" /-->
-			<div class="col-md-3">
-				<!--label>Data Inicial</label-->
-				<p class="input-group">
-					<input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="dt" datepicker-options="dataOptions" ng-required="true" close-text="Close" is-open="date.opened" />
-					<span class="input-group-btn">
-						<button type="button" class="btn btn-default" ng-click="open(1)"><i class="glyphicon glyphicon-calendar"></i></button>
-					</span>
-				</p>
-			</div>
-			<div class="col-md-3">
-				<button progress-button="pesquisar()"
-								pb-style="rotate-side-up"
-								class="btn btn-info">
-								Pesquisar
-				</button>
-			</div>
-		</div>
-	</div>
-</div>
-<!--<div class="row">
-  <div class="col-lg-4 col-sm-6 col-xs-12">
-    <div ba-panel ba-panel-title="Weather" ba-panel-class="medium-panel with-scroll">
-      <blur-weather forecast="5"></blur-weather>
-    </div>
-  </div>
-</div>-->

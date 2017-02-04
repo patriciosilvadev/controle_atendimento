@@ -44,7 +44,12 @@
 			<th></th>
 			<th><input st-search="cliente.nome" placeholder="Procure por nome" class="input-sm form-control search-input"
 								 /></th>
-			<th><input st-search="cliente.cnpj" placeholder="Procure por  cnpj" class="input-sm form-control search-input"
+			<th><input st-search="cliente.cnpj" 
+			ng-model="clienteSearch"
+			ng-keypress="pesquisaPorCliente($event,clienteSearch)"
+
+			placeholder="Procure por  cnpj" 
+			class="input-sm form-control search-input"
 								 type="search"/></th>
 			<th>
                         <select

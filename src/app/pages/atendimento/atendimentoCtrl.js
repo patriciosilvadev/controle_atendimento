@@ -94,7 +94,24 @@
 		}limpar();
 		$scope.limpar=limpar;
 
+		$scope.pesquisaPorCliente = function(keyEvent,clienteSearch){
 
+			  if (keyEvent.which === 13){
+
+					console.log("Searching: "+clienteSearch);
+					var cnpj = parseInt(getNumber(clienteSearch));
+					if(!isNaN(cnpj)){
+
+						atendimentoService.getByClienteID(cnpj).then(function(response){
+							console.log(response);
+							$scope.atendimentos=response.data;
+						});
+
+					}
+
+			  }
+		
+		};
 
 		/**Disable Status */
 		$scope.mudaStatus=function(id){

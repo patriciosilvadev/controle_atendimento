@@ -142,13 +142,30 @@
                 <div class="form-group">
                     <section class="col-md-3" ng-if="abrir">
                         <center>
-                            <button progress-button="abrirChamado()" 
+                            
+                            <button progress-button="abrirChamado(true)" 
                                     pb-style="rotate-side-up" 
                                     class="btn btn-success">
                                     Abrir
                             </button>
+
                         <center>
                     </section>
+
+                    <section class="col-md-3" ng-if="abrir">
+                        <center>
+                            
+                            <button progress-button="abrirChamado(false)" 
+                                    pb-style="rotate-side-up" 
+                                    class="btn btn-success">
+                                    Abrir/Finalizar
+                            </button>
+
+                        <center>
+                    </section>
+
+
+
                     <section class="col-md-3" ng-if="fechar">
                         <center>
                             <button progress-button="limpar()" 

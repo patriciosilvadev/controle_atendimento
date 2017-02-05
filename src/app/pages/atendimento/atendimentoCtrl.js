@@ -66,6 +66,7 @@
 		function limpar(){
 			var atendimento = $scope.atendimento;
 
+			$scope.saveMode= false;
 			atendimento.cliente={};
 			atendimento.cliente.cnpj="";
 			atendimento.cliente.nome="";
@@ -144,16 +145,25 @@
 			$scope.usuario={};
 		}atualizaDados();
 
+
+
+
 		/**
 		 * Abre Chamado
 		 */
-		$scope.abrirChamado=function(){
+		$scope.abrirChamado=function(aberto){
 			var deferred = $q.defer();
 			deferred.notify();
 
 			if($scope.ctrl.Form.$valid){
 				$scope.atendimento.usuario_id=Session.id;
 				var item = Util.clone($scope.atendimento);
+				if(!aberto){
+					item.aberto=false;
+					item.finalizado_at= new Date();
+				}else{
+					item.aberto=true;
+				}
 
 				$timeout(function(){atendimentoService.create(item)
 				.then(function(data) {
@@ -266,6 +276,8 @@
 			$log.log(item);
 			$scope.abrir=false;
 
+
+
 			/**verify if user can edit */
 			if(Session.id==item.usuario_id || Session.tipo=="administrador"){
 
@@ -281,7 +293,7 @@
 
 			}
 
-
+			$scope.saveMode=true;
 			$scope.atendimento= Util.clone(item);
 			$scope.verificarMore(item.tipo_atendimento_id);
 			$scope.mudaStatus(item.valor.status_id)

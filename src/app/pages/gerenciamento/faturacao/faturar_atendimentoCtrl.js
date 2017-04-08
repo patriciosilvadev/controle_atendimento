@@ -170,20 +170,54 @@
             return mascara.trim().replace(/[^0-9]$/, '');
         }
 
+        function chooseFaturadoAtDate(){
+
+            return $uibModal.open({
+                animation: true,
+                templateUrl: 'app/pages/gerenciamento/faturacao/chooseDateModal.html',
+                size: 'md',
+                backdrop: false,
+                controller: function($scope, $uibModalInstance) {
+
+                    $scope.dt = new Date();
+
+                    $scope.save = function () {
+                        $uibModalInstance.close($scope.dt);
+                    };
+
+                    $scope.cancel = function () {
+                        $uibModalInstance.dismiss('cancel');
+                    };
+
+                }
+            }).result;
+
+            /*modalInstance.then(function(data){
+                console.log(data);
+            }, function(cancelData){
+                console.log(cancelData);
+            })*/
+
+        }
+
         $scope.faturar=function(item){
+            chooseFaturadoAtDate().then(function(data){
+                item.faturado_at= new Date(data);
+                item.status_id=findFaturado().id;
+                $log.info("faturando item");
+                $log.debug(item);
+                faturamentoService.put(item).then(function(data){
+                    $log.debug("Faturado com sucesso");
+                    toastr.success('Faturado com sucesso', 'Sucesso ao Faturar!');
+                    atualizaDados(selectedDate);
+                },function(error){
+                    toastr.error('Erro ao faturar', 'Erro!');
+                    $log.debug(error);
+                })
 
-            $log.info("faturando item");
-            item.status_id=findFaturado().id;
-            $log.info(item);
-            faturamentoService.put(item).then(function(data){
-                $log.debug("Faturado com sucesso");
-                toastr.success('Faturado com sucesso', 'Sucesso ao Faturar!');
-                atualizaDados(selectedDate);
-            },function(error){
-                toastr.error('Erro ao faturar', 'Erro!');
-                $log.debug(error);
-            })
-
+            }, function(cancelData){
+                $log.debug("Closing modal!");
+            });
         }
 
         /**

@@ -43,6 +43,8 @@
     "wrench": "~1.5.8"
   },
   "scripts": {
-    "postinstall": "bower install"
+    "postinstall": "bower install",
+    "start": "gulp serve",
+    "build:": "gulp serve:dist"
   }
 }

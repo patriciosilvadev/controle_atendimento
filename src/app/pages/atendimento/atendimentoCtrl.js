@@ -11,8 +11,18 @@
   /** @ngInject */
 	function atendimentoCtrl($scope,atendimentoService,
 							 Session,$filter, editableOptions, $log,
-							 editableThemes,$q,$timeout,$uibModal,toastr) {
-	$scope.data=new Date();
+							 editableThemes,$q,$timeout
+							 ,$uibModal,toastr,Util) {
+		/**
+		 * Retrieves utils
+		 */
+		Util.atualiza().then(function(){
+			$scope.tipo_acesso=Util.tipo_acesso;
+			$scope.tipo_atendimento=Util.tipo_atendimento;
+			$scope.status=Util.status;
+		});
+
+		$scope.data=new Date();
         //options for data
         $scope.dataOptions={
             datepickerMode:'month',
@@ -30,7 +40,7 @@
             var deferred = $q.defer();
             deferred.notify();
             $timeout(function(){
-                if(dt===undefined){
+                if(dt===undefined || dt==null || dt.length<5){
                     toastr.error('Por favor, selecione as datas!', 'Erro!');
                     deferred.reject();
                 }else{
@@ -48,45 +58,78 @@
 		$scope.smartTablePageSize = 10;
 		$scope.displayedCollection=[];
 		$scope.atendimentos=[];
-		$scope.cadastroMode=true;
-		$scope.finalizarMode=false;
-		$scope.viewMode=false;
-		$scope.saveMode=false;
-		
+
 		//define the possible types of user that can be registered
 		$scope.atendimento_tipos=[];
-		$scope.acesso=['Acesso','Ligação','Acesso/Ligação'];
-		$scope.status=['aguardando aprovação','aprovado','não aprovado','faturado'];
 		$scope.atendimento={};
 
 		function limpar(){
 			var atendimento = $scope.atendimento;
-			atendimento.cnpj="";
-			atendimento.nome="";
+
+			$scope.saveMode= false;
+			atendimento.cliente={};
+			atendimento.cliente.cnpj="";
+			atendimento.cliente.nome="";
+
+			atendimento.valor={};
+			atendimento.valor.status_id="";
+			atendimento.valor.valor=null;
+
 			atendimento.contato="";
-			atendimento.tipo_acesso="";
-			atendimento.tipo_atendimento="";
+			atendimento.tipo_acesso_id="";
+			atendimento.tipo_atendimento_id="";
 			atendimento.problema="";
 			atendimento.solucao="";
 			atendimento.motivo="";
 			atendimento.chamado=false;
-			atendimento.valor=null;
-			atendimento.status="";
-			$scope.cadastroMode=true;
-			$scope.finalizarMode=false;
-			$scope.viewMode=false;
+
+			$scope.abrir=true;
+			$scope.fechar=false;
+			$scope.salvar=false;
+			$scope.disableStatus=false;
+			$scope.finalizar=false;
+			$scope.excluir=false;
 			$scope.more=false;
-			$scope.saveMode=false;
+			$scope.motivo=false;
+
 		}limpar();
 		$scope.limpar=limpar;
 
-		/**
-		 * 
-		 */
-		atendimentoService.getAtendimentoTipos().then(function(data){
-			console.log(data);
-			$scope.atendimento_tipos=data.data.data;
-	  	})
+		$scope.pesquisaPorCliente = function(keyEvent,clienteSearch){
+
+			  if (keyEvent.which === 13){
+
+					console.log("Searching: "+clienteSearch);
+					var cnpj = parseInt(getNumber(clienteSearch));
+					if(!isNaN(cnpj)){
+
+						atendimentoService.getByClienteID(cnpj).then(function(response){
+							console.log(response);
+							$scope.atendimentos=response.data;
+						});
+
+					}
+
+			  }
+		
+		};
+
+		/**Disable Status */
+		$scope.mudaStatus=function(id){
+			$log.debug("disabled "+id);
+			var found = $filter('getById')($scope.status, id);
+			if(found && (found.descricao.indexOf('NÃO FATURADO')>=0 || found.descricao.indexOf('NÃO APROVADO')>=0)){
+				$scope.motivo=true;
+				$scope.disableStatus=true;
+			}else if(found && (found.descricao.indexOf('FATURADO')>=0)){
+				
+				$scope.disableStatus=true;
+			
+			}else{
+				$scope.motivo=false;
+				$scope.disableStatus=false;
+			}
+		};
 		
 		/**
 		 * Atualiza dados da tabela
@@ -95,37 +138,52 @@
 			atendimentoService.all($scope.data).then(function (response) {
 				limpar();
 				$scope.atendimentos = response.data;
-				console.log($scope.atendimentos);
+				$log.info($scope.atendimentos);
 			}, function (error) {
 				$scope.status = 'Unable to load customer data: ' + error.message;
 			});
 			$scope.usuario={};
 		}atualizaDados();
 
+
+
+
 		/**
 		 * Abre Chamado
 		 */
-		$scope.abrirChamado=function(){
+		$scope.abrirChamado=function(aberto){
 			var deferred = $q.defer();
 			deferred.notify();
+
 			if($scope.ctrl.Form.$valid){
-				$scope.atendimento.cnpj=parseInt(getNumber($scope.atendimento.cnpj));
-				$scope.atendimento.valor=parseFloat($scope.atendimento.valor)
-				console.log($scope.atendimento.cnpj);
-				$scope.atendimento.userId=Session.usuario_id;
-				$timeout(function(){atendimentoService.create($scope.atendimento)
+				$scope.atendimento.usuario_id=Session.id;
+				var item = Util.clone($scope.atendimento);
+				if(!aberto){
+					item.aberto=false;
+					item.finalizado_at= new Date();
+				}else{
+					item.aberto=true;
+				}
+
+				$timeout(function(){atendimentoService.create(item)
 				.then(function(data) {
+
 					 toastr.success('Atendimento aberto com sucesso!', 'Sucesso!');
 					atualizaDados();
 					deferred.resolve();
+
 				},function(erro) {
-					alert(erro.data.message);
+
+					toastr.error('Ocorreu o seguinte erro: '+ erro.data.message, 'Erro');
 					deferred.reject();
+
 				})},400);
+
 			}else{
       			toastr.error('Digite os campos necessários para abrir o atendimento', 'Erro');
 				deferred.reject();
 			}
+
 			return deferred.promise;
 		}
 
@@ -152,7 +210,7 @@
 			}else{
 				mascara = cpf.apply(number);
 			}
-			return mascara.trim().replace(/[^0-9]$/, '');
+			return mascara.trim().replace('/[^0-9]$/', '');
 		}
 
 		/**
@@ -164,9 +222,9 @@
 		 * Aplica Mascara on Keypress
 		 */
 		$scope.key=function($event){
-			
-    		$scope.atendimento.cnpj = applyMask($scope.atendimento.cnpj);
-		}
+			var cnpj =$scope.atendimento.cliente.cnpj;
+    		$scope.atendimento.cliente.cnpj = applyMask(cnpj);
+		};
 
 		/**
 		 * Aplica Mascara on Keypress
@@ -178,7 +236,7 @@
 				var actualNumber = valor.replace(/[^\d]+/g,'');
 				actualNumber = actualNumber.replace(/^[0]+([1-9])/,'$1');
 				actualNumber = actualNumber || '0';
-				$scope.atendimento.valor = moneyMask.apply(actualNumber);
+				$scope.atendimento.valor.valor = moneyMask.apply(actualNumber);
 			}
 		}
 
@@ -186,11 +244,10 @@
 		 * 
 		 */
 		$scope.procura=function(cnpj){
-		    cnpj =parseInt(getNumber(cnpj));
-			if(!isNaN(cnpj)){
-				atendimentoService.getCliente(cnpj).then(function (response) {
+			if(cnpj!==undefined && cnpj.length>0){
+				atendimentoService.getCliente(getNumber(cnpj)).then(function (response) {
 					if(response.data.nome!==null && response.data.nome!==undefined){
-						$scope.atendimento.nome=response.data.nome;
+						$scope.atendimento.cliente.nome=response.data.nome;
 					}
 					$log.info("Cliente encontrado");
 				});
@@ -201,68 +258,80 @@
 		 * 
 		 */
 		$scope.verificarMore=function(opcao){
-			if(opcao==='Avulso Online' || opcao==='Avulso Local'){
+			var found = $filter('getById')($scope.tipo_atendimento, opcao);
+			$scope.atendimento.tipo_atendimento=found;
+			if(found && (found.descricao.indexOf('AVULSO ONLINE')>=0 
+			  || found.descricao.indexOf('AVULSO LOCAL' )>=0)){
+				
 				$scope.more=true;
+			
 			}else{
+				
 				$scope.more=false;
+			
 			}
 		}
 		$scope.seleciona=function(item){
-			if(Session.usuario_id!=item.usuario_id){
-				$log.log("Selecionou item de outra usuario!!!");
-				$scope.cadastroMode=false;
-				$scope.finalizarMode=false;
-				$scope.viewMode=true;
-				$scope.saveMode=false;
+			
+			$log.log(item);
+			$scope.abrir=false;
+
+
+
+			/**verify if user can edit */
+			if(Session.id==item.usuario_id || Session.tipo=="administrador"){
+
+				$scope.salvar=true;
+				$scope.finalizar=item.aberto;
+				if(Session.tipo==="administrador"){
+					$scope.exluir=true;
+				}
+
 			}else{
-				$log.log("Selecionou um item de si mesmo");
-				$log.log(item);
-				$scope.cadastroMode=false;
-				$scope.viewMode=false;
-				$scope.saveMode=true;
-				item.aberto
-			    $scope.finalizarMode=!!item.aberto;
+
+				$scope.fechar=true;
+
 			}
-			$scope.atendimento=clone(item);
-			$scope.atendimento.cnpj = applyMask($scope.atendimento.cnpj);
-			$scope.atendimento.tipo_atendimento=clone(item.descricao);
-			$scope.verificarMore(item.descricao);
+
+			$scope.saveMode=true;
+			$scope.atendimento= Util.clone(item);
+			$scope.verificarMore(item.tipo_atendimento_id);
+			$scope.mudaStatus(item.valor.status_id)
 		}
 
 		$scope.formataData=function(date){
 			return $filter('date')(date, 'dd/MM/yyyy');
 		};
 
-		/*function verifica(){
-			var atendimento= $scope.atendimento;
-			return (atendimento.cnpj.length==14 ||atendimento.cnpj.length==18)
-			&& atendimento.nome!==""
-			&& atendimento.contato!==""
-			&& atendimento.tipo_acesso!==""
-			&& atendimento.tipo_atendimento!=="";
-		}*/
-		function clone(obj) {
-			if (null == obj || "object" != typeof obj) return obj;
-			var copy = obj.constructor();
-			for (var attr in obj) {
-				if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
-			}
-			return copy;
-		}
-
 		$scope.finalizarChamado=function(){
 			var deferred = $q.defer();
 			deferred.notify();
 			if($scope.ctrl.Form.$valid){
-				var item = clone($scope.atendimento);
+				$scope.atendimento.aberto=false;
+				$scope.salvarChamado().then(function(){
+					deferred.resolve();
+				},function(){
+					deferred.reject();
+				});
+			}else{
+      			toastr.error('Digite os campos necessários para abrir o atendimento', 'Erro');
+				deferred.reject();
+			}
+			return deferred.promise;
+		};
+
+		$scope.salvarChamado=function(){
+			var deferred = $q.defer();
+			deferred.notify();
+			if($scope.ctrl.Form.$valid){
+				var item = Util.clone($scope.atendimento);
 				$log.debug(item);
-				item.cnpj=parseInt(getNumber($scope.atendimento.cnpj));
-				item.valor=parseFloat($scope.atendimento.valor)
-				$timeout(function(){atendimentoService.finalizar($scope.atendimento)
+				//item.valor=parseFloat($scope.atendimento.valor)
+				$timeout(function(){atendimentoService.update($scope.atendimento)
 				.then(function(data) {
-					toastr.success('Atendimento Finalizado com sucesso!', 'Finalizado!');
+					toastr.success('Atendimento  atualizado com sucesso!', 'Sucesso!');
 					atualizaDados();
-					$log.info("Finalizando Chamado");
+					$log.info("Salvando Chamado");
 					deferred.resolve();
 				},function(erro) {
 					alert(erro.data.message);
@@ -275,26 +344,25 @@
 			return deferred.promise;
 		};
 
-		$scope.salvarChamado=function(){
+
+		$scope.excluir=function(){
 			var deferred = $q.defer();
 			deferred.notify();
 			if($scope.ctrl.Form.$valid){
-				var item = clone($scope.atendimento);
+				var item = Util.clone($scope.atendimento);
 				$log.debug(item);
-				item.cnpj=parseInt(getNumber($scope.atendimento.cnpj));
-				item.valor=parseFloat($scope.atendimento.valor)
-				$timeout(function(){atendimentoService.update($scope.atendimento)
+				//item.valor=parseFloat($scope.atendimento.valor)
+				$timeout(function(){atendimentoService.deleta($scope.atendimento)
 				.then(function(data) {
-					toastr.success('Atendimento salvo com sucesso!', 'Sucesso!');
+					toastr.success('Atendimento  excluido com sucesso!', 'Excluido!');
 					atualizaDados();
-					$log.info("Salvando Chamado");
 					deferred.resolve();
 				},function(erro) {
 					alert(erro.data.message);
 					deferred.reject();
 				})},400);
 			}else{
-      			toastr.error('Digite os campos necessários para abrir o atendimento', 'Erro');
+      			toastr.error('Erro ao tentar excluir', 'Erro');
 				deferred.reject();
 			}
 			return deferred.promise;

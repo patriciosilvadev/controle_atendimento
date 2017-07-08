@@ -15,11 +15,11 @@
     var date=new Date();
     function all(data){
       date = data;
-      $log.debug("Retrieving by Year: "+date.getFullYear()+" Month: "+(date.getMonth()+1));
-      return $http.get(url+"/"+date.getFullYear()+"/"+(date.getMonth()+1));
+      $log.debug("Retrieving by Year: "+date.getFullYear()+" Month: "+(date.getMonth()));
+      return $http.get(url+"/"+date.getFullYear()+"/"+(date.getMonth()));
     }
-    function put(id) {
-      return $http.put(url+"/"+id+"/faturar");
+    function put(item) {
+      return $http.put(url+"/"+item.id,item);
     };
     return {
       all:all,

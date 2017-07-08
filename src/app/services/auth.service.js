@@ -18,8 +18,9 @@
 			var deferred = $q.defer();
 			var s = localStorageService.get("session");
 			if(s){
-				Session.create(s.usuario_id,
+				Session.create(s.id,
 						s.tipo,
+						s.email,
 						s.username,
 						s.token,
 						s.nome
@@ -35,7 +36,7 @@
 		 * checking if the session has been saved
 		 */
 		authService.isAuthenticated = function () {
-			return !!Session.usuario_id;
+			return !!Session.id;
 		};
 		/**
 		 * Verifies if the user can access an 

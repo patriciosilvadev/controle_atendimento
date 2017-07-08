@@ -13,7 +13,7 @@
 		//serviceChart.dataFinal=format(new Date());
 
 		function update(){
-			$http.get(url+"/"+dataInicial.getFullYear()+"/"+(dataInicial.getMonth()+1)+"/"+dataInicial.getDate())
+			$http.get(url+"/"+dataInicial.getFullYear()+"/"+(dataInicial.getMonth())+"/"+dataInicial.getDate())
 			.then(function(response){
 				serviceChart.data=response.data;
 				$rootScope.$emit("SYNC_CHART",{});
@@ -40,7 +40,7 @@
 			total_mes:0,
 			total_semana:0,
 			destaques:[{total:0}],
-			porTipo:[]
+			por_tipo:[]
 		};
 	}
 })();

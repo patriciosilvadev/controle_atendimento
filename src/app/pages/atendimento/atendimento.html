@@ -15,8 +15,8 @@
                             ng-keyup="key($event)"
                             name="cnpj"
                             ng-mouseleave="key($event)"
-                            ng-model="atendimento.cnpj"
-                            ng-blur="procura(atendimento.cnpj)" 
+                            ng-model="atendimento.cliente.cnpj"
+                            ng-blur="procura(atendimento.cliente.cnpj)" 
                             ng-disabled="saveMode"
                             required>
                         <span class="help-block error-block basic-block">Requerido</span>
@@ -28,7 +28,7 @@
                             id="cliente" placeholder="Cliente"
                             name="cliente"
                             ng-disabled="saveMode"
-                            ng-model="atendimento.nome" required>
+                            ng-model="atendimento.cliente.nome" required>
                         <span class="help-block error-block basic-block">Requerido</span>
                     </div>
                 </div>
@@ -43,26 +43,26 @@
                     <div class="form-group col-md-4"
                          ng-class="{'has-error': ctrl.Form.tipo_acesso.$invalid}">
                         <label for="Contato">Tipo Acesso</label>  
-                        <select ng-model="atendimento.tipo_acesso" 
+                        <select ng-model="atendimento.tipo_acesso_id" 
                                 name="tipo_acesso"
                                 id="tipo_acesso" 
                                 ng-disabled="saveMode"
+                                ng-options="option.id as option.descricao for option in  tipo_acesso"
                                 class="form-control" required>
-                            <option ng-repeat="item in acesso">{{item}}</option>
                         </select>
                         <span class="help-block error-block basic-block">Requerido</span>
                     </div>
                     <div class="form-group col-md-4"
                          ng-class="{'has-error': ctrl.Form.tipo.$invalid}">
                         <label for="Contato">Tipo Atendimento</label>
-                        <select ng-model="atendimento.tipo_atendimento" 
+                        <select ng-model="atendimento.tipo_atendimento_id" 
                                 ng-disabled="saveMode"
                                 class="form-control"
                                 name="tipo"
                                 id="tipo" 
-                                ng-change="verificarMore(atendimento.tipo_atendimento)"
+                                ng-options="option.id as option.descricao for option in tipo_atendimento"
+                                ng-change="verificarMore(atendimento.tipo_atendimento_id)"
                                 required>
-                            <option ng-repeat="item in atendimento_tipos">{{item.descricao}}</option>
                         </select>
                         <span class="help-block error-block basic-block">Requerido</span>
                     </div>
@@ -102,27 +102,31 @@
                             <div class="input-group">
                                 <span class="input-group-addon addon-left input-group-addon-success">R$</span>
                                 <input type="text" class="form-control with-success-addon" 
-                                    aria-label="Amount (to the nearest dollar)" ng-model="atendimento.valor"
+                                    aria-label="Amount (to the nearest dollar)" ng-model="atendimento.valor.valor"
                                     id="preco" 
                                     placeholder="Preço"
-                                    ng-keyup="keyPreco(atendimento.valor)"
+                                    ng-keyup="keyPreco(atendimento.valor.valor)"
                                     name="preco" required>
                             </div>
                             <span class="has-error" ng-if="ctrl.Form.preco.$invalid">Requerido</span>
                         </div>
                         <div class="form-group col-md-4" ng-if="more"
                             ng-class="{'has-error': ctrl.Form.status.$invalid}">
-                            <label for="status">Aprovado{{atendimento.status}}</label>  
-                            <select ng-disabled="atendimento.status==='faturado'" ng-model="atendimento.status" 
-                                    name="status"
-                                    id="status" 
-                                    class="form-control" required>
-                                <option ng-if="(item!=='faturado' || atendimento.status==='faturado')"  ng-repeat="item in status">{{item}}</option>
+                            <label for="status">Aprovado</label>  
+                            <select ng-model="atendimento.valor.status_id" 
+                                ng-disabled="disableStatus"
+                                class="form-control"
+                                name="status"
+                                id="status" 
+                                ng-init="mudaStatus(atendimento.valor.status_id)"
+                                ng-change="mudaStatus(atendimento.valor.status_id)"
+                                ng-options="option.id as option.descricao disable when ((option.descricao=='FATURADO' || option.descricao=='NÃO FATURADO')&& !disableStatus) for option in status"
+                                required>
                             </select>
                             <span class="help-block error-block basic-block">Requerido</span>
                         </div>
                 </div>
-                <div class="row" ng-if="atendimento.status==='não aprovado' && more">
+                <div class="row" ng-if="motivo">
                     <div class="form-group col-md-12"
                          ng-class="{'has-error': ctrl.Form.motivo.$invalid}">
                         <label for="motivo">Motivo</label>
@@ -130,39 +134,70 @@
                                 class="form-control form-group" 
                                 id="motivo"
                                 name="motivo"
-                                ng-model="atendimento.motivo" required>
+                                ng-model="atendimento.valor.motivo" required>
                         </textarea>
                         <span class="help-block error-block basic-block">Requerido</span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <section class="col-md-6" ng-if="cadastroMode">
-                        <center><button progress-button="abrirChamado()" 
-                                        pb-style="rotate-side-up" 
-                                        class="btn btn-success">
-                                        Abrir
-                                </button><center>
+                    <section class="col-md-3" ng-if="abrir">
+                        <center>
+                            
+                            <button progress-button="abrirChamado(true)" 
+                                    pb-style="rotate-side-up" 
+                                    class="btn btn-success">
+                                    Abrir
+                            </button>
+
+                        <center>
                     </section>
-                    <section class="col-md-6" ng-if="viewMode">
-                        <center><button progress-button="limpar()" 
-                                        pb-style="rotate-side-up" 
-                                        class="btn btn-info">
-                                        Fechar
-                                </button><center>
+
+                    <section class="col-md-3" ng-if="abrir">
+                        <center>
+                            
+                            <button progress-button="abrirChamado(false)" 
+                                    pb-style="rotate-side-up" 
+                                    class="btn btn-success">
+                                    Abrir/Finalizar
+                            </button>
+
+                        <center>
                     </section>
-                    <section class="col-md-6" ng-if="saveMode">
+
+
+
+                    <section class="col-md-3" ng-if="fechar">
+                        <center>
+                            <button progress-button="limpar()" 
+                                    pb-style="rotate-side-up" 
+                                    class="btn btn-info">
+                                    Fechar
+                            </button>
+                        <center>
+                    </section>
+                    <section class="col-md-3" ng-if="salvar">
                         <center><button progress-button="salvarChamado()" 
                                         pb-style="rotate-side-up" 
                                         class="btn btn-info">
                                         Salvar
-                                </button><center>
+                                </button>
+                        <center>
                     </section>
-                    <section class="col-md-6" ng-if="finalizarMode">
+                    <section class="col-md-3" ng-if="finalizar">
                         <center><button progress-button="finalizarChamado()" 
                                         pb-style="rotate-side-up" 
                                         class="btn btn-danger">
                                         Finalizar
-                                </button><center>
+                                </button>
+                        <center>
+                    </section>
+                    <section class="col-md-3" ng-if="excluir">
+                        <center><button progress-button="excluir()" 
+                                        pb-style="rotate-side-up" 
+                                        class="btn btn-danger">
+                                        Excluir
+                                </button>
+                        <center>
                     </section>
                 </div>
             </form>

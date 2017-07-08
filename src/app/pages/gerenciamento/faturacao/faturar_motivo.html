@@ -82,8 +82,8 @@
                 <div class="row">
                         <div class="form-group col-md-3" >
                             <label>Chamado</label>
-                                <div class="switches clearfix" ng-disabled="true">
-                                    <switcher color="primary" ng-model="item.chamado"></switcher>
+                                <div class="switches clearfix">
+                                    <switcher color="primary" ng-model="item.chamado" ng-disabled="true"></switcher>
                                 </div>
                         </div>
                         <div class="form-group col-md-3">
@@ -109,26 +109,24 @@
                        </div>                   
                 </div>
 
-
-
-
-                <div class="row" ng-if="item.valor.status.descricao==='NÃO APROVADO' || item.valor.status.descricao==='NÃO FATURADO'">
-                    <div class="form-group col-md-12">
+                <div class="row">
+                    <div class="form-group col-md-12"
+                         ng-class="{'has-error': ctrl.Form.motivo.$invalid}">
                         <label for="motivo">Motivo</label>
                         <textarea placeholder="Motivo" 
                                 class="form-control form-group" 
                                 id="motivo"
                                 name="motivo"
-                                ng-disabled="true"
-                                ng-model="item.valor.motivo">
+                                ng-model="item.valor.motivo" required>
                         </textarea>
+                        <span class="help-block error-block basic-block">Requerido</span>
                     </div>
                 </div>
             </form>
 
   </div>
   <div class="modal-footer">
-    <!--button type="button" class="btn btn-info" ng-if="!(item.status==='não aprovado')" ng-click="faturar()">Faturar</button-->
+    <button type="button" class="btn btn-info" ng-click="salvar(item)">Não Faturar</button>
     <button type="button" class="btn btn-primary" ng-click="$dismiss()">Fechar</button>
   </div>
 </div>

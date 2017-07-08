@@ -8,7 +8,8 @@
   angular.module('BlurAdmin.pages.grafico', [
     //'BlurAdmin.pages.gerenciamento.timeline',
     'BlurAdmin.pages.grafico.faturamento',
-    'BlurAdmin.pages.grafico.geral'
+    'BlurAdmin.pages.grafico.geral',
+    'BlurAdmin.pages.grafico.tv'
   ])
       .config(routeConfig);
 

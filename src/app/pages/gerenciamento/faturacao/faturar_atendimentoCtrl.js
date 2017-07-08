@@ -19,8 +19,24 @@
    * Controle para o cadastro de usuario
    */
     function faturamentoCtrl($filter,$scope,$http,faturamentoService,
-                toastr,$q,$timeout,$log,$uibModal) {
+                toastr,$q,$timeout,$log,$uibModal,Util) {
 
+        /**
+		 * Retrieves utils
+		 */
+		Util.atualiza().then(function(){
+			$scope.tipo_acesso=Util.tipo_acesso;
+			$scope.tipo_atendimento=Util.tipo_atendimento;
+			$scope.status=Util.status;
+		});
+
+        function findFaturado(){
+            for(var i=0;i<=$scope.status.length;i++){
+                if($scope.status[i].descricao==='FATURADO'){
+                    return $scope.status[i];
+                }
+            }
+        }
         
         $scope.open = function (item) {
             $uibModal.open({
@@ -32,6 +48,60 @@
                 }
             });
         };
+
+        $scope.naoFaturar = function (item) {
+
+            $uibModal.open({
+                animation: true,
+                templateUrl: 'app/pages/gerenciamento/faturacao/faturar_motivo.html',
+                size: 'lg',//size,
+                controller: function($scope,faturamentoService,toastr,Util) {
+                    $scope.item = item; 
+                    Util.atualiza().then(function(){
+                        $scope.status=Util.status;
+                    });
+                    $scope.salvar=function(item){
+                        var deferred = $q.defer();
+                        deferred.notify();
+
+                        if($scope.ctrl.Form.$valid){
+
+                            var itemCopy = item.valor;
+                            var status=$scope.status.filter(function( obj ) {
+                            return obj.descricao == 'NÃO FATURADO';
+                            });
+                            itemCopy.status_id=status[0].id;
+
+                            $timeout(function(){faturamentoService.put(itemCopy)
+                            .then(function(data) {
+
+                                toastr.success('Salvo com sucesso!', 'Sucesso!');
+                                atualizaDados(selectedDate);
+                                $scope.$dismiss();
+                                deferred.resolve();
+
+                            },function(erro) {
+
+                                toastr.error('Ocorreu o seguinte erro: '+ erro.data.message, 'Erro');
+                                deferred.reject();
+
+                            })},400);
+
+                        }else{
+                            toastr.error('Digite o motivo!!!!', 'Erro');
+                            deferred.reject();
+                        }
+
+                        return deferred.promise;
+                    };
+                }
+            });
+        };
+
+
+
+
+
         var selectedDate= new Date();
         $scope.data=undefined;
         //options for data
@@ -44,8 +114,8 @@
         $scope.date={opened:false};
         $scope.openDate=function(){
 		$scope.date.opened=!$scope.date.opened;
-		$log.info("Data :");
-		$log.info($scope.$parent.data);
+            $log.info("Data :");
+            $log.info($scope.$parent.data);
         };
         $scope.pesquisar=function(dt){
             var deferred = $q.defer();
@@ -64,7 +134,7 @@
             return deferred.promise;
         }
 
-        $scope.faturas={};
+        $scope.faturas=[];
         function atualizaDados(data){
             faturamentoService.all(data).then(function (response) {
                 $scope.faturas = response.data;
@@ -75,6 +145,7 @@
         $scope.formataData=function(date){
             return $filter('date')(date, 'dd/MM/yyyy');
         };
+
         /**
          * Pega Numero
          */
@@ -82,6 +153,7 @@
             str+="";
             return str.replace(/[^\d]/g, '').slice(0, 14)
         }
+        
         /**
          * Aplica Mascara
          */
@@ -98,17 +170,54 @@
             return mascara.trim().replace(/[^0-9]$/, '');
         }
 
-        $scope.faturar=function(id){
-            $log.info("faturando item");
-            $log.info(id);
-            faturamentoService.put(id).then(function(data){
-                $log.debug("Faturado com sucesso");
-                toastr.success('Faturado com sucesso', 'Sucesso ao Faturar!');
-                atualizaDados(selectedDate);
-            },function(error){
-                toastr.error('Erro ao faturar', 'Erro!');
-                $log.debug(error);
-            })
+        function chooseFaturadoAtDate(){
+
+            return $uibModal.open({
+                animation: true,
+                templateUrl: 'app/pages/gerenciamento/faturacao/chooseDateModal.html',
+                size: 'md',
+                backdrop: false,
+                controller: function($scope, $uibModalInstance) {
+
+                    $scope.dt = new Date();
+
+                    $scope.save = function () {
+                        $uibModalInstance.close($scope.dt);
+                    };
+
+                    $scope.cancel = function () {
+                        $uibModalInstance.dismiss('cancel');
+                    };
+
+                }
+            }).result;
+
+            /*modalInstance.then(function(data){
+                console.log(data);
+            }, function(cancelData){
+                console.log(cancelData);
+            })*/
+
+        }
+
+        $scope.faturar=function(item){
+            chooseFaturadoAtDate().then(function(data){
+                item.faturado_at= new Date(data);
+                item.status_id=findFaturado().id;
+                $log.info("faturando item");
+                $log.debug(item);
+                faturamentoService.put(item).then(function(data){
+                    $log.debug("Faturado com sucesso");
+                    toastr.success('Faturado com sucesso', 'Sucesso ao Faturar!');
+                    atualizaDados(selectedDate);
+                },function(error){
+                    toastr.error('Erro ao faturar', 'Erro!');
+                    $log.debug(error);
+                })
+
+            }, function(cancelData){
+                $log.debug("Closing modal!");
+            });
         }
 
         /**

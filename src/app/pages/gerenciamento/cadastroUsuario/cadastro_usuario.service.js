@@ -19,10 +19,10 @@
       return $http.post(url, item);
     };
     function update(item) {
-      return $http.put(url+'/'+item.usuario_id, item);
+      return $http.put(url+'/'+item.id, item);
     };
     function deleta(item) {
-      return $http.delete(url+'/'+item.usuario_id);
+      return $http.delete(url+'/'+item.id);
     };
     return {
       all:all,

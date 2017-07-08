@@ -12,7 +12,7 @@
   /**
    * Controle para o cadastro de usuario
    */
-  function cadastro_usuarioCtrl($scope,$http,usuarioService,$q,$timeout) {
+  function cadastro_usuarioCtrl($scope,$http,usuarioService,$q,$timeout,toastr) {
     $scope.usuario={};
     $scope.usuarios={};
     $scope.cadastroMode=true;
@@ -54,13 +54,13 @@
         var deferred = $q.defer();
         deferred.notify();
         $timeout(function(data){usuarioService.update($scope.usuario).then(function(response){
-            alert("Salvado com sucesso!"); 
+            toastr.success('Usuario salvo com sucesso!', 'Sucesso!');
             atualizaDados();
             $scope.cadastroMode=true;
             deferred.resolve();
         },function(erro){
             $scope.cadastroMode=true;
-            alert(erro.data.message);
+            toastr.error('Erro ao tentar excluir!'+erro, 'Erro ao excluir!');
             deferred.reject();    
         });},400);
         return deferred.promise;

@@ -61,18 +61,22 @@
 		}updateCharts();
 		function createChart(){
 			$scope.chartTipo=[];
-			var porTipo=service.data.porTipo;
+			var porTipo=service.data.por_tipo;
 			$scope.totalMes=service.data.total_mes;
+
 			for(var i=0;i<porTipo.length;i++){
+
 				$log.info(porTipo[i]);
 				$scope.chartTipo.push(
 				createItem(
-					porTipo[i].total_tipo,
-					calcPercentage($scope.totalMes,porTipo[i].total_tipo),
+					porTipo[i].total,
+					calcPercentage($scope.totalMes,porTipo[i].total),
 					porTipo[i].descricao,
 					i)
 				);
+				
 			}
+
 			//$log.info($scope.chartTipo);
 		}
 		function createItem(value,porcentagem,descricao,item){

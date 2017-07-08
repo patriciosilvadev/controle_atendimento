@@ -15,6 +15,7 @@
           url: '/faturamentoAtendimento',
           templateUrl: 'app/pages/gerenciamento/faturacao/faturar_atendimento.html',
           title: 'Faturamento',
+          controller:'faturamentoCtrl',
           sidebarMeta: {
             order: 300,
           },
